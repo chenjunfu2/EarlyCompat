@@ -44,6 +44,9 @@ dependencies {
 	// CrafterEarly
 	modCompileOnly files('libs/crafter-early-1.0.0+1.20.1.jar')
 	
+	// MasaGadget
+	modCompileOnly files('libs/MasaGadget-mc1.20.1-fabric-4.0.395-stable.jar')
+	
 }
 
 processResources {

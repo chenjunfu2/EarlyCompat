@@ -6,7 +6,7 @@ import com.plusls.carpet.network.PcaSyncProtocol;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.block.entity.DecoratedPotBlockEntity;
+import net.minecraft.block.entity.JukeboxBlockEntity;
 import net.minecraft.util.math.BlockPos;
 import org.spongepowered.asm.mixin.Intrinsic;
 import org.spongepowered.asm.mixin.Mixin;
@@ -14,17 +14,17 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(DecoratedPotBlockEntity.class)
-public class DecoratedPotBlockEntityMixin_PcaDecoratedPotEarlyCompat extends BlockEntity
+@Mixin(JukeboxBlockEntity.class)
+public class JukeboxBlockEntityMixin_PcaVanillaCompat extends BlockEntity
 {
-	public DecoratedPotBlockEntityMixin_PcaDecoratedPotEarlyCompat(BlockEntityType<?> type, BlockPos pos, BlockState state)
+	public JukeboxBlockEntityMixin_PcaVanillaCompat(BlockEntityType<?> type, BlockPos pos, BlockState state)
 	{
 		super(type, pos, state);
 	}
 	
 	@Override
 	@Intrinsic
-	public void markDirty()// 正常情况下 DecoratedPotEarly 会进行实现
+	public void markDirty()// JukeboxBlockEntity 默认使用基类，隐式注入防止mixin失败
 	{
 		super.markDirty();
 	}
@@ -35,7 +35,7 @@ public class DecoratedPotBlockEntityMixin_PcaDecoratedPotEarlyCompat extends Blo
 	{
 		if (PluslsCarpetAdditionSettings.pcaSyncProtocol && PcaSyncProtocol.syncBlockEntityToClient(this))
 		{
-			PluslsCarpetAdditionReference.getLogger().debug("update DecoratedPotBlockEntity: {}", this.pos);
+			PluslsCarpetAdditionReference.getLogger().debug("update JukeboxBlockEntity: {}", this.pos);
 		}
 	}
 }

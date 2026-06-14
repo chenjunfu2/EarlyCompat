@@ -5,7 +5,8 @@
   "plugin": "chenjunfu2.earlycompat.mixin.MixinPlugin",
   "mixins": [
     "CrafterBlockEntityMixin_PcaCrafterEarlyCompat",
-    "DecoratedPotBlockEntityMixin_PcaDecoratedPotEarlyCompat"
+    "DecoratedPotBlockEntityMixin_PcaDecoratedPotEarlyCompat",
+    "JukeboxBlockEntityMixin_PcaVanillaCompat"
   ],
   "injectors": {
     "defaultRequire": 1

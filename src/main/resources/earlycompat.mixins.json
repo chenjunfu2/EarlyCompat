@@ -1,15 +1,16 @@
 {
-	"required": true,
-	"package": "chenjunfu2.earlycompat.mixin",
-	"compatibilityLevel": "JAVA_17",
-    "plugin": "chenjunfu2.earlycompat.mixin.MixinPlugin",
-	"mixins": [
-      "DecoratedPotBlockEntityMixin_PcaDecoratedPotEarlyCompat"
-	],
-	"injectors": {
-		"defaultRequire": 1
-	},
-	"overwrites": {
-		"requireAnnotations": true
+  "required": true,
+  "package": "chenjunfu2.earlycompat.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "plugin": "chenjunfu2.earlycompat.mixin.MixinPlugin",
+  "mixins": [
+    "CrafterBlockEntityMixin_PcaCrafterEarlyCompat",
+    "DecoratedPotBlockEntityMixin_PcaDecoratedPotEarlyCompat"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
 	}
 }

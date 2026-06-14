@@ -15,6 +15,7 @@ public class MixinPlugin implements IMixinConfigPlugin
 	
 	private boolean isPluslsCarpetAdditionAvailable;
 	private boolean isDecoratedPotEarlyAvailable;
+	private boolean isCrafterEarlyAvailable;
 	
 	@Override
 	public void onLoad(String mixinPackage)
@@ -52,7 +53,7 @@ public class MixinPlugin implements IMixinConfigPlugin
 							(
 								modContainer.getMetadata().getVersion().getFriendlyString()
 							);
-							SemanticVersion required = SemanticVersion.parse("1.0.1");
+							SemanticVersion required = SemanticVersion.parse("1.0.0");
 							return installed.compareTo(required) >= 0;
 						}
 						catch (VersionParsingException e)
@@ -61,6 +62,28 @@ public class MixinPlugin implements IMixinConfigPlugin
 						}
 					}
 				).orElse(false);
+		
+		isCrafterEarlyAvailable = loaderInstance.getModContainer("crafter-early")
+			.map
+				(
+					modContainer ->
+					{
+						try
+						{
+							SemanticVersion installed = SemanticVersion.parse
+							(
+								modContainer.getMetadata().getVersion().getFriendlyString()
+							);
+							SemanticVersion required = SemanticVersion.parse("1.0.0");
+							return installed.compareTo(required) >= 0;
+						}
+						catch (VersionParsingException e)
+						{
+							return false;
+						}
+					}
+				).orElse(false);
+		
 	}
 	
 	@Override
@@ -71,6 +94,14 @@ public class MixinPlugin implements IMixinConfigPlugin
 		{
 			return isPluslsCarpetAdditionAvailable && isDecoratedPotEarlyAvailable;
 		}
+		
+		// 只有带 "PcaCrafterEarlyCompat" 的 mixin 才受 PCA 和 CrafterEarly 影响
+		if (mixinClassName.contains("PcaCrafterEarlyCompat"))
+		{
+			return isPluslsCarpetAdditionAvailable && isCrafterEarlyAvailable;
+		}
+		
+		// 剩下全部允许通过
 		return true;
 	}
 	

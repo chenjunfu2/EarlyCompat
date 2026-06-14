@@ -12,7 +12,5 @@ public class EarlyCompat implements ModInitializer
 
 	@Override
 	public void onInitialize()
-	{
-	
-	}
+	{}
 }

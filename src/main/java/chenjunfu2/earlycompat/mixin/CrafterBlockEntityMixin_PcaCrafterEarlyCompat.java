@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(CrafterBlockEntity.class)
-public class CrafterBlockEntityMixin_PcaCrafterEarlyCompat extends BlockEntity
+public abstract class CrafterBlockEntityMixin_PcaCrafterEarlyCompat extends BlockEntity
 {
 	public CrafterBlockEntityMixin_PcaCrafterEarlyCompat(BlockEntityType<?> type, BlockPos pos, BlockState state)
 	{

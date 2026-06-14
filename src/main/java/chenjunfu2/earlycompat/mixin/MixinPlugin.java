@@ -124,6 +124,24 @@ public class MixinPlugin implements IMixinConfigPlugin
 			return isPluslsCarpetAdditionAvailable && isCrafterEarlyAvailable;
 		}
 		
+		// Masa原版方块同步修复
+		if(mixinClassName.contains("MasaVanillaCompat"))
+		{
+			return isMasaGadgetAvailable;
+		}
+		
+		// 陶罐方块同步修复
+		if(mixinClassName.contains("MasaDecoratedPotEarlyCompat"))
+		{
+			return isMasaGadgetAvailable && isDecoratedPotEarlyAvailable;
+		}
+		
+		// 合成器方块同步修复
+		if(mixinClassName.contains("MasaCrafterEarlyCompat"))
+		{
+			return isMasaGadgetAvailable && isCrafterEarlyAvailable;
+		}
+		
 		// 剩下全部允许通过
 		return true;
 	}

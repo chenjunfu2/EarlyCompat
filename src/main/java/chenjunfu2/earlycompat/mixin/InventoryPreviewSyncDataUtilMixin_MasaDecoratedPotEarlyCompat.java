@@ -17,6 +17,7 @@ public abstract class InventoryPreviewSyncDataUtilMixin_MasaDecoratedPotEarlyCom
 	@Inject
 		(
 			method = "onHitCallback",
+			cancellable = true,
 			at =
 			@At
 				(

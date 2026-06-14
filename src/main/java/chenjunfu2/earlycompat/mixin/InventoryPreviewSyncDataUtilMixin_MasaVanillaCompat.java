@@ -18,6 +18,7 @@ public abstract class InventoryPreviewSyncDataUtilMixin_MasaVanillaCompat
 	@Inject
 	(
 		method = "onHitCallback",
+		cancellable = true,
 		at =
 		@At
 		(

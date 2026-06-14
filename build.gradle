@@ -44,10 +44,10 @@ dependencies {
 	// CrafterEarly
 	modCompileOnly files('libs/crafter-early-1.0.0+1.20.1.jar')
 	
-	// MagicLib & MasaGadget
+	// malilib & MagicLib & MasaGadget
+	modCompileOnly files('libs/malilib-fabric-1.20.1-0.16.3.jar')
 	modCompileOnly files('libs/MagicLib-mc1.20.1-fabric-0.8.784-stable.jar')
 	modCompileOnly files('libs/MasaGadget-mc1.20.1-fabric-4.0.395-stable.jar')
-	
 }
 
 processResources {

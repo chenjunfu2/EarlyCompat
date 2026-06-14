@@ -1,0 +1,38 @@
+{
+	"schemaVersion": 1,
+	"id": "earlycompat",
+	"version": "${version}",
+	"name": "EarlyCompat",
+	"description": "",
+	"authors": [
+		"chenjunfu2"
+	],
+	"contact": {
+		"homepage": "NULL",
+		"sources": "https://github.com/"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/earlycompat/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"chenjunfu2.earlycompat.EarlyCompat"
+		],
+		"client": [
+			"chenjunfu2.earlycompat.client.EarlyCompatClient"
+		]
+	},
+	"mixins": [
+		"earlycompat.mixins.json",
+		{
+			"config": "earlycompat.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.16.10",
+		"minecraft": "~1.20.1",
+		"java": ">=17",
+		"fabric-api": "*"
+	}
+}

@@ -16,7 +16,7 @@ public abstract class InventoryPreviewSyncDataUtilMixin_MasaCrafterEarlyCompat
 {
 	@Inject
 		(
-			method = "onHitCallback",
+			method = "onHitCallback(Lnet/minecraft/util/hit/HitResult;ZZ)V",
 			at =
 			@At
 				(

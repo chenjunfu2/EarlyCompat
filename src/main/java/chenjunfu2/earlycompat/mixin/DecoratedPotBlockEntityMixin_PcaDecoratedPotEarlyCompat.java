@@ -30,7 +30,7 @@ public abstract class DecoratedPotBlockEntityMixin_PcaDecoratedPotEarlyCompat ex
 	}
 	
 	@SuppressWarnings({"MixinAnnotationTarget", "UnresolvedMixinReference", "target"})
-	@Inject(method = "markDirty", at = @At(value = "RETURN"))
+	@Inject(method = "markDirty()V", at = @At(value = "RETURN"))
 	private void PcaCallback(CallbackInfo info)
 	{
 		if (PluslsCarpetAdditionSettings.pcaSyncProtocol && PcaSyncProtocol.syncBlockEntityToClient(this))

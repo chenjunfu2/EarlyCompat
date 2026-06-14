@@ -3,13 +3,13 @@
 	"id": "earlycompat",
 	"version": "${version}",
 	"name": "EarlyCompat",
-	"description": "",
+	"description": "This mod adds local protocol compatibility and bug fixes for ported blocks.",
 	"authors": [
 		"chenjunfu2"
 	],
 	"contact": {
 		"homepage": "NULL",
-		"sources": "https://github.com/"
+		"sources": "https://github.com/chenjunfu2/EarlyCompat"
 	},
 	"license": "CC0-1.0",
 	"icon": "assets/earlycompat/icon.png",

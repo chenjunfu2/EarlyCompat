@@ -1,6 +1,8 @@
 package chenjunfu2.earlycompat.mixin;
 
 import net.fabricmc.loader.api.FabricLoader;
+import net.fabricmc.loader.api.SemanticVersion;
+import net.fabricmc.loader.api.VersionParsingException;
 import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
@@ -11,23 +13,63 @@ import java.util.Set;
 public class MixinPlugin implements IMixinConfigPlugin
 {
 	
-	private boolean pcaAvailable;
+	private boolean isPluslsCarpetAdditionAvailable;
+	private boolean isDecoratedPotEarlyAvailable;
 	
 	@Override
 	public void onLoad(String mixinPackage)
 	{
-		pcaAvailable = FabricLoader
-			.getInstance()
-			.isModLoaded("pca-1_20_1");
+		var loaderInstance = FabricLoader.getInstance();
+		isPluslsCarpetAdditionAvailable = loaderInstance.getModContainer("pca-1_20_1")
+			.map
+			(
+				modContainer ->
+				{
+					try
+					{
+						SemanticVersion installed = SemanticVersion.parse
+						(
+							modContainer.getMetadata().getVersion().getFriendlyString()
+						);
+						SemanticVersion required = SemanticVersion.parse("0.3.190");
+						return installed.compareTo(required) >= 0;
+					}
+					catch (VersionParsingException e)
+					{
+						return false;
+					}
+				}
+			).orElse(false);
+		
+		isDecoratedPotEarlyAvailable = loaderInstance.getModContainer("decoratedpotearly")
+			.map
+				(
+					modContainer ->
+					{
+						try
+						{
+							SemanticVersion installed = SemanticVersion.parse
+							(
+								modContainer.getMetadata().getVersion().getFriendlyString()
+							);
+							SemanticVersion required = SemanticVersion.parse("1.0.1");
+							return installed.compareTo(required) >= 0;
+						}
+						catch (VersionParsingException e)
+						{
+							return false;
+						}
+					}
+				).orElse(false);
 	}
 	
 	@Override
 	public boolean shouldApplyMixin(String targetClassName, String mixinClassName)
 	{
-		// 只有带 "PcaCompat" 的 mixin 才受 PCA 影响
-		if (mixinClassName.contains("PcaCompat"))
+		// 只有带 "PcaDecoratedPotEarlyCompat" 的 mixin 才受 PCA 和 DecoratedPotEarly 影响
+		if (mixinClassName.contains("PcaDecoratedPotEarlyCompat"))
 		{
-			return pcaAvailable;
+			return isPluslsCarpetAdditionAvailable && isDecoratedPotEarlyAvailable;
 		}
 		return true;
 	}

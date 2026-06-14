@@ -4,7 +4,7 @@
 	"compatibilityLevel": "JAVA_17",
     "plugin": "chenjunfu2.earlycompat.mixin.MixinPlugin",
 	"mixins": [
-		"ExampleMixin"
+      "DecoratedPotBlockEntityMixin_PcaDecoratedPotEarlyCompat"
 	],
 	"injectors": {
 		"defaultRequire": 1

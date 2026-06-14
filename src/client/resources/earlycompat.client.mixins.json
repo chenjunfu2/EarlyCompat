@@ -1,14 +1,15 @@
 {
-	"required": true,
-	"package": "chenjunfu2.earlycompat.client.mixin",
-	"compatibilityLevel": "JAVA_17",
-	"client": [
-		"ExampleClientMixin"
-	],
-	"injectors": {
-		"defaultRequire": 1
-	},
-	"overwrites": {
-		"requireAnnotations": true
+  "required": true,
+  "package": "chenjunfu2.earlycompat.client.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "plugin": "chenjunfu2.earlycompat.mixin.MixinPlugin",
+  "client": [
+    "PcaSyncProtocolMixin_MasaBugFix"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
 	}
 }

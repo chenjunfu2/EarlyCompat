@@ -49,7 +49,6 @@ public class MixinPlugin implements IMixinConfigPlugin
 		}
 		else
 		{
-			// 默认精确等于
 			SemanticVersion required = SemanticVersion.parse(constraint);
 			return installed.compareTo(required) == 0;
 		}
@@ -70,12 +69,12 @@ public class MixinPlugin implements IMixinConfigPlugin
 					boolean satisfied = checkVersionConstraint(installed, versionConstraint);
 					if (satisfied)
 					{
-						EarlyCompat.LOGGER.info("{} version {} satisfies constraint {}",
+						EarlyCompat.LOGGER.info("{} version {} satisfies constraint {}, loaded",
 							modName, installed.getFriendlyString(), versionConstraint);
 					}
 					else
 					{
-						EarlyCompat.LOGGER.warn("{} version {} does NOT satisfy constraint {}",
+						EarlyCompat.LOGGER.warn("{} version {} does NOT satisfy constraint {}, skipping",
 							modName, installed.getFriendlyString(), versionConstraint);
 					}
 					
@@ -83,7 +82,7 @@ public class MixinPlugin implements IMixinConfigPlugin
 				}
 				catch (VersionParsingException e)
 				{
-					EarlyCompat.LOGGER.warn("Failed to parse version of {}: {}", modName, e.getMessage());
+					EarlyCompat.LOGGER.warn("Failed to parse version of {}: {}, skipping", modName, e.getMessage());
 					return false;
 				}
 			})
@@ -126,6 +125,12 @@ public class MixinPlugin implements IMixinConfigPlugin
 		
 		// Masa原版方块同步修复
 		if(mixinClassName.contains("MasaVanillaCompat"))
+		{
+			return isMasaGadgetAvailable;
+		}
+		
+		// Masa bug修复
+		if(mixinClassName.contains("MasaBugFix"))
 		{
 			return isMasaGadgetAvailable;
 		}

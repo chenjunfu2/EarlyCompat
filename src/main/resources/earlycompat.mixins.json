@@ -5,6 +5,7 @@
   "plugin": "chenjunfu2.earlycompat.mixin.MixinPlugin",
   "mixins": [
     "ChiseledBookshelfBlockEntity_PcaVanillaCompat",
+    "ChiseledBookshelfBlockEntityMixin_VanillaBugFix",
     "CrafterBlockEntityMixin_PcaCrafterEarlyCompat",
     "DecoratedPotBlockEntityMixin_PcaDecoratedPotEarlyCompat",
     "InventoryPreviewSyncDataUtilMixin_MasaCrafterEarlyCompat",

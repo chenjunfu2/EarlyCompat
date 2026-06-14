@@ -1,7 +1,6 @@
 package chenjunfu2.earlycompat.client.mixin;
 
 import com.llamalad7.mixinextras.sugar.Local;
-import com.mojang.authlib.minecraft.client.MinecraftClient;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.entity.BlockEntity;

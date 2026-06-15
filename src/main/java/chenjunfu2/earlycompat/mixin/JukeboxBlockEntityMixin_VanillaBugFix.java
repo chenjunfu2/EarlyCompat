@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(JukeboxBlockEntity.class)
-public class JukeboxBlockEntityMixin_VanillaBugFix extends BlockEntity
+public abstract class JukeboxBlockEntityMixin_VanillaBugFix extends BlockEntity
 {
 	public JukeboxBlockEntityMixin_VanillaBugFix(BlockEntityType<?> type, BlockPos pos, BlockState state)
 	{
@@ -30,10 +30,7 @@ public class JukeboxBlockEntityMixin_VanillaBugFix extends BlockEntity
 	private DefaultedList<ItemStack> inventory;
 	
 	@Invoker("stopPlaying")
-	private void earlycompat_shadow$stopPlaying()
-	{
-		throw new AssertionError();
-	}
+	public abstract void earlycompat_shadow$stopPlaying();
 	
 	@Inject(method = "readNbt", at = @At(value = "INVOKE", target = "Lnet/minecraft/nbt/NbtCompound;getBoolean(Ljava/lang/String;)Z", shift = At.Shift.BEFORE))
 	void readNbtBugFix(NbtCompound nbt, CallbackInfo ci)

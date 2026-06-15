@@ -37,7 +37,7 @@ public abstract class JukeboxBlockEntityMixin_VanillaBugFix extends BlockEntity
 	{
 		if(!nbt.contains("RecordItem", NbtElement.COMPOUND_TYPE))//相当于原先的else，如果不存在，那么清空（与1.21代码同步）
 		{
-			if(!inventory.isEmpty())
+			if(((JukeboxBlockEntity)(Object)this).isPlayingRecord())//如果正在播放
 			{
 				earlycompat_shadow$stopPlaying();//先停止播放
 			}

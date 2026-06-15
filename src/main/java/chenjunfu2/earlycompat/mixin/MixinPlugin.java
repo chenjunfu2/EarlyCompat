@@ -1,5 +1,6 @@
 package chenjunfu2.earlycompat.mixin;
 
+import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.SemanticVersion;
 import net.fabricmc.loader.api.VersionParsingException;
@@ -13,6 +14,11 @@ import java.util.Set;
 
 public class MixinPlugin implements IMixinConfigPlugin
 {
+	public boolean isPluslsCarpetAdditionAvailable = false;
+	public boolean isMasaGadgetAvailable = false;
+	public boolean isDecoratedPotEarlyAvailable = false;
+	public boolean isCrafterEarlyAvailable = false;
+	
 	private boolean checkVersionConstraint(SemanticVersion installed, String constraint) throws VersionParsingException
 	{
 		constraint = constraint.trim();
@@ -89,10 +95,24 @@ public class MixinPlugin implements IMixinConfigPlugin
 	@Override
 	public void onLoad(String mixinPackage)
 	{
-		EarlyCompat.isPluslsCarpetAdditionAvailable = checkModVersion("PluslsCarpetAddition","pca-1_20_1","0.3.190+");
-		EarlyCompat.isMasaGadgetAvailable = checkModVersion("MasaGadget","masa_gadget_mod","4.0.395+");
-		EarlyCompat.isDecoratedPotEarlyAvailable = checkModVersion("DecoratedPotEarly","decoratedpotearly","1.0.2+");
-		EarlyCompat.isCrafterEarlyAvailable = checkModVersion("CrafterEarly","crafter-early","1.0.0+");
+		EnvType env = FabricLoader.getInstance().getEnvironmentType();
+		if(env == EnvType.CLIENT)
+		{
+			EarlyCompat.LOGGER.info("onLoad environment: CLIENT");
+		}
+		else if(env == EnvType.SERVER)
+		{
+			EarlyCompat.LOGGER.info("onLoad environment: SERVER");
+		}
+		else
+		{
+			EarlyCompat.LOGGER.info("onLoad environment: UNKNOWN");
+		}
+		
+		isPluslsCarpetAdditionAvailable = checkModVersion("PluslsCarpetAddition","pca-1_20_1","0.3.190+");
+		isMasaGadgetAvailable = checkModVersion("MasaGadget","masa_gadget_mod","4.0.395+");
+		isDecoratedPotEarlyAvailable = checkModVersion("DecoratedPotEarly","decoratedpotearly","1.0.2+");
+		isCrafterEarlyAvailable = checkModVersion("CrafterEarly","crafter-early","1.0.0+");
 	}
 	
 	@Override
@@ -101,37 +121,37 @@ public class MixinPlugin implements IMixinConfigPlugin
 		// PCA 原版修复
 		if(mixinClassName.contains("PcaVanillaCompat"))
 		{
-			return EarlyCompat.isPluslsCarpetAdditionAvailable;
+			return isPluslsCarpetAdditionAvailable;
 		}
 		
 		// PCA 陶罐移植修复
 		if (mixinClassName.contains("PcaDecoratedPotEarlyCompat"))
 		{
-			return EarlyCompat.isPluslsCarpetAdditionAvailable && EarlyCompat.isDecoratedPotEarlyAvailable;
+			return isPluslsCarpetAdditionAvailable && isDecoratedPotEarlyAvailable;
 		}
 		
 		// PCA 合成器移植修复
 		if (mixinClassName.contains("PcaCrafterEarlyCompat"))
 		{
-			return EarlyCompat.isPluslsCarpetAdditionAvailable && EarlyCompat.isCrafterEarlyAvailable;
+			return isPluslsCarpetAdditionAvailable && isCrafterEarlyAvailable;
 		}
 		
 		// Masa原版方块同步修复
 		if(mixinClassName.contains("MasaVanillaCompat"))
 		{
-			return EarlyCompat.isMasaGadgetAvailable;
+			return isMasaGadgetAvailable;
 		}
 		
 		// Masa陶罐方块同步修复
 		if(mixinClassName.contains("MasaDecoratedPotEarlyCompat"))
 		{
-			return EarlyCompat.isMasaGadgetAvailable && EarlyCompat.isDecoratedPotEarlyAvailable;
+			return isMasaGadgetAvailable && isDecoratedPotEarlyAvailable;
 		}
 		
 		// Masa合成器方块同步修复
 		if(mixinClassName.contains("MasaCrafterEarlyCompat"))
 		{
-			return EarlyCompat.isMasaGadgetAvailable && EarlyCompat.isCrafterEarlyAvailable;
+			return isMasaGadgetAvailable && isCrafterEarlyAvailable;
 		}
 		
 		// 原版相关BUG修复

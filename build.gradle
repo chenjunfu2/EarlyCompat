@@ -44,6 +44,9 @@ dependencies {
 	// Carpet
 	modCompileOnly files('libs/fabric-carpet-1.20-1.4.112+v230608.jar')
 	
+	// Carpet Extra
+	modCompileOnly files('libs/carpet-extra-1.20-1.4.115.jar')
+	
 	// PCA
 	modCompileOnly files('libs/PluslsCarpetAddition-1.20.1-0.3.190+9e97daa-beta.jar')
 	

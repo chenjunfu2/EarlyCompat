@@ -15,6 +15,7 @@ import java.util.Set;
 public class MixinPlugin implements IMixinConfigPlugin
 {
 	private boolean isFabricCarpetAvailable = false;
+	private boolean isCarpetExtraAvailable = false;
 	private boolean isPluslsCarpetAdditionAvailable = false;
 	
 	private boolean isMagicLibAvailable = false;
@@ -127,14 +128,15 @@ public class MixinPlugin implements IMixinConfigPlugin
 		
 		//Carpet家族（协议提供者）
 		isFabricCarpetAvailable = checkModVersion("Carpet","carpet","1.4.112+");
+		isCarpetExtraAvailable = isFabricCarpetAvailable && checkModVersion("CarpetExtra","carpet-extra","1.4.115+");
 		isPluslsCarpetAdditionAvailable = isFabricCarpetAvailable && checkModVersion("PluslsCarpetAddition","pca-1_20_1","0.3.190+");
 		
 		//前置库（库提供者）
-		isMagicLibAvailable = checkModVersion("MagicLib","magiclib","0.8.697+");
+		isMagicLibAvailable = checkModVersion("MagicLib","magiclib","0.8.576+");
 		isMalilibAvailable = checkModVersion("MaLiLib", "malilib", "0.16.0+");
 		
 		//MASA家族（协议使用者）
-		isMasaGadgetAvailable = isMagicLibAvailable && isMalilibAvailable && checkModVersion("MasaGadget","masa_gadget_mod","4.0.395+");
+		isMasaGadgetAvailable = isMagicLibAvailable && isMalilibAvailable && checkModVersion("MasaGadget","masa_gadget_mod","4.0.373+");
 		isTweakerooAvailable = isMalilibAvailable && checkModVersion("Tweakeroo","tweakeroo","0.17.1+");
 		isLitematicaAvailable = isMalilibAvailable && checkModVersion("Litematica","litematica","0.15.4+");
 	}

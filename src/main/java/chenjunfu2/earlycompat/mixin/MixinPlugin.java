@@ -13,13 +13,6 @@ import java.util.Set;
 
 public class MixinPlugin implements IMixinConfigPlugin
 {
-	
-	private boolean isPluslsCarpetAdditionAvailable;
-	private boolean isMasaGadgetAvailable;
-	
-	private boolean isDecoratedPotEarlyAvailable;
-	private boolean isCrafterEarlyAvailable;
-	
 	private boolean checkVersionConstraint(SemanticVersion installed, String constraint) throws VersionParsingException
 	{
 		constraint = constraint.trim();
@@ -96,10 +89,10 @@ public class MixinPlugin implements IMixinConfigPlugin
 	@Override
 	public void onLoad(String mixinPackage)
 	{
-		isPluslsCarpetAdditionAvailable = checkModVersion("PluslsCarpetAddition","pca-1_20_1","0.3.190+");
-		isMasaGadgetAvailable = checkModVersion("MasaGadget","masa_gadget_mod","4.0.395+");
-		isDecoratedPotEarlyAvailable = checkModVersion("DecoratedPotEarly","decoratedpotearly","1.0.0+");
-		isCrafterEarlyAvailable = checkModVersion("CrafterEarly","crafter-early","1.0.0+");
+		EarlyCompat.isPluslsCarpetAdditionAvailable = checkModVersion("PluslsCarpetAddition","pca-1_20_1","0.3.190+");
+		EarlyCompat.isMasaGadgetAvailable = checkModVersion("MasaGadget","masa_gadget_mod","4.0.395+");
+		EarlyCompat.isDecoratedPotEarlyAvailable = checkModVersion("DecoratedPotEarly","decoratedpotearly","1.0.0+");
+		EarlyCompat.isCrafterEarlyAvailable = checkModVersion("CrafterEarly","crafter-early","1.0.0+");
 	}
 	
 	@Override
@@ -108,43 +101,43 @@ public class MixinPlugin implements IMixinConfigPlugin
 		// 只有带 "PcaVanillaCompat" 的 mixin 才受 PCA 影响
 		if(mixinClassName.contains("PcaVanillaCompat"))//原版修复
 		{
-			return isPluslsCarpetAdditionAvailable;
+			return EarlyCompat.isPluslsCarpetAdditionAvailable;
 		}
 		
 		// 只有带 "PcaDecoratedPotEarlyCompat" 的 mixin 才受 PCA 和 DecoratedPotEarly 影响
 		if (mixinClassName.contains("PcaDecoratedPotEarlyCompat"))//陶罐移植修复
 		{
-			return isPluslsCarpetAdditionAvailable && isDecoratedPotEarlyAvailable;
+			return EarlyCompat.isPluslsCarpetAdditionAvailable && EarlyCompat.isDecoratedPotEarlyAvailable;
 		}
 		
 		// 只有带 "PcaCrafterEarlyCompat" 的 mixin 才受 PCA 和 CrafterEarly 影响
 		if (mixinClassName.contains("PcaCrafterEarlyCompat"))//合成器移植修复
 		{
-			return isPluslsCarpetAdditionAvailable && isCrafterEarlyAvailable;
+			return EarlyCompat.isPluslsCarpetAdditionAvailable && EarlyCompat.isCrafterEarlyAvailable;
 		}
 		
 		// Masa原版方块同步修复
 		if(mixinClassName.contains("MasaVanillaCompat"))
 		{
-			return isMasaGadgetAvailable;
+			return EarlyCompat.isMasaGadgetAvailable;
 		}
 		
 		// Masa bug修复
 		if(mixinClassName.contains("MasaBugFix"))
 		{
-			return isMasaGadgetAvailable;
+			return EarlyCompat.isMasaGadgetAvailable;
 		}
 		
 		// 陶罐方块同步修复
 		if(mixinClassName.contains("MasaDecoratedPotEarlyCompat"))
 		{
-			return isMasaGadgetAvailable && isDecoratedPotEarlyAvailable;
+			return EarlyCompat.isMasaGadgetAvailable && EarlyCompat.isDecoratedPotEarlyAvailable;
 		}
 		
 		// 合成器方块同步修复
 		if(mixinClassName.contains("MasaCrafterEarlyCompat"))
 		{
-			return isMasaGadgetAvailable && isCrafterEarlyAvailable;
+			return EarlyCompat.isMasaGadgetAvailable && EarlyCompat.isCrafterEarlyAvailable;
 		}
 		
 		// 剩下全部允许通过

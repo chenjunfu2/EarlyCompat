@@ -15,17 +15,17 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class InventoryPreviewSyncDataUtilMixin_MasaCrafterEarlyCompat
 {
 	@Inject
+	(
+		method = "onHitCallback(Lnet/minecraft/util/hit/HitResult;ZZ)V",
+		cancellable = true,
+		at =
+		@At
 		(
-			method = "onHitCallback(Lnet/minecraft/util/hit/HitResult;ZZ)V",
-			cancellable = true,
-			at =
-			@At
-				(
-					value = "INVOKE_ASSIGN",
-					target = "Ltop/hendrixshen/magiclib/util/collect/ValueContainer;orElse(Ljava/lang/Object;)Ljava/lang/Object;",
-					shift = At.Shift.AFTER
-				)
+			value = "INVOKE_ASSIGN",
+			target = "Ltop/hendrixshen/magiclib/util/collect/ValueContainer;orElse(Ljava/lang/Object;)Ljava/lang/Object;",
+			shift = At.Shift.AFTER
 		)
+	)
 	private static void addNewSyncBlockEntity(HitResult hitResult, boolean oldStatus, boolean stateChanged, CallbackInfo ci, @Local(name = "pos") BlockPos pos, @Local(name = "blockEntity") Object blockEntity)
 	{
 		if(blockEntity == null)

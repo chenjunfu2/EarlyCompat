@@ -22,7 +22,12 @@ public abstract class RenderUtilsMixin_TweakerooVanillaCompat
 	@ModifyVariable
 	(
 		method = "Lfi/dy/masa/tweakeroo/renderer/RenderUtils;renderInventoryOverlay(Lnet/minecraft/client/MinecraftClient;Lnet/minecraft/client/gui/DrawContext;)V",
-		at = @At(value = "INVOKE_ASSIGN", target = "Lfi/dy/masa/malilib/render/InventoryOverlay;getInventoryPropsTemp(Lfi/dy/masa/malilib/render/InventoryOverlay$InventoryRenderType;I)Lfi/dy/masa/malilib/render/InventoryOverlay$InventoryProperties;"),
+		at = @At
+			(
+				value = "INVOKE_ASSIGN",
+				shift = At.Shift.AFTER,
+				target = "Lfi/dy/masa/malilib/render/InventoryOverlay;getInventoryPropsTemp(Lfi/dy/masa/malilib/render/InventoryOverlay$InventoryRenderType;I)Lfi/dy/masa/malilib/render/InventoryOverlay$InventoryProperties;"
+			),
 		name = "props"
 	)
 	private static InventoryOverlay.InventoryProperties renderInventoryOverlayChiseledBookshelfCompat(InventoryOverlay.InventoryProperties props, @Local(name = "world") World world, @Local(name = "trace")HitResult trace)
@@ -37,7 +42,9 @@ public abstract class RenderUtilsMixin_TweakerooVanillaCompat
 		
 		if(lookBlockEntity instanceof ChiseledBookshelfBlockEntity)
 		{
-			props.slotsPerRow = 3;//修改为一行3个
+			props.slotsPerRow = 3;// 修改为一行 = 3 个
+			props.width = 3 * 18 + 14;   //重新设置宽度 = 68 像素
+			props.height = 2 * 18 + 14;  //重新设置高度 = 50 像素
 		}
 		
 		return props;

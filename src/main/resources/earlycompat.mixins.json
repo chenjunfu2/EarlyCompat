@@ -11,7 +11,8 @@
     "InventoryPreviewSyncDataUtilMixin_MasaCrafterEarlyCompat",
     "InventoryPreviewSyncDataUtilMixin_MasaDecoratedPotEarlyCompat",
     "InventoryPreviewSyncDataUtilMixin_MasaVanillaCompat",
-    "JukeboxBlockEntityMixin_PcaVanillaCompat"
+    "JukeboxBlockEntityMixin_PcaVanillaCompat",
+    "JukeboxBlockEntityMixin_VanillaBugFix"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -91,27 +91,27 @@ public class MixinPlugin implements IMixinConfigPlugin
 	{
 		EarlyCompat.isPluslsCarpetAdditionAvailable = checkModVersion("PluslsCarpetAddition","pca-1_20_1","0.3.190+");
 		EarlyCompat.isMasaGadgetAvailable = checkModVersion("MasaGadget","masa_gadget_mod","4.0.395+");
-		EarlyCompat.isDecoratedPotEarlyAvailable = checkModVersion("DecoratedPotEarly","decoratedpotearly","1.0.0+");
+		EarlyCompat.isDecoratedPotEarlyAvailable = checkModVersion("DecoratedPotEarly","decoratedpotearly","1.0.2+");
 		EarlyCompat.isCrafterEarlyAvailable = checkModVersion("CrafterEarly","crafter-early","1.0.0+");
 	}
 	
 	@Override
 	public boolean shouldApplyMixin(String targetClassName, String mixinClassName)
 	{
-		// 只有带 "PcaVanillaCompat" 的 mixin 才受 PCA 影响
-		if(mixinClassName.contains("PcaVanillaCompat"))//原版修复
+		// PCA 原版修复
+		if(mixinClassName.contains("PcaVanillaCompat"))
 		{
 			return EarlyCompat.isPluslsCarpetAdditionAvailable;
 		}
 		
-		// 只有带 "PcaDecoratedPotEarlyCompat" 的 mixin 才受 PCA 和 DecoratedPotEarly 影响
-		if (mixinClassName.contains("PcaDecoratedPotEarlyCompat"))//陶罐移植修复
+		// PCA 陶罐移植修复
+		if (mixinClassName.contains("PcaDecoratedPotEarlyCompat"))
 		{
 			return EarlyCompat.isPluslsCarpetAdditionAvailable && EarlyCompat.isDecoratedPotEarlyAvailable;
 		}
 		
-		// 只有带 "PcaCrafterEarlyCompat" 的 mixin 才受 PCA 和 CrafterEarly 影响
-		if (mixinClassName.contains("PcaCrafterEarlyCompat"))//合成器移植修复
+		// PCA 合成器移植修复
+		if (mixinClassName.contains("PcaCrafterEarlyCompat"))
 		{
 			return EarlyCompat.isPluslsCarpetAdditionAvailable && EarlyCompat.isCrafterEarlyAvailable;
 		}
@@ -122,22 +122,22 @@ public class MixinPlugin implements IMixinConfigPlugin
 			return EarlyCompat.isMasaGadgetAvailable;
 		}
 		
-		// Masa bug修复
-		if(mixinClassName.contains("MasaBugFix"))
-		{
-			return EarlyCompat.isMasaGadgetAvailable;
-		}
-		
-		// 陶罐方块同步修复
+		// Masa陶罐方块同步修复
 		if(mixinClassName.contains("MasaDecoratedPotEarlyCompat"))
 		{
 			return EarlyCompat.isMasaGadgetAvailable && EarlyCompat.isDecoratedPotEarlyAvailable;
 		}
 		
-		// 合成器方块同步修复
+		// Masa合成器方块同步修复
 		if(mixinClassName.contains("MasaCrafterEarlyCompat"))
 		{
 			return EarlyCompat.isMasaGadgetAvailable && EarlyCompat.isCrafterEarlyAvailable;
+		}
+		
+		// 原版相关BUG修复
+		if(mixinClassName.contains("VanillaBugFix"))
+		{
+			return true;
 		}
 		
 		// 剩下全部允许通过

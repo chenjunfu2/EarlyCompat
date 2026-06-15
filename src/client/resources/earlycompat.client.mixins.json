@@ -12,6 +12,7 @@
     "requireAnnotations": true
   },
   "mixins": [
+    "RenderUtilsMixin_TweakerooCrafterEarlyCompat",
     "RenderUtilsMixin_TweakerooVanillaCompat"
   ]
 }

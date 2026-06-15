@@ -113,7 +113,7 @@ public class MixinPlugin implements IMixinConfigPlugin
 		
 		isPluslsCarpetAdditionAvailable = checkModVersion("PluslsCarpetAddition","pca-1_20_1","0.3.190+");
 		isMasaGadgetAvailable = checkModVersion("MasaGadget","masa_gadget_mod","4.0.395+");
-		isTweakerooAvailable = checkModVersion("MaLiLib", "malilib", "0.16.0") && checkModVersion("Tweakeroo","tweakeroo","0.17.1+");
+		isTweakerooAvailable = checkModVersion("MaLiLib", "malilib", "0.16.0+") && checkModVersion("Tweakeroo","tweakeroo","0.17.1+");
 		
 		isDecoratedPotEarlyAvailable = checkModVersion("DecoratedPotEarly","decoratedpotearly","1.0.2+");
 		isCrafterEarlyAvailable = checkModVersion("CrafterEarly","crafter-early","1.0.0+");

@@ -54,6 +54,9 @@ dependencies {
 	modCompileOnly files('libs/magiclib-minecraft-api-mc1.20.1-fabric-0.6.105-stable.jar')
 	
 	modCompileOnly files('libs/MasaGadget-mc1.20.1-fabric-4.0.395-stable.jar')
+	
+	// Tweakeroo
+	modCompileOnly files('libs/tweakeroo-fabric-1.20.1-0.17.1.jar')
 }
 
 processResources {

@@ -16,6 +16,8 @@ public class MixinPlugin implements IMixinConfigPlugin
 {
 	public boolean isPluslsCarpetAdditionAvailable = false;
 	public boolean isMasaGadgetAvailable = false;
+	public boolean isTweakerooAvailable = false;
+	
 	public boolean isDecoratedPotEarlyAvailable = false;
 	public boolean isCrafterEarlyAvailable = false;
 	
@@ -111,6 +113,8 @@ public class MixinPlugin implements IMixinConfigPlugin
 		
 		isPluslsCarpetAdditionAvailable = checkModVersion("PluslsCarpetAddition","pca-1_20_1","0.3.190+");
 		isMasaGadgetAvailable = checkModVersion("MasaGadget","masa_gadget_mod","4.0.395+");
+		isTweakerooAvailable = checkModVersion("MaLiLib", "malilib", "0.16.0") && checkModVersion("Tweakeroo","tweakeroo","0.17.1+");
+		
 		isDecoratedPotEarlyAvailable = checkModVersion("DecoratedPotEarly","decoratedpotearly","1.0.2+");
 		isCrafterEarlyAvailable = checkModVersion("CrafterEarly","crafter-early","1.0.0+");
 	}
@@ -118,19 +122,25 @@ public class MixinPlugin implements IMixinConfigPlugin
 	@Override
 	public boolean shouldApplyMixin(String targetClassName, String mixinClassName)
 	{
-		// PCA 原版修复
+		// 原版BUG修复
+		if(mixinClassName.contains("VanillaBugFix"))
+		{
+			return true;
+		}
+		
+		// PCA原版修复
 		if(mixinClassName.contains("PcaVanillaCompat"))
 		{
 			return isPluslsCarpetAdditionAvailable;
 		}
 		
-		// PCA 陶罐移植修复
+		// PCA陶罐移植修复
 		if (mixinClassName.contains("PcaDecoratedPotEarlyCompat"))
 		{
 			return isPluslsCarpetAdditionAvailable && isDecoratedPotEarlyAvailable;
 		}
 		
-		// PCA 合成器移植修复
+		// PCA合成器移植修复
 		if (mixinClassName.contains("PcaCrafterEarlyCompat"))
 		{
 			return isPluslsCarpetAdditionAvailable && isCrafterEarlyAvailable;
@@ -154,10 +164,16 @@ public class MixinPlugin implements IMixinConfigPlugin
 			return isMasaGadgetAvailable && isCrafterEarlyAvailable;
 		}
 		
-		// 原版相关BUG修复
-		if(mixinClassName.contains("VanillaBugFix"))
+		// Tweakeroo原版修复
+		if(mixinClassName.contains("TweakerooVanillaCompat"))
 		{
-			return true;
+			return isTweakerooAvailable;
+		}
+		
+		// Tweakeroo合成器移植修复
+		if(mixinClassName.contains("TweakerooCrafterEarlyCompat"))
+		{
+			return isTweakerooAvailable && isCrafterEarlyAvailable;
 		}
 		
 		// 剩下全部允许通过

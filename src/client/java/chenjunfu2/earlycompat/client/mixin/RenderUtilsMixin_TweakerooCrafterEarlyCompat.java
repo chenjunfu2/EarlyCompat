@@ -36,9 +36,7 @@ public abstract class RenderUtilsMixin_TweakerooCrafterEarlyCompat
 		method = "Lfi/dy/masa/tweakeroo/renderer/RenderUtils;renderInventoryOverlay(Lnet/minecraft/client/MinecraftClient;Lnet/minecraft/client/gui/DrawContext;)V",
 		at = @At
 		(
-			value = "INVOKE",
-			shift = At.Shift.BEFORE,
-			target = "Lfi/dy/masa/malilib/render/InventoryOverlay;getInventoryPropsTemp(Lfi/dy/masa/malilib/render/InventoryOverlay$InventoryRenderType;I)Lfi/dy/masa/malilib/render/InventoryOverlay$InventoryProperties;"
+			value = "STORE"
 		),
 		name = "type"
 	)

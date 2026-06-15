@@ -14,17 +14,26 @@ import java.util.Set;
 
 public class MixinPlugin implements IMixinConfigPlugin
 {
-	public boolean isPluslsCarpetAdditionAvailable = false;
-	public boolean isMasaGadgetAvailable = false;
-	public boolean isTweakerooAvailable = false;
+	private boolean isFabricCarpetAvailable = false;
+	private boolean isPluslsCarpetAdditionAvailable = false;
 	
-	public boolean isDecoratedPotEarlyAvailable = false;
-	public boolean isCrafterEarlyAvailable = false;
+	private boolean isMagicLibAvailable = false;
+	private boolean isMalilibAvailable = false;
+	
+	private boolean isMasaGadgetAvailable = false;
+	private boolean isTweakerooAvailable = false;
+	private boolean isLitematicaAvailable = false;
+	
+	private boolean isDecoratedPotEarlyAvailable = false;
+	private boolean isCrafterEarlyAvailable = false;
 	
 	private boolean checkVersionConstraint(SemanticVersion installed, String constraint) throws VersionParsingException
 	{
-		constraint = constraint.trim();
-		if (constraint.endsWith("+"))
+		if(constraint.equals("*"))
+		{
+			return true;//匹配任意版本
+		}
+		else if (constraint.endsWith("+"))
 		{
 			String minVerStr = constraint.substring(0, constraint.length() - 1);
 			SemanticVersion minVer = SemanticVersion.parse(minVerStr);
@@ -57,6 +66,7 @@ public class MixinPlugin implements IMixinConfigPlugin
 	
 	private boolean checkModVersion(String modName, String modId, String versionConstraint)
 	{
+		String trimVersionConstraint = versionConstraint.trim();//去除空白
 		return FabricLoader.getInstance().getModContainer(modId)
 			.map(container ->
 			{
@@ -67,16 +77,16 @@ public class MixinPlugin implements IMixinConfigPlugin
 						container.getMetadata().getVersion().getFriendlyString()
 					);
 					
-					boolean satisfied = checkVersionConstraint(installed, versionConstraint);
+					boolean satisfied = checkVersionConstraint(installed, trimVersionConstraint);
 					if (satisfied)
 					{
 						EarlyCompat.LOGGER.info("{} version {} satisfies constraint {}, loaded",
-							modName, installed.getFriendlyString(), versionConstraint);
+							modName, installed.getFriendlyString(), trimVersionConstraint);
 					}
 					else
 					{
 						EarlyCompat.LOGGER.warn("{} version {} does NOT satisfy constraint {}, skipping",
-							modName, installed.getFriendlyString(), versionConstraint);
+							modName, installed.getFriendlyString(), trimVersionConstraint);
 					}
 					
 					return satisfied;
@@ -111,12 +121,22 @@ public class MixinPlugin implements IMixinConfigPlugin
 			EarlyCompat.LOGGER.info("onLoad environment: UNKNOWN");
 		}
 		
-		isPluslsCarpetAdditionAvailable = checkModVersion("PluslsCarpetAddition","pca-1_20_1","0.3.190+");
-		isMasaGadgetAvailable = checkModVersion("MasaGadget","masa_gadget_mod","4.0.395+");
-		isTweakerooAvailable = checkModVersion("MaLiLib", "malilib", "0.16.0+") && checkModVersion("Tweakeroo","tweakeroo","0.17.1+");
-		
+		//移植MOD（新增方块、内容）
 		isDecoratedPotEarlyAvailable = checkModVersion("DecoratedPotEarly","decoratedpotearly","1.0.2+");
 		isCrafterEarlyAvailable = checkModVersion("CrafterEarly","crafter-early","1.0.0+");
+		
+		//Carpet家族（协议提供者）
+		isFabricCarpetAvailable = checkModVersion("Carpet","carpet","1.4.112+");
+		isPluslsCarpetAdditionAvailable = isFabricCarpetAvailable && checkModVersion("PluslsCarpetAddition","pca-1_20_1","0.3.190+");
+		
+		//前置库（库提供者）
+		isMagicLibAvailable = checkModVersion("MagicLib","magiclib","0.8.697+");
+		isMalilibAvailable = checkModVersion("MaLiLib", "malilib", "0.16.0+");
+		
+		//MASA家族（协议使用者）
+		isMasaGadgetAvailable = isMagicLibAvailable && isMalilibAvailable && checkModVersion("MasaGadget","masa_gadget_mod","4.0.395+");
+		isTweakerooAvailable = isMalilibAvailable && checkModVersion("Tweakeroo","tweakeroo","0.17.1+");
+		isLitematicaAvailable = isMalilibAvailable && checkModVersion("Litematica","litematica","0.15.4+");
 	}
 	
 	@Override
@@ -174,6 +194,12 @@ public class MixinPlugin implements IMixinConfigPlugin
 		if(mixinClassName.contains("TweakerooCrafterEarlyCompat"))
 		{
 			return isTweakerooAvailable && isCrafterEarlyAvailable;
+		}
+		
+		// Litematica轻松放置合成器移植修复
+		if(mixinClassName.contains("LitematicaCrafterEarlyCompat"))
+		{
+			return isLitematicaAvailable && isCrafterEarlyAvailable;
 		}
 		
 		// 剩下全部允许通过

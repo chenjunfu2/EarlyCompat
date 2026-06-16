@@ -14,6 +14,10 @@ import java.util.Set;
 
 public class MixinPlugin implements IMixinConfigPlugin
 {
+	private boolean isDecoratedPotEarlyAvailable = false;
+	private boolean isCrafterEarlyAvailable = false;
+	private boolean isCopperBulbAvailable = false;
+	
 	private boolean isFabricCarpetAvailable = false;
 	private boolean isCarpetExtraAvailable = false;
 	private boolean isPluslsCarpetAdditionAvailable = false;
@@ -24,9 +28,6 @@ public class MixinPlugin implements IMixinConfigPlugin
 	private boolean isMasaGadgetAvailable = false;
 	private boolean isTweakerooAvailable = false;
 	private boolean isLitematicaAvailable = false;
-	
-	private boolean isDecoratedPotEarlyAvailable = false;
-	private boolean isCrafterEarlyAvailable = false;
 	
 	private boolean checkVersionConstraint(SemanticVersion installed, String constraint) throws VersionParsingException
 	{
@@ -125,6 +126,7 @@ public class MixinPlugin implements IMixinConfigPlugin
 		//移植MOD（新增方块、内容）
 		isDecoratedPotEarlyAvailable = checkModVersion("DecoratedPotEarly","decoratedpotearly","1.0.2+");
 		isCrafterEarlyAvailable = checkModVersion("CrafterEarly","crafter-early","1.0.0+");
+		isCopperBulbAvailable = checkModVersion("CopperBulbEarly","copper-bulb-early","1.0.3+");
 		
 		//Carpet家族（协议提供者）
 		isFabricCarpetAvailable = checkModVersion("Carpet","carpet","1.4.112+");
@@ -174,7 +176,7 @@ public class MixinPlugin implements IMixinConfigPlugin
 			return isMasaGadgetAvailable;
 		}
 		
-		// Masa陶罐方块同步修复
+		// Masa陶罐移植同步修复
 		if(mixinClassName.contains("MasaDecoratedPotEarlyCompat"))
 		{
 			return isMasaGadgetAvailable && isDecoratedPotEarlyAvailable;
@@ -202,6 +204,30 @@ public class MixinPlugin implements IMixinConfigPlugin
 		if(mixinClassName.contains("CarpetExtraVanillaCompat"))
 		{
 			return isCarpetExtraAvailable;
+		}
+		
+		// Carpet Extra轻松放置协议铜灯移植修复
+		if(mixinClassName.contains("CarpetExtraCopperBulbCompat"))
+		{
+			return isCarpetExtraAvailable && isCopperBulbAvailable;
+		}
+		
+		// Carpet Extra轻松放置协议合成器移植修复
+		if(mixinClassName.contains("CarpetExtraCrafterEarlyCompat"))
+		{
+			return isCarpetExtraAvailable && isCrafterEarlyAvailable;
+		}
+		
+		// Litematica轻松放置原版修复
+		if(mixinClassName.contains("LitematicaVanillaCompat"))
+		{
+			return isLitematicaAvailable;
+		}
+		
+		// Litematica轻松放置铜灯移植修复
+		if(mixinClassName.contains("LitematicaCopperBulbCompat"))
+		{
+			return isLitematicaAvailable && isCopperBulbAvailable;
 		}
 		
 		// Litematica轻松放置合成器移植修复

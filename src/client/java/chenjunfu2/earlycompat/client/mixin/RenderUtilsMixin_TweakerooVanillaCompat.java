@@ -42,8 +42,8 @@ public abstract class RenderUtilsMixin_TweakerooVanillaCompat
 		if(lookBlockEntity instanceof ChiseledBookshelfBlockEntity)
 		{
 			props.slotsPerRow = 3;// 修改为一行 = 3 个
-			props.width = 3 * 18 + 14;   //重新设置宽度 = 68 像素
-			props.height = 2 * 18 + 14;  //重新设置高度 = 50 像素
+			props.width = 3 * 18 + 14;//重新设置宽度 = 68 像素
+			props.height = 2 * 18 + 14;//重新设置高度 = 50 像素
 		}
 		
 		return props;

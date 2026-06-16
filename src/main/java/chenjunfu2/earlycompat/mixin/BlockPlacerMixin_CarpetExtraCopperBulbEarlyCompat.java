@@ -11,8 +11,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import static chenjunfu2.earlycompat.util.EasyPlaceExtraProtocolHelper.getExtraProtocolRawValue;
-import static chenjunfu2.earlycompat.util.EasyPlaceExtraProtocolHelper.isExtraProtocol;
+import static chenjunfu2.earlycompat.util.EasyPlaceExtraProtocolHelper.*;
 
 @Mixin(BlockPlacer.class)
 public class BlockPlacerMixin_CarpetExtraCopperBulbEarlyCompat
@@ -24,7 +23,7 @@ public class BlockPlacerMixin_CarpetExtraCopperBulbEarlyCompat
 		at = @At
 		(
 			value = "INVOKE",
-			target = "Lnet/minecraft/block/BlockState;get(Lnet/minecraft/state/property/Property;)Ljava/lang/Comparable;",
+			target = "Lcarpetextra/utils/BlockPlacer;getFirstDirectionProperty(Lnet/minecraft/block/BlockState;)Lnet/minecraft/state/property/DirectionProperty;",
 			ordinal = 0
 		)
 	)
@@ -34,15 +33,16 @@ public class BlockPlacerMixin_CarpetExtraCopperBulbEarlyCompat
 		ItemPlacementContext context,
 		CallbackInfoReturnable<BlockState> cir,
 		@Local(name = "state") BlockState state,
-		@Local(name = "protocolValue") int protocolValue
+		@Local(name = "relativeHitX") double relativeHitX
 	)
 	{
 		//最低bit0留给浮点误差兼容，protocolValue已进行摘除处理
+		int protocolValue = decodeProtocolValue(relativeHitX);
 		if(!isExtraProtocol(protocolValue))
 		{
 			return;//不是扩展协议
 		}
-		int extraProtocolValue = getExtraProtocolRawValue(protocolValue);
+		int extraProtocolValue = decodeExtraProtocolRawValue(protocolValue);
 		
 		
 		//只处理扩展协议内已知的方块

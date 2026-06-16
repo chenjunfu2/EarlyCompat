@@ -32,7 +32,7 @@ public abstract class JukeboxBlockEntityMixin_VanillaBugFix extends BlockEntity
 	@Invoker("stopPlaying")
 	public abstract void earlycompat_shadow$stopPlaying();
 	
-	@Inject(method = "readNbt", at = @At(value = "INVOKE", target = "Lnet/minecraft/nbt/NbtCompound;getBoolean(Ljava/lang/String;)Z", shift = At.Shift.BEFORE))
+	@Inject(method = "readNbt", at = @At(value = "INVOKE", target = "Lnet/minecraft/nbt/NbtCompound;getBoolean(Ljava/lang/String;)Z"))
 	void readNbtBugFix(NbtCompound nbt, CallbackInfo ci)
 	{
 		if(!nbt.contains("RecordItem", NbtElement.COMPOUND_TYPE))//相当于原先的else，如果不存在，那么清空（与1.21代码同步）

@@ -23,8 +23,7 @@ public abstract class InventoryPreviewSyncDataUtilMixin_MasaVanillaCompat
 		@At
 		(
 			value = "INVOKE_ASSIGN",
-			target = "Ltop/hendrixshen/magiclib/util/collect/ValueContainer;orElse(Ljava/lang/Object;)Ljava/lang/Object;",
-			shift = At.Shift.AFTER
+			target = "Ltop/hendrixshen/magiclib/util/collect/ValueContainer;orElse(Ljava/lang/Object;)Ljava/lang/Object;"
 		)
 	)
 	private static void addNewSyncBlockEntity(HitResult hitResult, boolean oldStatus, boolean stateChanged, CallbackInfo ci, @Local(name = "pos")BlockPos pos, @Local(name = "blockEntity") Object blockEntity)

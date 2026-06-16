@@ -198,6 +198,12 @@ public class MixinPlugin implements IMixinConfigPlugin
 			return isTweakerooAvailable && isCrafterEarlyAvailable;
 		}
 		
+		// Carpet Extra轻松放置协议原版修复
+		if(mixinClassName.contains("CarpetExtraVanillaCompat"))
+		{
+			return isCarpetExtraAvailable;
+		}
+		
 		// Litematica轻松放置合成器移植修复
 		if(mixinClassName.contains("LitematicaCrafterEarlyCompat"))
 		{

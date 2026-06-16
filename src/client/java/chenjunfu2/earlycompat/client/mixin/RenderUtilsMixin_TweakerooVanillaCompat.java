@@ -25,7 +25,6 @@ public abstract class RenderUtilsMixin_TweakerooVanillaCompat
 		at = @At
 			(
 				value = "INVOKE_ASSIGN",
-				shift = At.Shift.AFTER,
 				target = "Lfi/dy/masa/malilib/render/InventoryOverlay;getInventoryPropsTemp(Lfi/dy/masa/malilib/render/InventoryOverlay$InventoryRenderType;I)Lfi/dy/masa/malilib/render/InventoryOverlay$InventoryProperties;"
 			),
 		name = "props"

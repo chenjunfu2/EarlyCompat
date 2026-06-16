@@ -1,7 +1,9 @@
 package chenjunfu2.earlycompat.mixin;
 
+import com.chenjunfu2.block.BulbBlock;
 import com.chenjunfu2.block.OxidizableBulbBlock;
 import fi.dy.masa.litematica.util.WorldUtils;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -23,10 +25,18 @@ public class WorldUtilsMixin_LitematicaCopperBulbEarlyCompat
 	)
 	private static void addExtraProtocol(BlockPos pos, BlockState state, Vec3d hitVecIn, CallbackInfoReturnable<Vec3d> cir)
 	{
-		if(state.getBlock() instanceof OxidizableBulbBlock)
+		Block block = state.getBlock();
+		if(block instanceof OxidizableBulbBlock)
 		{
 			int lit = state.get(OxidizableBulbBlock.LIT) ? 0b0001 : 0b0000;//bit0
 			int powered = state.get(OxidizableBulbBlock.POWERED) ? 0b0010 : 0b0000;//bit1
+			cir.setReturnValue(encodeExtraProtocolRawValue(lit | powered, hitVecIn));
+			cir.cancel();
+		}
+		else if(block instanceof BulbBlock)
+		{
+			int lit = state.get(BulbBlock.LIT) ? 0b0001 : 0b0000;//bit0
+			int powered = state.get(BulbBlock.POWERED) ? 0b0010 : 0b0000;//bit1
 			cir.setReturnValue(encodeExtraProtocolRawValue(lit | powered, hitVecIn));
 			cir.cancel();
 		}

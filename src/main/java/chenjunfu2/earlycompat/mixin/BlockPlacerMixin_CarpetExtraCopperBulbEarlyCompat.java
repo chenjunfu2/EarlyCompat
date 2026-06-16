@@ -1,6 +1,7 @@
 package chenjunfu2.earlycompat.mixin;
 
 import carpetextra.utils.BlockPlacer;
+import com.chenjunfu2.block.BulbBlock;
 import com.chenjunfu2.block.OxidizableBulbBlock;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.block.Block;
@@ -52,6 +53,14 @@ public class BlockPlacerMixin_CarpetExtraCopperBulbEarlyCompat
 			boolean lit = (extraProtocolValue & 0b0001) == 0b0001;//bit0
 			boolean powered = (extraProtocolValue & 0b0010) == 0b0010;//bit1
 			cir.setReturnValue(state.with(OxidizableBulbBlock.LIT, lit).with(OxidizableBulbBlock.POWERED, powered));
+			cir.cancel();//完成返回
+		}
+		else if(block instanceof BulbBlock)
+		{
+			//两个bit，bit0是lit，bit1是powered，都是bool值
+			boolean lit = (extraProtocolValue & 0b0001) == 0b0001;//bit0
+			boolean powered = (extraProtocolValue & 0b0010) == 0b0010;//bit1
+			cir.setReturnValue(state.with(BulbBlock.LIT, lit).with(BulbBlock.POWERED, powered));
 			cir.cancel();//完成返回
 		}
 		

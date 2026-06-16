@@ -4,6 +4,7 @@ import fi.dy.masa.litematica.util.WorldUtils;
 import net.chenjunfu2.block.CrafterBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.enums.JigsawOrientation;
+import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import org.spongepowered.asm.mixin.Mixin;
@@ -26,7 +27,7 @@ public class WorldUtilsMixin_LitematicaCrafterEarlyCompat
 	{
 		if(state.getBlock() instanceof CrafterBlock)
 		{
-			JigsawOrientation orientation = state.get(CrafterBlockAccessor_CrafterEarlyAccessor.getORIENTATION());
+			JigsawOrientation orientation = state.get(Properties.ORIENTATION);
 			int orientationOrdinal = orientation.ordinal();
 			cir.setReturnValue(encodeExtraProtocolRawValue(orientationOrdinal, hitVecIn));
 			cir.cancel();

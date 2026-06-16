@@ -9,7 +9,6 @@
     "BlockPlacerMixin_CarpetExtraVanillaCompat",
     "ChiseledBookshelfBlockEntity_PcaVanillaCompat",
     "ChiseledBookshelfBlockEntityMixin_VanillaBugFix",
-    "CrafterBlockAccessor_CrafterEarlyAccessor",
     "CrafterBlockEntityMixin_PcaCrafterEarlyCompat",
     "DecoratedPotBlockEntityMixin_PcaDecoratedPotEarlyCompat",
     "InventoryPreviewSyncDataUtilMixin_MasaCrafterEarlyCompat",

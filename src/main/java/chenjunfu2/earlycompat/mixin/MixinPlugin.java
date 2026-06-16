@@ -152,12 +152,6 @@ public class MixinPlugin implements IMixinConfigPlugin
 			return true;
 		}
 		
-		// 合成器移植访问器
-		if(mixinClassName.contains("CrafterEarlyAccessor"))
-		{
-			return isCrafterEarlyAvailable;
-		}
-		
 		// PCA原版修复
 		if(mixinClassName.contains("PcaVanillaCompat"))
 		{

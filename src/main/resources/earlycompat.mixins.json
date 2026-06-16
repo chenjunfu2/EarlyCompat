@@ -17,7 +17,10 @@
     "InventoryPreviewSyncDataUtilMixin_MasaVanillaCompat",
     "JigsawOrientationAccessor_VanillaAccessor",
     "JukeboxBlockEntityMixin_PcaVanillaCompat",
-    "JukeboxBlockEntityMixin_VanillaBugFix"
+    "JukeboxBlockEntityMixin_VanillaBugFix",
+    "WorldUtilsMixin_LitematicaCopperBulbEarlyCompat",
+    "WorldUtilsMixin_LitematicaCrafterEarlyCompat",
+    "WorldUtilsMixin_LitematicaVanillaCompat"
   ],
   "injectors": {
     "defaultRequire": 1

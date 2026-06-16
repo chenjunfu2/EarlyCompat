@@ -14,7 +14,6 @@
     "InventoryPreviewSyncDataUtilMixin_MasaCrafterEarlyCompat",
     "InventoryPreviewSyncDataUtilMixin_MasaDecoratedPotEarlyCompat",
     "InventoryPreviewSyncDataUtilMixin_MasaVanillaCompat",
-    "JigsawOrientationAccessor_VanillaAccessor",
     "JukeboxBlockEntityMixin_PcaVanillaCompat",
     "JukeboxBlockEntityMixin_VanillaBugFix",
     "WorldUtilsMixin_LitematicaCopperBulbEarlyCompat",

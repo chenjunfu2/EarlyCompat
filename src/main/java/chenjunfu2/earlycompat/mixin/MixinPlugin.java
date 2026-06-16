@@ -147,7 +147,7 @@ public class MixinPlugin implements IMixinConfigPlugin
 	public boolean shouldApplyMixin(String targetClassName, String mixinClassName)
 	{
 		// 原版BUG修复
-		if(mixinClassName.contains("VanillaBugFix") || mixinClassName.contains("VanillaAccessor"))
+		if(mixinClassName.contains("VanillaBugFix"))
 		{
 			return true;
 		}

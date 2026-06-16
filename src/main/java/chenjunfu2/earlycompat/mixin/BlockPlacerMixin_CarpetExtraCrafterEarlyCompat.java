@@ -5,6 +5,7 @@ import com.llamalad7.mixinextras.sugar.Local;
 import net.chenjunfu2.block.CrafterBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.enums.JigsawOrientation;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.state.property.Properties;
 import org.spongepowered.asm.mixin.Mixin;
@@ -49,8 +50,8 @@ public class BlockPlacerMixin_CarpetExtraCrafterEarlyCompat
 		if(block instanceof CrafterBlock)
 		{
 			//低4bit存储12个方向
-			int orientationIndex = (extraProtocolValue & 0b0000_1111) % 12;//0~11
-			cir.setReturnValue(state.with(Properties.ORIENTATION, JigsawOrientationAccessor_VanillaAccessor.getBY_INDEX().get(orientationIndex)));
+			int orientationOrdinal = (extraProtocolValue & 0b0000_1111) % 12;//0~11
+			cir.setReturnValue(state.with(Properties.ORIENTATION, JigsawOrientation.values()[orientationOrdinal]));
 			cir.cancel();//完成返回
 		}
 		

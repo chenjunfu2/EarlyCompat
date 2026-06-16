@@ -1,8 +1,8 @@
 package chenjunfu2.earlycompat.mixin;
 
 import carpetextra.utils.BlockPlacer;
-import com.chenjunfu2.block.OxidizableBulbBlock;
 import com.llamalad7.mixinextras.sugar.Local;
+import net.chenjunfu2.block.CrafterBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemPlacementContext;
@@ -15,7 +15,7 @@ import static chenjunfu2.earlycompat.util.EasyPlaceExtraProtocolHelper.getExtraP
 import static chenjunfu2.earlycompat.util.EasyPlaceExtraProtocolHelper.isExtraProtocol;
 
 @Mixin(BlockPlacer.class)
-public class BlockPlacerMixin_CarpetExtraCopperBulbCompat
+public class BlockPlacerMixin_CarpetExtraCrafterEarlyCompat
 {
 	@Inject
 	(
@@ -33,29 +33,27 @@ public class BlockPlacerMixin_CarpetExtraCopperBulbCompat
 		Block block,
 		ItemPlacementContext context,
 		CallbackInfoReturnable<BlockState> cir,
-		@Local(name = "relativeHitX") double relativeHitX,
 		@Local(name = "state") BlockState state,
 		@Local(name = "protocolValue") int protocolValue
 	)
 	{
 		//最低bit0留给浮点误差兼容，protocolValue已进行摘除处理
-		if(!isExtraProtocol(protocolValue))
+		if (!isExtraProtocol(protocolValue))
 		{
 			return;//不是扩展协议
 		}
 		int extraProtocolValue = getExtraProtocolRawValue(protocolValue);
 		
-		
 		//只处理扩展协议内已知的方块
-		if(block instanceof OxidizableBulbBlock)
+		if(block instanceof CrafterBlock)
 		{
-			//两个bit，bit0是lit，bit1是powered，都是bool值
-			boolean lit = (extraProtocolValue & 0b0001) == 0b0001;//bit0
-			boolean powered = (extraProtocolValue & 0b0010) == 0b0010;//bit1
-			cir.setReturnValue(state.with(OxidizableBulbBlock.LIT, lit).with(OxidizableBulbBlock.POWERED, powered));
+			//低4bit存储12个方向
+			int orientationIndex = (extraProtocolValue & 0b0000_1111) % 12;//0~11
+			cir.setReturnValue(state.with(CrafterBlockAccessor_CrafterEarlyAccessor.getORIENTATION(), JigsawOrientationAccessor_VanillaAccessor.getBY_INDEX().get(orientationIndex)));
 			cir.cancel();//完成返回
 		}
 		
 		//不是已知方块，跳过处理，有可能是其它mixin的协议
 	}
 }
+

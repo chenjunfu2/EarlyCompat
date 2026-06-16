@@ -16,7 +16,7 @@ public class MixinPlugin implements IMixinConfigPlugin
 {
 	private boolean isDecoratedPotEarlyAvailable = false;
 	private boolean isCrafterEarlyAvailable = false;
-	private boolean isCopperBulbAvailable = false;
+	private boolean isCopperBulbEarlyAvailable = false;
 	
 	private boolean isFabricCarpetAvailable = false;
 	private boolean isCarpetExtraAvailable = false;
@@ -126,7 +126,7 @@ public class MixinPlugin implements IMixinConfigPlugin
 		//移植MOD（新增方块、内容）
 		isDecoratedPotEarlyAvailable = checkModVersion("DecoratedPotEarly","decoratedpotearly","1.0.2+");
 		isCrafterEarlyAvailable = checkModVersion("CrafterEarly","crafter-early","1.0.0+");
-		isCopperBulbAvailable = checkModVersion("CopperBulbEarly","copper-bulb-early","1.0.3+");
+		isCopperBulbEarlyAvailable = checkModVersion("CopperBulbEarly","copper-bulb-early","1.0.3+");
 		
 		//Carpet家族（协议提供者）
 		isFabricCarpetAvailable = checkModVersion("Carpet","carpet","1.4.112+");
@@ -147,9 +147,15 @@ public class MixinPlugin implements IMixinConfigPlugin
 	public boolean shouldApplyMixin(String targetClassName, String mixinClassName)
 	{
 		// 原版BUG修复
-		if(mixinClassName.contains("VanillaBugFix"))
+		if(mixinClassName.contains("VanillaBugFix") || mixinClassName.contains("VanillaAccessor"))
 		{
 			return true;
+		}
+		
+		// 合成器移植访问器
+		if(mixinClassName.contains("CrafterEarlyAccessor"))
+		{
+			return isCrafterEarlyAvailable;
 		}
 		
 		// PCA原版修复
@@ -207,9 +213,9 @@ public class MixinPlugin implements IMixinConfigPlugin
 		}
 		
 		// Carpet Extra轻松放置协议铜灯移植修复
-		if(mixinClassName.contains("CarpetExtraCopperBulbCompat"))
+		if(mixinClassName.contains("CarpetExtraCopperBulbEarlyCompat"))
 		{
-			return isCarpetExtraAvailable && isCopperBulbAvailable;
+			return isCarpetExtraAvailable && isCopperBulbEarlyAvailable;
 		}
 		
 		// Carpet Extra轻松放置协议合成器移植修复
@@ -225,9 +231,9 @@ public class MixinPlugin implements IMixinConfigPlugin
 		}
 		
 		// Litematica轻松放置铜灯移植修复
-		if(mixinClassName.contains("LitematicaCopperBulbCompat"))
+		if(mixinClassName.contains("LitematicaCopperBulbEarlyCompat"))
 		{
-			return isLitematicaAvailable && isCopperBulbAvailable;
+			return isLitematicaAvailable && isCopperBulbEarlyAvailable;
 		}
 		
 		// Litematica轻松放置合成器移植修复
@@ -236,8 +242,9 @@ public class MixinPlugin implements IMixinConfigPlugin
 			return isLitematicaAvailable && isCrafterEarlyAvailable;
 		}
 		
-		// 剩下全部允许通过
-		return true;
+		// 剩下全部不允许通过（正常绝对不应该出现）
+		EarlyCompat.LOGGER.warn("Skipping mixin {} for target {} (conditions not met)", mixinClassName, targetClassName);
+		return false;
 	}
 	
 	@Override public String getRefMapperConfig() { return null; }

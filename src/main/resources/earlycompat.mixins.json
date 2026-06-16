@@ -4,6 +4,7 @@
   "compatibilityLevel": "JAVA_17",
   "plugin": "chenjunfu2.earlycompat.mixin.MixinPlugin",
   "mixins": [
+    "BlockPlacerMixin_CarpetExtraCopperBulbCompat",
     "BlockPlacerMixin_CarpetExtraVanillaCompat",
     "ChiseledBookshelfBlockEntity_PcaVanillaCompat",
     "ChiseledBookshelfBlockEntityMixin_VanillaBugFix",

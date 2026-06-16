@@ -3,7 +3,6 @@ package chenjunfu2.earlycompat.mixin;
 import com.chenjunfu2.block.OxidizableBulbBlock;
 import fi.dy.masa.litematica.util.WorldUtils;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.NoteBlock;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import org.spongepowered.asm.mixin.Mixin;
@@ -24,7 +23,7 @@ public class WorldUtilsMixin_LitematicaCopperBulbEarlyCompat
 	)
 	private static void addExtraProtocol(BlockPos pos, BlockState state, Vec3d hitVecIn, CallbackInfoReturnable<Vec3d> cir)
 	{
-		if(state.getBlock() instanceof NoteBlock)
+		if(state.getBlock() instanceof OxidizableBulbBlock)
 		{
 			int lit = state.get(OxidizableBulbBlock.LIT) ? 0b0001 : 0b0000;//bit0
 			int powered = state.get(OxidizableBulbBlock.POWERED) ? 0b0010 : 0b0000;//bit1

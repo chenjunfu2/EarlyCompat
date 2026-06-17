@@ -40,7 +40,7 @@ public class EarlyCompat implements ModInitializer
 						return 1;
 					}
 				)
-			));
+			)));
 			
 			dispatcher.register(rootCommand);
 		});

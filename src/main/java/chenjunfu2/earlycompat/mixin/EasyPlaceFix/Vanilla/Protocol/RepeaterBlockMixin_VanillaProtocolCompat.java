@@ -19,7 +19,7 @@ public abstract class RepeaterBlockMixin_VanillaProtocolCompat implements BlockP
 		boolean isLocked = fromState.get(RepeaterBlock.LOCKED);//1bit
 		int bits =
 			(facingOrdinal & 0b0000_0011)|
-			(delay & 0b0000_0011 << 2)|
+			((delay & 0b0000_0011) << 2)|
 			(isPowered ? 0b0001_0000 : 0b0000_0000)|
 			(isLocked ? 0b0010_0000 : 0b0000_0000);
 		return bits;

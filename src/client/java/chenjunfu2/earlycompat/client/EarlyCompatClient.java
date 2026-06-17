@@ -33,7 +33,7 @@ public class EarlyCompatClient implements ClientModInitializer
 						return 1;
 					}
 				)
-			));
+			)));
 			
 			dispatcher.register(rootCommand);
 		});

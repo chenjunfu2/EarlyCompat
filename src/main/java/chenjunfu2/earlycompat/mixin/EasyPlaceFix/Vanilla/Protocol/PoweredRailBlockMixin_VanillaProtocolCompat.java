@@ -2,25 +2,27 @@ package chenjunfu2.earlycompat.mixin.EasyPlaceFix.Vanilla.Protocol;
 
 import chenjunfu2.earlycompat.util.BlockProtocolStateAdapter;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.NoteBlock;
+import net.minecraft.block.PoweredRailBlock;
+import net.minecraft.block.enums.RailShape;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 
-@Mixin(NoteBlock.class)
-public abstract class NoteBlockMixin_VanillaProtocolCompat implements BlockProtocolStateAdapter//让目标类实现此接口
+@Mixin(PoweredRailBlock.class)//相当于同时修复activator_rail
+public class PoweredRailBlockMixin_VanillaProtocolCompat implements BlockProtocolStateAdapter
 {
 	@Override
 	public int earlycompat$toProtocolValue(int protocolValue, BlockState fromState)
 	{
-		int note = fromState.get(NoteBlock.NOTE);
-		return note & 0b0001_1111;
+		int shapeOrdinal = fromState.get(PoweredRailBlock.SHAPE).ordinal();
+		return shapeOrdinal & 0b0000_1111;
 	}
 	
 	@Override
 	public @NotNull BlockState earlycompat$fromProtocolValue(int extraProtocolValue, BlockState fromState)
 	{
-		int note = (extraProtocolValue & 0b0001_1111) % 25;// 0~24
-		return fromState.with(NoteBlock.NOTE, note);
+		int shapeOrdinal = (extraProtocolValue & 0b0000_1111) % 10;//0~9 10种状态
+		return fromState
+			.with(PoweredRailBlock.SHAPE, RailShape.values()[shapeOrdinal]);
 	}
 	
 	@Override

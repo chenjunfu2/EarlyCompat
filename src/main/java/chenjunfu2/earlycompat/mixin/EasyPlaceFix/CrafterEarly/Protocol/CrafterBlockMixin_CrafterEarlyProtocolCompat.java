@@ -16,7 +16,7 @@ public abstract class CrafterBlockMixin_CrafterEarlyProtocolCompat implements Bl
 	{
 		JigsawOrientation orientation = fromState.get(Properties.ORIENTATION);
 		int orientationOrdinal = orientation.ordinal();
-		return orientationOrdinal;
+		return orientationOrdinal & 0b0000_1111;
 	}
 	
 	@Override

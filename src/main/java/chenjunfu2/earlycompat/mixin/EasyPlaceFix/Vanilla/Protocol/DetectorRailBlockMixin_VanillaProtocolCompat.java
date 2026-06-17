@@ -14,13 +14,13 @@ public class DetectorRailBlockMixin_VanillaProtocolCompat implements BlockProtoc
 	public int earlycompat$toProtocolValue(int protocolValue, BlockState fromState)
 	{
 		int shapeOrdinal = fromState.get(DetectorRailBlock.SHAPE).ordinal();
-		return shapeOrdinal & 0b0000_1111;
+		return shapeOrdinal & 0b0000_0111;
 	}
 	
 	@Override
 	public @NotNull BlockState earlycompat$fromProtocolValue(int extraProtocolValue, BlockState fromState)
 	{
-		int shapeOrdinal = (extraProtocolValue & 0b0000_1111) % 10;//0~9 10种状态
+		int shapeOrdinal = (extraProtocolValue & 0b0000_0111) % 6;//0~5 6种状态
 		return fromState
 			.with(DetectorRailBlock.SHAPE, RailShape.values()[shapeOrdinal]);
 	}

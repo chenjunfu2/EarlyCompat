@@ -26,7 +26,7 @@ public class EasyPlaceExtraProtocolHelper
 	
 	public static int removeExtraProtocolBit(int protocolValue)
 	{
-		return protocolValue = ~((int)0b0000_1000);
+		return protocolValue & ~((int)0b0000_1000);
 	}
 	
 	public static int toExtraProtocolValue(int protocolValue)

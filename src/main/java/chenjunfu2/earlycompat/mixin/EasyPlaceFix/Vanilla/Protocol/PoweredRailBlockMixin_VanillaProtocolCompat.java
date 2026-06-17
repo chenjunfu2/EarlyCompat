@@ -14,13 +14,13 @@ public class PoweredRailBlockMixin_VanillaProtocolCompat implements BlockProtoco
 	public int earlycompat$toProtocolValue(int protocolValue, BlockState fromState)
 	{
 		int shapeOrdinal = fromState.get(PoweredRailBlock.SHAPE).ordinal();
-		return shapeOrdinal & 0b0000_1111;
+		return shapeOrdinal & 0b0000_0111;
 	}
 	
 	@Override
 	public @NotNull BlockState earlycompat$fromProtocolValue(int extraProtocolValue, BlockState fromState)
 	{
-		int shapeOrdinal = (extraProtocolValue & 0b0000_1111) % 10;//0~9 10种状态
+		int shapeOrdinal = (extraProtocolValue & 0b0000_0111) % 10;//0~5 6种状态
 		return fromState
 			.with(PoweredRailBlock.SHAPE, RailShape.values()[shapeOrdinal]);
 	}

@@ -16,9 +16,8 @@ public class EarlyCompatClient implements ClientModInitializer
 		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) ->
 		{
 			var rootCommand = CommandManager.literal("earlycompat")
-				.requires(source -> source.hasPermissionLevel(2));
-			
-			rootCommand.then(CommandManager.literal("set"))
+			.requires(source -> source.hasPermissionLevel(2))
+			.then(CommandManager.literal("set")
 			.then(
 				CommandManager.argument("ExtraProtocolServerEnabled", BoolArgumentType.bool())
 				.executes
@@ -33,7 +32,9 @@ public class EarlyCompatClient implements ClientModInitializer
 						return 1;
 					}
 				)
-			);
+			));
+			
+			dispatcher.register(rootCommand);
 		});
 		
 	}

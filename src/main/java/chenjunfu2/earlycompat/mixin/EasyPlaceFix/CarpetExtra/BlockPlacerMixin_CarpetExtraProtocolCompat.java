@@ -63,6 +63,25 @@ public abstract class BlockPlacerMixin_CarpetExtraProtocolCompat
 	(
 		method = "alternativeBlockPlacement",
 		at = @At
+			(
+				value = "INVOKE_ASSIGN",
+				target = "Lnet/minecraft/block/BlockState;get(Lnet/minecraft/state/property/Property;)Ljava/lang/Comparable;",
+				ordinal = 0
+			),
+		name = "protocolValue"
+	)
+	private static int replaceExtraProtocolValue
+	(
+		int protocolValue
+	)
+	{
+		return removeExtraProtocolBit(protocolValue);//防止ADDED模式下自定义扩展bit对原始逻辑的影响，所有模式下协议值都从原始浮点内读出，此处修改不影响自定义协议处理效果
+	}
+	
+	@ModifyVariable
+	(
+		method = "alternativeBlockPlacement",
+		at = @At
 		(
 			value = "RETURN",
 			ordinal = 0
@@ -97,5 +116,4 @@ public abstract class BlockPlacerMixin_CarpetExtraProtocolCompat
 		BlockState newState = blockProtocolStateAdapter.earlycompat$fromProtocolValue(protocolValue, state);//使用原值，不解包
 		return newState;
 	}
-	
 }

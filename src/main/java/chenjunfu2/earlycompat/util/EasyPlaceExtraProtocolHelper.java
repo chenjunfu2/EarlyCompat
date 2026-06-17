@@ -24,6 +24,11 @@ public class EasyPlaceExtraProtocolHelper
 		return protocolValue | 0b0000_1000;
 	}
 	
+	public static int removeExtraProtocolBit(int protocolValue)
+	{
+		return protocolValue = ~((int)0b0000_1000);
+	}
+	
 	public static int toExtraProtocolValue(int protocolValue)
 	{
 		return ((protocolValue & 0b0111_1000) << 1) | (protocolValue & 0b0000_0111) | 0b0000_1000;//把值从bit3中间分开，设置bit3为1

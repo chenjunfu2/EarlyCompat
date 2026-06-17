@@ -9,6 +9,12 @@
     "EasyPlaceFix.CopperBulbEarly.Protocol.OxidizableBulbBlockMixin_CopperBlubEarlyProtocolCompat",
     "EasyPlaceFix.CrafterEarly.Protocol.CrafterBlockMixin_CrafterEarlyProtocolCompat",
     "EasyPlaceFix.Litematica.WorldUtilsMixin_LitematicaProtocolCompat",
+    "EasyPlaceFix.Vanilla.Protocol.AbstractRedstoneGateBlockMixin_VanillaProtocolCompat",
+    "EasyPlaceFix.Vanilla.Protocol.ComparatorBlockMixin_VanillaProtocolCompat",
+    "EasyPlaceFix.Vanilla.Protocol.DaylightDetectorBlockMixin_VanillaProtocolCompat",
+    "EasyPlaceFix.Vanilla.Protocol.NoteBlockMixin_VanillaProtocolCompat",
+    "EasyPlaceFix.Vanilla.Protocol.RedstoneWireBlockMixin_VanillaProtocolCompat",
+    "EasyPlaceFix.Vanilla.Protocol.RepeaterBlockMixin_VanillaProtocolCompat",
     "PcaProtocolFix.Masa.InventoryPreviewSyncDataUtilMixin_MasaCrafterEarlyCompat",
     "PcaProtocolFix.Masa.InventoryPreviewSyncDataUtilMixin_MasaDecoratedPotEarlyCompat",
     "PcaProtocolFix.Masa.InventoryPreviewSyncDataUtilMixin_MasaVanillaCompat",
@@ -17,10 +23,7 @@
     "PcaProtocolFix.Pca.DecoratedPotBlockEntityMixin_PcaDecoratedPotEarlyCompat",
     "PcaProtocolFix.Pca.JukeboxBlockEntityMixin_PcaVanillaCompat",
     "PcaProtocolFix.Vanilla.ChiseledBookshelfBlockEntityMixin_VanillaBugFix",
-    "PcaProtocolFix.Vanilla.JukeboxBlockEntityMixin_VanillaBugFix",
-    "EasyPlaceFix.Vanilla.Protocol.DaylightDetectorBlockMixin_VanillaProtocolCompat",
-    "EasyPlaceFix.Vanilla.Protocol.NoteBlockMixin_VanillaProtocolCompat",
-    "EasyPlaceFix.Vanilla.Protocol.RedstoneWireBlockMixin_VanillaProtocolCompat"
+    "PcaProtocolFix.Vanilla.JukeboxBlockEntityMixin_VanillaBugFix"
   ],
   "injectors": {
     "defaultRequire": 1

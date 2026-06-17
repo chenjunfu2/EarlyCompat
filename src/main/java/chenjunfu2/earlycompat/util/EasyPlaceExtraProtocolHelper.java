@@ -11,7 +11,7 @@ public class EasyPlaceExtraProtocolHelper
 	
 	public static int decodeProtocolValue(double relativeHitX)
 	{
-		return ((int)relativeHitX - 2) >> 1;
+		return ((int)relativeHitX - 2) >>> 1;
 	}
 	
 	public static int decodeExtraProtocolRawValue(int protocolValue)

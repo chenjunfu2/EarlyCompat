@@ -21,7 +21,7 @@ public abstract class ComparatorBlockMixin_VanillaProtocolCompat implements Bloc
 			(facingOrdinal & 0b0000_0011) |
 			(isPowered ? 0b0000_0100 : 0b0000_0000) |
 			(isSubMod  ? 0b0000_1000 : 0b0000_0000);
-		return  protocolValue | bits;
+		return bits;
 	}
 	
 	@Override

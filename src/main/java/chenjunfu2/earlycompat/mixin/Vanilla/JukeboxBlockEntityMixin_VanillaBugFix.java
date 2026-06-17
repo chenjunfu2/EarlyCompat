@@ -1,4 +1,4 @@
-package chenjunfu2.earlycompat.mixin;
+package chenjunfu2.earlycompat.mixin.Vanilla;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;

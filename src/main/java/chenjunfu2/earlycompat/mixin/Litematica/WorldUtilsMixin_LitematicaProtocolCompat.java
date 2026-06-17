@@ -1,10 +1,8 @@
-package chenjunfu2.earlycompat.mixin;
+package chenjunfu2.earlycompat.mixin.Litematica;
 
+import chenjunfu2.earlycompat.util.BlockProtocolStateAdapter;
 import fi.dy.masa.litematica.util.WorldUtils;
-import net.chenjunfu2.block.CrafterBlock;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.enums.JigsawOrientation;
-import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import org.spongepowered.asm.mixin.Mixin;
@@ -15,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import static chenjunfu2.earlycompat.util.EasyPlaceExtraProtocolHelper.encodeExtraProtocolRawValue;
 
 @Mixin(WorldUtils.class)
-public class WorldUtilsMixin_LitematicaCrafterEarlyCompat
+public abstract class WorldUtilsMixin_LitematicaProtocolCompat
 {
 	@Inject
 	(
@@ -25,12 +23,13 @@ public class WorldUtilsMixin_LitematicaCrafterEarlyCompat
 	)
 	private static void addExtraProtocol(BlockPos pos, BlockState state, Vec3d hitVecIn, CallbackInfoReturnable<Vec3d> cir)
 	{
-		if(state.getBlock() instanceof CrafterBlock)
+		if(!(state.getBlock() instanceof BlockProtocolStateAdapter blockProtocolStateAdapter))
 		{
-			JigsawOrientation orientation = state.get(Properties.ORIENTATION);
-			int orientationOrdinal = orientation.ordinal();
-			cir.setReturnValue(encodeExtraProtocolRawValue(orientationOrdinal, hitVecIn));
-			cir.cancel();
+			return;//不是已知方块，跳过处理，有可能是其它mixin的协议
 		}
+		
+		int protocolValue = blockProtocolStateAdapter.earlycompat$toProtocolValue(state);
+		cir.setReturnValue(encodeExtraProtocolRawValue(protocolValue, hitVecIn));
+		cir.cancel();
 	}
 }

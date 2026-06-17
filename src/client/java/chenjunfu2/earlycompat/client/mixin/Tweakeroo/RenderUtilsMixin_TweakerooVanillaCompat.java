@@ -1,4 +1,4 @@
-package chenjunfu2.earlycompat.client.mixin;
+package chenjunfu2.earlycompat.client.mixin.Tweakeroo;
 
 import com.llamalad7.mixinextras.sugar.Local;
 import fi.dy.masa.malilib.render.InventoryOverlay;

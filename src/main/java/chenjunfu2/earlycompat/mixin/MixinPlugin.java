@@ -126,7 +126,7 @@ public class MixinPlugin implements IMixinConfigPlugin
 		//移植MOD（新增方块、内容）
 		isDecoratedPotEarlyAvailable = checkModVersion("DecoratedPotEarly","decoratedpotearly","1.0.2+");
 		isCrafterEarlyAvailable = checkModVersion("CrafterEarly","crafter-early","1.0.0+");
-		isCopperBulbEarlyAvailable = checkModVersion("CopperBulbEarly","copper-bulb-early","1.0.3+");
+		isCopperBulbEarlyAvailable = checkModVersion("BulbBlockMixin","copper-bulb-early","1.0.3+");
 		
 		//Carpet家族（协议提供者）
 		isFabricCarpetAvailable = checkModVersion("Carpet","carpet","1.4.112+");
@@ -200,40 +200,34 @@ public class MixinPlugin implements IMixinConfigPlugin
 			return isTweakerooAvailable && isCrafterEarlyAvailable;
 		}
 		
-		// Carpet Extra轻松放置协议原版修复
-		if(mixinClassName.contains("CarpetExtraVanillaCompat"))
+		// 原版协议实现
+		if(mixinClassName.contains("VanillaProtocolCompat"))
+		{
+			return true;
+		}
+		
+		// 铜灯协议实现
+		if(mixinClassName.contains("CopperBlubEarlyProtocolCompat"))
+		{
+			return isCopperBulbEarlyAvailable;
+		}
+		
+		// 合成器协议实现
+		if(mixinClassName.contains("CrafterEarlyProtocolCompat"))
+		{
+			return isCrafterEarlyAvailable;
+		}
+		
+		// Carpet Extra轻松放置协议修复
+		if(mixinClassName.contains("CarpetExtraProtocolCompat"))
 		{
 			return isCarpetExtraAvailable;
 		}
 		
-		// Carpet Extra轻松放置协议铜灯移植修复
-		if(mixinClassName.contains("CarpetExtraCopperBulbEarlyCompat"))
-		{
-			return isCarpetExtraAvailable && isCopperBulbEarlyAvailable;
-		}
-		
-		// Carpet Extra轻松放置协议合成器移植修复
-		if(mixinClassName.contains("CarpetExtraCrafterEarlyCompat"))
-		{
-			return isCarpetExtraAvailable && isCrafterEarlyAvailable;
-		}
-		
-		// Litematica轻松放置原版修复
-		if(mixinClassName.contains("LitematicaVanillaCompat"))
+		// Litematica轻松放置协议修复
+		if(mixinClassName.contains("LitematicaProtocolCompat"))
 		{
 			return isLitematicaAvailable;
-		}
-		
-		// Litematica轻松放置铜灯移植修复
-		if(mixinClassName.contains("LitematicaCopperBulbEarlyCompat"))
-		{
-			return isLitematicaAvailable && isCopperBulbEarlyAvailable;
-		}
-		
-		// Litematica轻松放置合成器移植修复
-		if(mixinClassName.contains("LitematicaCrafterEarlyCompat"))
-		{
-			return isLitematicaAvailable && isCrafterEarlyAvailable;
 		}
 		
 		// 剩下全部不允许通过（正常绝对不应该出现）

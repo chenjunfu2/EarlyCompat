@@ -1,4 +1,4 @@
-package chenjunfu2.earlycompat.mixin;
+package chenjunfu2.earlycompat.mixin.Vanilla;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ChiseledBookshelfBlockEntity.class)
-public class ChiseledBookshelfBlockEntityMixin_VanillaBugFix extends BlockEntity
+public abstract class ChiseledBookshelfBlockEntityMixin_VanillaBugFix extends BlockEntity
 {
 	public ChiseledBookshelfBlockEntityMixin_VanillaBugFix(BlockEntityType<?> type, BlockPos pos, BlockState state)
 	{

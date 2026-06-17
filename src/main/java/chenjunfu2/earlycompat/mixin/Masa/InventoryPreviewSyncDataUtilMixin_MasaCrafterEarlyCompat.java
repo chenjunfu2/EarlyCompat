@@ -1,4 +1,4 @@
-package chenjunfu2.earlycompat.mixin;
+package chenjunfu2.earlycompat.mixin.Masa;
 
 import com.llamalad7.mixinextras.sugar.Local;
 import com.plusls.MasaGadget.util.InventoryPreviewSyncDataUtil;

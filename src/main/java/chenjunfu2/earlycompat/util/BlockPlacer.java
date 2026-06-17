@@ -60,6 +60,10 @@ public class BlockPlacer
 			{
 				blockState = wallBlockProtocolStateAdapter.earlycompat$fromProtocolValue(protocolValue, blockState2);
 			}
+			else
+			{
+				blockState = blockState2;
+			}
 		}
 		else
 		{

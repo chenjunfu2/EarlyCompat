@@ -4,6 +4,9 @@
   "compatibilityLevel": "JAVA_17",
   "plugin": "chenjunfu2.earlycompat.mixin.MixinPlugin",
   "client": [
+    "EasyPlaceFix.Litematica.WorldUtilsMixin_LitematicaProtocolCompat",
+    "InventoryPreviewFix.Tweakeroo.RenderUtilsMixin_TweakerooCrafterEarlyCompat",
+    "InventoryPreviewFix.Tweakeroo.RenderUtilsMixin_TweakerooVanillaCompat"
   ],
   "injectors": {
     "defaultRequire": 1
@@ -12,7 +15,5 @@
     "requireAnnotations": true
   },
   "mixins": [
-    "Tweakeroo.RenderUtilsMixin_TweakerooCrafterEarlyCompat",
-    "Tweakeroo.RenderUtilsMixin_TweakerooVanillaCompat"
   ]
 }

@@ -1,9 +1,9 @@
-package chenjunfu2.earlycompat.mixin.EasyPlaceFix.Litematica;
+package chenjunfu2.earlycompat.client.mixin.EasyPlaceFix.Litematica;
 
 import chenjunfu2.earlycompat.util.BlockProtocolStateAdapter;
 import com.llamalad7.mixinextras.sugar.Local;
 import fi.dy.masa.litematica.util.WorldUtils;
-import net.minecraft.block.BlockState;
+import net.fabricmc.api.EnvType;import net.fabricmc.api.Environment;import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import org.spongepowered.asm.mixin.Mixin;
@@ -14,8 +14,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import static chenjunfu2.earlycompat.util.EasyPlaceExtraProtocolHelper.addExtraProtocolBit;
 import static chenjunfu2.earlycompat.util.EasyPlaceExtraProtocolHelper.encodeExtraProtocolRawValue;
+import static chenjunfu2.earlycompat.client.EarlyCompatClient.isExtraProtocolClientEnabled;
 
 @Mixin(WorldUtils.class)
+@Environment(EnvType.CLIENT)
 public abstract class WorldUtilsMixin_LitematicaProtocolCompat
 {
 	@Inject
@@ -26,6 +28,11 @@ public abstract class WorldUtilsMixin_LitematicaProtocolCompat
 	)
 	private static void replaceExtraProtocol(BlockPos pos, BlockState state, Vec3d hitVecIn, CallbackInfoReturnable<Vec3d> cir)
 	{
+		if(!isExtraProtocolClientEnabled)//未开启扩展协议
+		{
+			return;
+		}
+		
 		if(!(state.getBlock() instanceof BlockProtocolStateAdapter blockProtocolStateAdapter))
 		{
 			return;//不是已知方块，跳过处理，有可能是其它mixin的协议
@@ -54,6 +61,11 @@ public abstract class WorldUtilsMixin_LitematicaProtocolCompat
 	)
 	private static int addExtraProtocol(int protocolValue, @Local(name = "state") BlockState state)
 	{
+		if(!isExtraProtocolClientEnabled)//未开启扩展协议
+		{
+			return protocolValue;
+		}
+		
 		if(!(state.getBlock() instanceof BlockProtocolStateAdapter blockProtocolStateAdapter))
 		{
 			return protocolValue;//不是已知方块，跳过处理，有可能是其它mixin的协议

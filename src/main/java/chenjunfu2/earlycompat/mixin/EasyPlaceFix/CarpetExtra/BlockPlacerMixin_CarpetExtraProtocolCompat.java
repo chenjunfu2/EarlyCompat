@@ -11,6 +11,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import static chenjunfu2.earlycompat.EarlyCompat.isExtraProtocolServerEnabled;
 import static chenjunfu2.earlycompat.util.EasyPlaceExtraProtocolHelper.*;
 
 @Mixin(BlockPlacer.class)
@@ -36,6 +37,11 @@ public abstract class BlockPlacerMixin_CarpetExtraProtocolCompat
 		@Local(name = "relativeHitX") double relativeHitX
 	)
 	{
+		if(!isExtraProtocolServerEnabled)//未开启扩展协议
+		{
+			return;
+		}
+		
 		//最低bit0留给浮点误差兼容，protocolValue已进行摘除处理
 		int protocolValue = decodeProtocolValue(relativeHitX);
 		if(!isExtraProtocol(protocolValue))
@@ -75,6 +81,11 @@ public abstract class BlockPlacerMixin_CarpetExtraProtocolCompat
 		int protocolValue
 	)
 	{
+		if(!isExtraProtocolServerEnabled)//未开启扩展协议
+		{
+			return protocolValue;
+		}
+		
 		return removeExtraProtocolBit(protocolValue);//防止ADDED模式下自定义扩展bit对原始逻辑的影响，所有模式下协议值都从原始浮点内读出，此处修改不影响自定义协议处理效果
 	}
 	
@@ -95,6 +106,11 @@ public abstract class BlockPlacerMixin_CarpetExtraProtocolCompat
 		@Local(name = "relativeHitX") double relativeHitX
 	)
 	{
+		if(!isExtraProtocolServerEnabled)//未开启扩展协议
+		{
+			return state;
+		}
+		
 		//最低bit0留给浮点误差兼容，protocolValue已进行摘除处理
 		int protocolValue = decodeProtocolValue(relativeHitX);
 		if(!isExtraProtocol(protocolValue))

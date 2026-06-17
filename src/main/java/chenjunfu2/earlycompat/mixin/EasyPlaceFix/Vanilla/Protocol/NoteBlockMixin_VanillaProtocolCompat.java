@@ -1,4 +1,4 @@
-package chenjunfu2.earlycompat.mixin.Vanilla.Protocol;
+package chenjunfu2.earlycompat.mixin.EasyPlaceFix.Vanilla.Protocol;
 
 import chenjunfu2.earlycompat.util.BlockProtocolStateAdapter;
 import net.minecraft.block.BlockState;
@@ -21,5 +21,11 @@ public abstract class NoteBlockMixin_VanillaProtocolCompat implements BlockProto
 	{
 		int note = (protocolValue & 0b0001_1111) % 25;// 0~24
 		return fromState.with(NoteBlock.NOTE, note);
+	}
+	
+	@Override
+	public @NotNull ProtocolType earlycompat$getProtocolType()
+	{
+		return ProtocolType.REPLACE;
 	}
 }

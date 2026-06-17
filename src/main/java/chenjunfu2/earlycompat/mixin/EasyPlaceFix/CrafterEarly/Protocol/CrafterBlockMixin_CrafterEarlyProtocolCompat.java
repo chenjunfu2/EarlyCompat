@@ -1,4 +1,4 @@
-package chenjunfu2.earlycompat.mixin.CrafterEarly.Protocol;
+package chenjunfu2.earlycompat.mixin.EasyPlaceFix.CrafterEarly.Protocol;
 
 import chenjunfu2.earlycompat.util.BlockProtocolStateAdapter;
 import net.chenjunfu2.block.CrafterBlock;
@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 
 @Mixin(CrafterBlock.class)
-public class CrafterBlockMixin_CrafterEarlyProtocolCompat implements BlockProtocolStateAdapter
+public abstract class CrafterBlockMixin_CrafterEarlyProtocolCompat implements BlockProtocolStateAdapter
 {
 	@Override
 	public int earlycompat$toProtocolValue(BlockState fromState)
@@ -25,5 +25,11 @@ public class CrafterBlockMixin_CrafterEarlyProtocolCompat implements BlockProtoc
 		//低4bit存储12个方向
 		int orientationOrdinal = (protocolValue & 0b0000_1111) % 12;//0~11
 		return fromState.with(Properties.ORIENTATION, JigsawOrientation.values()[orientationOrdinal]);
+	}
+	
+	@Override
+	public @NotNull ProtocolType earlycompat$getProtocolType()
+	{
+		return ProtocolType.REPLACE;
 	}
 }

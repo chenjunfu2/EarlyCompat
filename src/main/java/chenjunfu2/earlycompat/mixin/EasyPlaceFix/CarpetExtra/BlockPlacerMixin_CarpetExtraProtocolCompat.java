@@ -1,4 +1,4 @@
-package chenjunfu2.earlycompat.mixin.CarpetExtra;
+package chenjunfu2.earlycompat.mixin.EasyPlaceFix.CarpetExtra;
 
 import carpetextra.utils.BlockPlacer;
 import chenjunfu2.earlycompat.util.BlockProtocolStateAdapter;
@@ -47,6 +47,11 @@ public abstract class BlockPlacerMixin_CarpetExtraProtocolCompat
 		if(!(block instanceof BlockProtocolStateAdapter blockProtocolStateAdapter))
 		{
 			return;//不是已知方块，跳过处理，有可能是其它mixin的协议
+		}
+		
+		if(blockProtocolStateAdapter.earlycompat$getProtocolType() != BlockProtocolStateAdapter.ProtocolType.REPLACE)
+		{
+			return;//如果不是替换协议，那么什么也不做
 		}
 		
 		cir.setReturnValue(blockProtocolStateAdapter.earlycompat$fromProtocolValue(extraProtocolValue, state));

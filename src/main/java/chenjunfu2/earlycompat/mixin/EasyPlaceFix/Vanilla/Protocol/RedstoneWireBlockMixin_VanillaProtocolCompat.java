@@ -1,4 +1,4 @@
-package chenjunfu2.earlycompat.mixin.Vanilla.Protocol;
+package chenjunfu2.earlycompat.mixin.EasyPlaceFix.Vanilla.Protocol;
 
 import chenjunfu2.earlycompat.util.BlockProtocolStateAdapter;
 import net.minecraft.block.BlockState;
@@ -32,5 +32,11 @@ public abstract class RedstoneWireBlockMixin_VanillaProtocolCompat implements Bl
 				.with(RedstoneWireBlock.WIRE_CONNECTION_NORTH, WireConnection.NONE)
 				.with(RedstoneWireBlock.WIRE_CONNECTION_SOUTH, WireConnection.NONE)
 			: fromState;
+	}
+	
+	@Override
+	public @NotNull ProtocolType earlycompat$getProtocolType()
+	{
+		return ProtocolType.REPLACE;
 	}
 }

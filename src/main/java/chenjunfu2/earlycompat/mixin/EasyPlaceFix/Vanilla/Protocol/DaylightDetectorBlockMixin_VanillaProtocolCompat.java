@@ -1,4 +1,4 @@
-package chenjunfu2.earlycompat.mixin.Vanilla.Protocol;
+package chenjunfu2.earlycompat.mixin.EasyPlaceFix.Vanilla.Protocol;
 
 import chenjunfu2.earlycompat.util.BlockProtocolStateAdapter;
 import net.minecraft.block.BlockState;
@@ -21,5 +21,11 @@ public abstract class DaylightDetectorBlockMixin_VanillaProtocolCompat implement
 	{
 		boolean isInverted = (protocolValue & 0b0001) == 0b0001;//0bit
 		return fromState.with(DaylightDetectorBlock.INVERTED, isInverted);
+	}
+	
+	@Override
+	public @NotNull ProtocolType earlycompat$getProtocolType()
+	{
+		return ProtocolType.REPLACE;
 	}
 }

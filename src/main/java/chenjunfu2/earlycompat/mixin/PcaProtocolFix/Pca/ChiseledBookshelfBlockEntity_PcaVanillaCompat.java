@@ -1,4 +1,4 @@
-package chenjunfu2.earlycompat.mixin.Pca;
+package chenjunfu2.earlycompat.mixin.PcaProtocolFix.Pca;
 
 import com.plusls.carpet.PluslsCarpetAdditionReference;
 import com.plusls.carpet.PluslsCarpetAdditionSettings;
@@ -6,7 +6,7 @@ import com.plusls.carpet.network.PcaSyncProtocol;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.block.entity.JukeboxBlockEntity;
+import net.minecraft.block.entity.ChiseledBookshelfBlockEntity;
 import net.minecraft.util.math.BlockPos;
 import org.spongepowered.asm.mixin.Intrinsic;
 import org.spongepowered.asm.mixin.Mixin;
@@ -14,17 +14,17 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(JukeboxBlockEntity.class)
-public abstract class JukeboxBlockEntityMixin_PcaVanillaCompat extends BlockEntity
+@Mixin(ChiseledBookshelfBlockEntity.class)
+public abstract class ChiseledBookshelfBlockEntity_PcaVanillaCompat extends BlockEntity
 {
-	public JukeboxBlockEntityMixin_PcaVanillaCompat(BlockEntityType<?> type, BlockPos pos, BlockState state)
+	public ChiseledBookshelfBlockEntity_PcaVanillaCompat(BlockEntityType<?> type, BlockPos pos, BlockState state)
 	{
 		super(type, pos, state);
 	}
 	
 	@Override
 	@Intrinsic
-	public void markDirty()// JukeboxBlockEntity 默认使用基类，隐式注入防止mixin失败
+	public void markDirty()// ChiseledBookshelfBlockEntity 默认使用基类，隐式注入防止mixin失败
 	{
 		super.markDirty();
 	}
@@ -35,7 +35,7 @@ public abstract class JukeboxBlockEntityMixin_PcaVanillaCompat extends BlockEnti
 	{
 		if (PluslsCarpetAdditionSettings.pcaSyncProtocol && PcaSyncProtocol.syncBlockEntityToClient(this))
 		{
-			PluslsCarpetAdditionReference.getLogger().debug("update JukeboxBlockEntity: {}", this.pos);
+			PluslsCarpetAdditionReference.getLogger().debug("update ChiseledBookshelfBlockEntity: {}", this.pos);
 		}
 	}
 }

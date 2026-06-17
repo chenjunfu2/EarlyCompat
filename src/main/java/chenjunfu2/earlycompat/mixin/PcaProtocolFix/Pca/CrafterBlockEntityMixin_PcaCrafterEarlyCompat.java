@@ -1,4 +1,4 @@
-package chenjunfu2.earlycompat.mixin.Pca;
+package chenjunfu2.earlycompat.mixin.PcaProtocolFix.Pca;
 
 import com.plusls.carpet.PluslsCarpetAdditionReference;
 import com.plusls.carpet.PluslsCarpetAdditionSettings;

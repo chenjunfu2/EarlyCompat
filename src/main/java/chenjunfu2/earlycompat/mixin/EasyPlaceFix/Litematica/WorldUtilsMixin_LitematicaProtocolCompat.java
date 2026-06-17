@@ -1,4 +1,4 @@
-package chenjunfu2.earlycompat.mixin.Litematica;
+package chenjunfu2.earlycompat.mixin.EasyPlaceFix.Litematica;
 
 import chenjunfu2.earlycompat.util.BlockProtocolStateAdapter;
 import fi.dy.masa.litematica.util.WorldUtils;
@@ -26,6 +26,11 @@ public abstract class WorldUtilsMixin_LitematicaProtocolCompat
 		if(!(state.getBlock() instanceof BlockProtocolStateAdapter blockProtocolStateAdapter))
 		{
 			return;//不是已知方块，跳过处理，有可能是其它mixin的协议
+		}
+		
+		if(blockProtocolStateAdapter.earlycompat$getProtocolType() != BlockProtocolStateAdapter.ProtocolType.REPLACE)
+		{
+			return;//如果不是替换协议，那么什么也不做
 		}
 		
 		int protocolValue = blockProtocolStateAdapter.earlycompat$toProtocolValue(state);

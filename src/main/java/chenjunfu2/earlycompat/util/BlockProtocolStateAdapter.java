@@ -7,4 +7,11 @@ public interface BlockProtocolStateAdapter
 {
 	int earlycompat$toProtocolValue(BlockState fromState);
 	@NotNull BlockState earlycompat$fromProtocolValue(int protocolValue, BlockState fromState);
+	@NotNull ProtocolType earlycompat$getProtocolType();
+	
+	enum ProtocolType
+	{
+		ADDED,
+		REPLACE,
+	}
 }

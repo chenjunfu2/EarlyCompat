@@ -10,16 +10,16 @@ import org.spongepowered.asm.mixin.Mixin;
 public abstract class NoteBlockMixin_VanillaProtocolCompat implements BlockProtocolStateAdapter//让目标类实现此接口
 {
 	@Override
-	public int earlycompat$toProtocolValue(BlockState fromState)
+	public int earlycompat$toProtocolValue(int protocolValue, BlockState fromState)
 	{
 		int note = fromState.get(NoteBlock.NOTE);
 		return note;
 	}
 	
 	@Override
-	public @NotNull BlockState earlycompat$fromProtocolValue(int protocolValue, BlockState fromState)
+	public @NotNull BlockState earlycompat$fromProtocolValue(int extraProtocolValue, BlockState fromState)
 	{
-		int note = (protocolValue & 0b0001_1111) % 25;// 0~24
+		int note = (extraProtocolValue & 0b0001_1111) % 25;// 0~24
 		return fromState.with(NoteBlock.NOTE, note);
 	}
 	

@@ -10,16 +10,16 @@ import org.spongepowered.asm.mixin.Mixin;
 public abstract class DaylightDetectorBlockMixin_VanillaProtocolCompat implements BlockProtocolStateAdapter//让目标类实现此接口
 {
 	@Override
-	public int earlycompat$toProtocolValue(BlockState fromState)
+	public int earlycompat$toProtocolValue(int protocolValue, BlockState fromState)
 	{
 		boolean isInverted = fromState.get(DaylightDetectorBlock.INVERTED);
 		return isInverted ? 0b0001 : 0b0000;
 	}
 	
 	@Override
-	public @NotNull BlockState earlycompat$fromProtocolValue(int protocolValue, BlockState fromState)
+	public @NotNull BlockState earlycompat$fromProtocolValue(int extraProtocolValue, BlockState fromState)
 	{
-		boolean isInverted = (protocolValue & 0b0001) == 0b0001;//0bit
+		boolean isInverted = (extraProtocolValue & 0b0001) == 0b0001;//0bit
 		return fromState.with(DaylightDetectorBlock.INVERTED, isInverted);
 	}
 	

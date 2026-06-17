@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.Mixin;
 public abstract class RedstoneWireBlockMixin_VanillaProtocolCompat implements BlockProtocolStateAdapter//让目标类实现此接口
 {
 	@Override
-	public int earlycompat$toProtocolValue(BlockState fromState)
+	public int earlycompat$toProtocolValue(int protocolValue, BlockState fromState)
 	{
 		boolean isDot =
 			fromState.get(RedstoneWireBlock.WIRE_CONNECTION_SOUTH)==WireConnection.NONE &&
@@ -22,9 +22,9 @@ public abstract class RedstoneWireBlockMixin_VanillaProtocolCompat implements Bl
 	}
 	
 	@Override
-	public @NotNull BlockState earlycompat$fromProtocolValue(int protocolValue, BlockState fromState)
+	public @NotNull BlockState earlycompat$fromProtocolValue(int extraProtocolValue, BlockState fromState)
 	{
-		boolean isDot = (protocolValue & 0b0001) == 0b0001;//0bit
+		boolean isDot = (extraProtocolValue & 0b0001) == 0b0001;//0bit
 		return isDot
 			? fromState
 				.with(RedstoneWireBlock.WIRE_CONNECTION_EAST, WireConnection.NONE)

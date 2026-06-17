@@ -15,5 +15,6 @@
     "requireAnnotations": true
   },
   "mixins": [
+    "EasyPlaceFix.Vanilla.VerticallyAttachableBlockItemMixin_VanillaProtocolCompat"
   ]
 }

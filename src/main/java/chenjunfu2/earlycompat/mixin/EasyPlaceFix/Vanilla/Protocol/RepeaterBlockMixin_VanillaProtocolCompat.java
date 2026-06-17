@@ -13,7 +13,7 @@ public abstract class RepeaterBlockMixin_VanillaProtocolCompat implements BlockP
 	@Override
 	public int earlycompat$toProtocolValue(int protocolValue, BlockState fromState)
 	{
-		int facingOrdinal = fromState.get(RepeaterBlock.FACING).ordinal();//2bit
+		int facingOrdinal = fromState.get(RepeaterBlock.FACING).ordinal() - 2;//2bit 0~3 默认方向有6个，中继器只能4向
 		int delay = fromState.get(RepeaterBlock.DELAY) - 1;//2bit 0~3
 		boolean isPowered = fromState.get(RepeaterBlock.POWERED);//1bit
 		boolean isLocked = fromState.get(RepeaterBlock.LOCKED);//1bit
@@ -28,7 +28,7 @@ public abstract class RepeaterBlockMixin_VanillaProtocolCompat implements BlockP
 	@Override
 	public @NotNull BlockState earlycompat$fromProtocolValue(int extraProtocolValue, BlockState fromState)
 	{
-		int facingOrdinal = extraProtocolValue & 0b0000_0011;//2bit
+		int facingOrdinal = (extraProtocolValue & 0b0000_0011) + 2;//2bit 0~3
 		int delay = ((extraProtocolValue & 0b0000_1100) >>> 2) + 1;//2bit 0~3
 		boolean isPowered = (extraProtocolValue & 0b0001_0000) == 0b0001_0000;//1bit
 		boolean isLocked = (extraProtocolValue & 0b0010_0000) == 0b0010_0000;//1bit

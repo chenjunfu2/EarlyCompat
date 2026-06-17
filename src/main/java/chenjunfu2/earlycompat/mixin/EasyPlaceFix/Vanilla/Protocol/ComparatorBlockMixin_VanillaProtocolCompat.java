@@ -14,7 +14,7 @@ public abstract class ComparatorBlockMixin_VanillaProtocolCompat implements Bloc
 	@Override
 	public int earlycompat$toProtocolValue(int protocolValue, BlockState fromState)
 	{
-		int facingOrdinal = fromState.get(ComparatorBlock.FACING).ordinal();
+		int facingOrdinal = fromState.get(ComparatorBlock.FACING).ordinal() - 2;//2bit 比较器只能4向
 		boolean isPowered = fromState.get(ComparatorBlock.POWERED);
 		boolean isSubMod = fromState.get(ComparatorBlock.MODE) == ComparatorMode.SUBTRACT;
 		int bits =
@@ -27,7 +27,7 @@ public abstract class ComparatorBlockMixin_VanillaProtocolCompat implements Bloc
 	@Override
 	public @NotNull BlockState earlycompat$fromProtocolValue(int extraProtocolValue, BlockState fromState)
 	{
-		int facingOrdinal = (extraProtocolValue & 0b0000_0011);
+		int facingOrdinal = (extraProtocolValue & 0b0000_0011) + 2;//2bit 比较器只能4向
 		boolean isPowered = (extraProtocolValue & 0b0000_0100) == 0b0000_0100;
 		boolean isSubMod = (extraProtocolValue & 0b0000_1000) == 0b0000_1000;
 		return fromState

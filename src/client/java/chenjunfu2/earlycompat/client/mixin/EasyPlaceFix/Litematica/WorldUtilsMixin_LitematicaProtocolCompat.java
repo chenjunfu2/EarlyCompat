@@ -1,9 +1,15 @@
 package chenjunfu2.earlycompat.client.mixin.EasyPlaceFix.Litematica;
 
+import chenjunfu2.earlycompat.client.mixin.EasyPlaceFix.Vanilla.VerticallyAttachableBlockItemAccessor;
+import chenjunfu2.earlycompat.util.BlockPlacer;
 import chenjunfu2.earlycompat.util.BlockProtocolStateAdapter;
 import com.llamalad7.mixinextras.sugar.Local;
 import fi.dy.masa.litematica.util.WorldUtils;
-import net.fabricmc.api.EnvType;import net.fabricmc.api.Environment;import net.minecraft.block.BlockState;
+import net.fabricmc.api.EnvType;import net.fabricmc.api.Environment;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.item.VerticallyAttachableBlockItem;
+import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import org.spongepowered.asm.mixin.Mixin;
@@ -33,9 +39,34 @@ public abstract class WorldUtilsMixin_LitematicaProtocolCompat
 			return;
 		}
 		
-		if(!(state.getBlock() instanceof BlockProtocolStateAdapter blockProtocolStateAdapter))
+		Block block = state.getBlock();
+		
+		//如果不是附着方块并且不是协议方块，那么跳出
+		//如果是附着方块，但不是协议方块，并且是墙上方块，使用默认协议
+		
+		//附着方块默认行为
+		int wallProtocolValue = 0;
+		if(block.asItem() instanceof VerticallyAttachableBlockItem verticallyAttachableBlockItem &&
+			block.equals(((VerticallyAttachableBlockItemAccessor)verticallyAttachableBlockItem).esrlycompat$getWallBlock()))
 		{
-			return;//不是已知方块，跳过处理，有可能是其它mixin的协议
+			DirectionProperty dir = BlockPlacer.getFirstDirectionProperty(state);
+			if(dir != null)
+			{
+				int facingIndex = state.get(dir).ordinal() - 2;//2 based index
+				wallProtocolValue = ((facingIndex & 0b0000_0011) << 1);
+			}
+			
+			wallProtocolValue |= 0b0000_0001;
+		}
+		
+		if(!(block instanceof BlockProtocolStateAdapter blockProtocolStateAdapter))
+		{
+			if((wallProtocolValue & 0b0000_0001) == 0b0000_0001)//最低为至少为1
+			{
+				cir.setReturnValue(encodeExtraProtocolRawValue(wallProtocolValue, hitVecIn));
+				cir.cancel();
+			}
+			return;
 		}
 		
 		if(blockProtocolStateAdapter.earlycompat$getProtocolType() != BlockProtocolStateAdapter.ProtocolType.REPLACE)
@@ -43,7 +74,7 @@ public abstract class WorldUtilsMixin_LitematicaProtocolCompat
 			return;//如果不是替换模式，那么什么也不做
 		}
 		
-		int protocolValue = blockProtocolStateAdapter.earlycompat$toProtocolValue(0, state);
+		int protocolValue = blockProtocolStateAdapter.earlycompat$toProtocolValue(wallProtocolValue, state);
 		cir.setReturnValue(encodeExtraProtocolRawValue(protocolValue, hitVecIn));
 		cir.cancel();
 	}

@@ -1,6 +1,6 @@
 package chenjunfu2.earlycompat.client.mixin.EasyPlaceFix.Litematica;
 
-import chenjunfu2.earlycompat.client.mixin.EasyPlaceFix.Vanilla.VerticallyAttachableBlockItemAccessor;
+import chenjunfu2.earlycompat.client.Accessor.VerticallyAttachableBlockItemAccessor;
 import chenjunfu2.earlycompat.util.BlockPlacer;
 import chenjunfu2.earlycompat.util.BlockProtocolStateAdapter;
 import com.llamalad7.mixinextras.sugar.Local;

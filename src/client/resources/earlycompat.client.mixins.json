@@ -6,15 +6,13 @@
   "client": [
     "EasyPlaceFix.Litematica.WorldUtilsMixin_LitematicaProtocolCompat",
     "InventoryPreviewFix.Tweakeroo.RenderUtilsMixin_TweakerooCrafterEarlyCompat",
-    "InventoryPreviewFix.Tweakeroo.RenderUtilsMixin_TweakerooVanillaCompat"
+    "InventoryPreviewFix.Tweakeroo.RenderUtilsMixin_TweakerooVanillaCompat",
+    "EasyPlaceFix.Vanilla.VerticallyAttachableBlockItemMixin_VanillaProtocolCompat"
   ],
   "injectors": {
     "defaultRequire": 1
   },
   "overwrites": {
     "requireAnnotations": true
-  },
-  "mixins": [
-    "EasyPlaceFix.Vanilla.VerticallyAttachableBlockItemMixin_VanillaProtocolCompat"
-  ]
+  }
 }

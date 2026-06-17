@@ -1,5 +1,6 @@
 package chenjunfu2.earlycompat.client.mixin.EasyPlaceFix.Vanilla;
 
+import chenjunfu2.earlycompat.client.Accessor.VerticallyAttachableBlockItemAccessor;
 import net.minecraft.block.Block;
 import net.minecraft.item.VerticallyAttachableBlockItem;
 import org.spongepowered.asm.mixin.Final;

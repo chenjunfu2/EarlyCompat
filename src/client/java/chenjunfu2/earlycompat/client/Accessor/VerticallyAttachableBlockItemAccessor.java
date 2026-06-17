@@ -1,4 +1,4 @@
-package chenjunfu2.earlycompat.client.mixin.EasyPlaceFix.Vanilla;
+package chenjunfu2.earlycompat.client.Accessor;
 
 import net.minecraft.block.Block;
 

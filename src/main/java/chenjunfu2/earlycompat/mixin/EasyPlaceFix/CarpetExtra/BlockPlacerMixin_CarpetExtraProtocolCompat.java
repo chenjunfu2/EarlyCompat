@@ -41,7 +41,6 @@ public abstract class BlockPlacerMixin_CarpetExtraProtocolCompat
 		{
 			return;//不是扩展协议
 		}
-		int extraProtocolValue = decodeExtraProtocolRawValue(protocolValue);
 		
 		//只处理扩展协议内已知的方块
 		if(!(block instanceof BlockProtocolStateAdapter blockProtocolStateAdapter))
@@ -54,6 +53,7 @@ public abstract class BlockPlacerMixin_CarpetExtraProtocolCompat
 			return;//如果不是替换协议，那么什么也不做
 		}
 		
+		int extraProtocolValue = decodeExtraProtocolRawValue(protocolValue);
 		cir.setReturnValue(blockProtocolStateAdapter.earlycompat$fromProtocolValue(extraProtocolValue, state));
 		cir.cancel();
 	}

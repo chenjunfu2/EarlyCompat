@@ -95,7 +95,9 @@ public abstract class BlockPlacerMixin_CarpetExtraProtocolCompat
 		at = @At
 		(
 			value = "RETURN",
-			ordinal = 1
+			ordinal = 2,
+			shift = At.Shift.BY,
+			by = -1//前移一条指令，在ASTORE 6之前才能修改state
 		),
 		name = "state"
 	)

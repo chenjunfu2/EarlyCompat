@@ -25,6 +25,7 @@ public class EarlyCompat implements ModInitializer
 			var rootCommand = CommandManager.literal("earlycompat")
 			.requires(source -> source.hasPermissionLevel(2))
 			.then(CommandManager.literal("set")
+			.then(CommandManager.literal("ExtraProtocolServerEnabled")
 			.then(
 				CommandManager.argument("ExtraProtocolServerEnabled", BoolArgumentType.bool())
 				.executes

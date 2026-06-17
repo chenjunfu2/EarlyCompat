@@ -18,8 +18,9 @@ public class EarlyCompatClient implements ClientModInitializer
 			var rootCommand = CommandManager.literal("earlycompat")
 			.requires(source -> source.hasPermissionLevel(2))
 			.then(CommandManager.literal("set")
+			.then(CommandManager.literal("ExtraProtocolClientEnabled")
 			.then(
-				CommandManager.argument("ExtraProtocolServerEnabled", BoolArgumentType.bool())
+				CommandManager.argument("ExtraProtocolClientEnabled", BoolArgumentType.bool())
 				.executes
 				(context ->
 					{

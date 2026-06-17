@@ -95,7 +95,7 @@ public abstract class BlockPlacerMixin_CarpetExtraProtocolCompat
 		at = @At
 		(
 			value = "RETURN",
-			ordinal = 0
+			ordinal = 1
 		),
 		name = "state"
 	)

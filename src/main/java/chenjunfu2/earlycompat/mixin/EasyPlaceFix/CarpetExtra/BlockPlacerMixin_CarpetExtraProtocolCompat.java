@@ -69,11 +69,11 @@ public abstract class BlockPlacerMixin_CarpetExtraProtocolCompat
 	(
 		method = "alternativeBlockPlacement",
 		at = @At
-			(
-				value = "INVOKE_ASSIGN",
-				target = "Lnet/minecraft/block/BlockState;get(Lnet/minecraft/state/property/Property;)Ljava/lang/Comparable;",
-				ordinal = 0
-			),
+		(
+			value = "INVOKE_ASSIGN",
+			target = "Lnet/minecraft/block/BlockState;get(Lnet/minecraft/state/property/Property;)Ljava/lang/Comparable;",
+			ordinal = 0
+		),
 		name = "protocolValue"
 	)
 	private static int replaceExtraProtocolValue

@@ -5,6 +5,7 @@
   "plugin": "chenjunfu2.earlycompat.mixin.MixinPlugin",
   "mixins": [
     "EasyPlaceFix.CarpetExtra.BlockPlacerMixin_CarpetExtraProtocolCompat",
+    "EasyPlaceFix.CarpetExtra.VerticallyAttachableBlockItemMixin_CarpetExtraProtocolCompat",
     "EasyPlaceFix.CopperBulbEarly.Protocol.BulbBlockMixin_CopperBlubEarlyProtocolCompat",
     "EasyPlaceFix.CopperBulbEarly.Protocol.OxidizableBulbBlockMixin_CopperBlubEarlyProtocolCompat",
     "EasyPlaceFix.CrafterEarly.Protocol.CrafterBlockMixin_CrafterEarlyProtocolCompat",
@@ -19,7 +20,7 @@
     "EasyPlaceFix.Vanilla.Protocol.RailBlockMixin_VanillaProtocolCompat",
     "EasyPlaceFix.Vanilla.Protocol.RedstoneWireBlockMixin_VanillaProtocolCompat",
     "EasyPlaceFix.Vanilla.Protocol.RepeaterBlockMixin_VanillaProtocolCompat",
-    "EasyPlaceFix.CarpetExtra.VerticallyAttachableBlockItemMixin_CarpetExtraProtocolCompat",
+    "EasyPlaceFix.Vanilla.Protocol.WallMountedBlockMixin_VanillaProtocolCompat",
     "PcaProtocolFix.Masa.InventoryPreviewSyncDataUtilMixin_MasaCrafterEarlyCompat",
     "PcaProtocolFix.Masa.InventoryPreviewSyncDataUtilMixin_MasaDecoratedPotEarlyCompat",
     "PcaProtocolFix.Masa.InventoryPreviewSyncDataUtilMixin_MasaVanillaCompat",

@@ -40,7 +40,7 @@ public class VerticallyAttachableBlockItemMixin_VanillaProtocolCompat extends Bl
 	)
 	void getAlternatePlacement(ItemPlacementContext context, CallbackInfoReturnable<BlockState> cir)
 	{
-		if(!isExtraProtocolServerEnabled || ! CarpetExtraSettingsAccessor.getAccurateBlockPlacement())
+		if(!isExtraProtocolServerEnabled || (!context.getWorld().isClient() && !CarpetExtraSettingsAccessor.getAccurateBlockPlacement()))//不是客户端并且carpet规则被关闭
 		{
 			return;//啥都不做
 		}

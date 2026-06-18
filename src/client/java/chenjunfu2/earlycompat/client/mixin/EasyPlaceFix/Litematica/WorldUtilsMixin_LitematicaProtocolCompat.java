@@ -18,9 +18,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import static chenjunfu2.earlycompat.util.EasyPlaceExtraProtocolHelper.addExtraProtocolBit;
-import static chenjunfu2.earlycompat.util.EasyPlaceExtraProtocolHelper.encodeExtraProtocolRawValue;
 import static chenjunfu2.earlycompat.client.EarlyCompatClient.isExtraProtocolClientEnabled;
+import static chenjunfu2.earlycompat.util.EasyPlaceExtraProtocolHelper.*;
 
 @Mixin(WorldUtils.class)
 @Environment(EnvType.CLIENT)
@@ -46,24 +45,29 @@ public abstract class WorldUtilsMixin_LitematicaProtocolCompat
 		
 		//附着方块默认行为
 		int wallProtocolValue = 0;
-		if(block.asItem() instanceof VerticallyAttachableBlockItem verticallyAttachableBlockItem &&
-			block.equals(((VerticallyAttachableBlockItemAccessor)verticallyAttachableBlockItem).esrlycompat$getWallBlock()))
+		boolean isWallBlock = false;
+		if(	block.asItem() instanceof VerticallyAttachableBlockItem verticallyAttachableBlockItem)
 		{
-			DirectionProperty dir = BlockPlacer.getFirstDirectionProperty(state);
-			if(dir != null)
-			{
-				int facingIndex = state.get(dir).ordinal() - 2;//2 based index
-				wallProtocolValue = ((facingIndex & 0b0000_0011) << 1);
-			}
+			isWallBlock = true;
 			
-			wallProtocolValue |= 0b0000_0001;
+			if(block.equals(((VerticallyAttachableBlockItemAccessor)verticallyAttachableBlockItem).esrlycompat$getWallBlock()))//上墙才使用默认协议，否则低位预留为0
+			{
+				DirectionProperty dir = BlockPlacer.getFirstDirectionProperty(state);
+				if(dir != null)
+				{
+					int facingIndex = state.get(dir).ordinal() - 2;//2 based index
+					wallProtocolValue = ((facingIndex & 0b0000_0011) << 1);
+				}
+				
+				wallProtocolValue |= 0b0000_0001;
+			}
 		}
 		
 		if(!(block instanceof BlockProtocolStateAdapter blockProtocolStateAdapter))
 		{
-			if((wallProtocolValue & 0b0000_0001) == 0b0000_0001)//最低为至少为1
+			if(isWallBlock)//不是自定义类型并且是墙上方块类型，默认协议处理
 			{
-				cir.setReturnValue(encodeExtraProtocolRawValue(wallProtocolValue, hitVecIn));
+				cir.setReturnValue(encodeProtocolRawValue(wallProtocolValue, hitVecIn));//注意，非Extra
 				cir.cancel();
 			}
 			return;
@@ -74,8 +78,11 @@ public abstract class WorldUtilsMixin_LitematicaProtocolCompat
 			return;//如果不是替换模式，那么什么也不做
 		}
 		
-		int protocolValue = blockProtocolStateAdapter.earlycompat$toProtocolValue(wallProtocolValue, state);
-		cir.setReturnValue(encodeExtraProtocolRawValue(protocolValue, hitVecIn));
+		Vec3d returnValue = isWallBlock
+			? encodeProtocolRawValue(blockProtocolStateAdapter.earlycompat$toProtocolValue(wallProtocolValue, state), hitVecIn)//注意，非Extra
+			: encodeExtraProtocolRawValue(blockProtocolStateAdapter.earlycompat$toProtocolValue(0, state), hitVecIn);
+		
+		cir.setReturnValue(returnValue);
 		cir.cancel();
 	}
 	

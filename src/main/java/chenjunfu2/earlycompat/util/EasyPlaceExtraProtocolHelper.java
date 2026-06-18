@@ -14,6 +14,16 @@ public class EasyPlaceExtraProtocolHelper
 		return ((int)relativeHitX - 2) >>> 1;
 	}
 	
+	public static double encodeProtocolValue(double relativeHitX, int protocolValue)
+	{
+		return relativeHitX + (double)(protocolValue << 1 + 2);
+	}
+	
+	public static Vec3d encodeProtocolRawValue(int protocolRawValue, Vec3d hitVec)
+	{
+		return new Vec3d(encodeProtocolValue(hitVec.x, protocolRawValue), hitVec.y, hitVec.z);
+	}
+	
 	public static int decodeExtraProtocolRawValue(int protocolValue)
 	{
 		return (((protocolValue & 0b1111_0000) >>> 1) | (protocolValue & 0b0000_0111));//摘除bit3，拼接剩余位，一共剩余6bit可用，最大7bit，因为bit3作为协议判断所以少一位
@@ -37,6 +47,6 @@ public class EasyPlaceExtraProtocolHelper
 	public static Vec3d encodeExtraProtocolRawValue(int protocolRawValue, Vec3d hitVec)//值最多7bit
 	{
 		int protocolValue = toExtraProtocolValue(protocolRawValue);
-		return new Vec3d(hitVec.x + (double)(protocolValue * 2 + 2), hitVec.y, hitVec.z);
+		return encodeProtocolRawValue(protocolValue, hitVec);
 	}
 }

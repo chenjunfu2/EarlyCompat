@@ -11,7 +11,6 @@ import net.minecraft.util.math.Vec3d;
 import org.jetbrains.annotations.Nullable;
 
 import static chenjunfu2.earlycompat.util.EasyPlaceExtraProtocolHelper.decodeProtocolValue;
-import static chenjunfu2.earlycompat.util.EasyPlaceExtraProtocolHelper.isExtraProtocol;
 
 public class BlockPlacer
 {
@@ -26,11 +25,7 @@ public class BlockPlacer
 		}
 		
 		//最低bit0留给浮点误差兼容，protocolValue已进行摘除处理
-		int protocolValue = decodeProtocolValue(relativeHitX);
-		if(!isExtraProtocol(protocolValue))
-		{
-			return null;//不是扩展协议
-		}
+		int protocolValue = decodeProtocolValue(relativeHitX);//注意，特殊路径非Extra协议，全部bit都可利用
 		
 		BlockState blockState = null;
 		boolean isWallType = (protocolValue & 0b0000_0001) == 0b0000_0001;
@@ -49,10 +44,6 @@ public class BlockPlacer
 			{
 				int facingIndex = (protocolValue & 0b0000_0011) + 2;//6方向，facing从2开始
 				Direction facing = Direction.values()[facingIndex];
-				if (!directionProperty.getValues().contains(facing))
-				{
-					facing = context.getPlayer().getHorizontalFacing().getOpposite();
-				}
 				blockState2 = blockState2.with(directionProperty, facing);
 			}
 			

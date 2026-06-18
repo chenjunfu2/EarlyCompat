@@ -84,7 +84,15 @@ public abstract class WorldUtilsMixin_LitematicaProtocolCompat
 		Vec3d returnValue = null;
 		if(isWallBlock)
 		{
-			protocolRawValue = (protocolRawValue << 3) | (wallProtocolValue & 0b0000_0111);//墙面方块额外拼接低位
+			if((wallProtocolValue & 0b0000_0001) == 0b0000_0001)//墙上版本，添加3bit，地下版本仅添加1bit
+			{
+				protocolRawValue = (protocolRawValue << 3) | (wallProtocolValue & 0b0000_0111);//墙上方块额外拼接低位
+			}
+			else
+			{
+				protocolRawValue <<= 1;//仅移动1bit作为最低为识别
+			}
+			
 			returnValue = encodeProtocolValueToHitVec(protocolRawValue, hitVecIn);//注意，非Extra
 		}
 		else

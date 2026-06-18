@@ -20,7 +20,6 @@
     "EasyPlaceFix.Vanilla.Protocol.DoorBlockMixin_VanillaProtocolCompat",
     "EasyPlaceFix.Vanilla.Protocol.FenceGateBlockMixin_VanillaProtocolCompat",
     "EasyPlaceFix.Vanilla.Protocol.HangingSignBlockMixin_VanillaProtocolCompat",
-    "EasyPlaceFix.Vanilla.Protocol.HeadBlockMixin_VanillaProtocolCompat",
     "EasyPlaceFix.Vanilla.Protocol.JigsawBlockMixin_VanillaProtocolCompat",
     "EasyPlaceFix.Vanilla.Protocol.LanternBlockMixin_VanillaProtocolCompat",
     "EasyPlaceFix.Vanilla.Protocol.LeverBlockMixin_VanillaProtocolCompat",

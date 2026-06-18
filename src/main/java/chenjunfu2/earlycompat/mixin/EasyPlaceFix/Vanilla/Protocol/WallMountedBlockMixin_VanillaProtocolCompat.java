@@ -22,7 +22,7 @@ public abstract class WallMountedBlockMixin_VanillaProtocolCompat implements Blo
 	@Override
 	public @NotNull BlockState earlycompat$fromProtocolValue(int extraProtocolValue, BlockState fromState)
 	{
-		int faceOridinal = ((extraProtocolValue | 0b0011_0000) >>> 4) % 3;//0~2
+		int faceOridinal = ((extraProtocolValue & 0b0011_0000) >>> 4) % 3;//0~2
 		return fromState.with(WallMountedBlock.FACE, WallMountLocation.values()[faceOridinal]);
 	}
 	

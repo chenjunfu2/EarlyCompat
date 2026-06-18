@@ -15,6 +15,7 @@
     "EasyPlaceFix.Vanilla.Protocol.DaylightDetectorBlockMixin_VanillaProtocolCompat",
     "EasyPlaceFix.Vanilla.Protocol.DetectorRailBlockMixin_VanillaProtocolCompat",
     "EasyPlaceFix.Vanilla.Protocol.DispenserBlockMixin_VanillaProtocolCompat",
+    "EasyPlaceFix.Vanilla.Protocol.DoorBlockMixin_VanillaProtocolCompat",
     "EasyPlaceFix.Vanilla.Protocol.FenceGateBlockMixin_VanillaProtocolCompat",
     "EasyPlaceFix.Vanilla.Protocol.LanternBlockMixin_VanillaProtocolCompat",
     "EasyPlaceFix.Vanilla.Protocol.NoteBlockMixin_VanillaProtocolCompat",

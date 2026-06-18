@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.Overwrite;
 @Mixin(CarpetExtraSettingsAccessor.class)
 public abstract class CarpetExtraSettingsAccessorMixin_CarpetExtraProtocolCompat
 {
-	@Overwrite
+	@Overwrite(remap = false)
 	public static boolean getAccurateBlockPlacement()
 	{
 		return CarpetExtraSettings.accurateBlockPlacement;

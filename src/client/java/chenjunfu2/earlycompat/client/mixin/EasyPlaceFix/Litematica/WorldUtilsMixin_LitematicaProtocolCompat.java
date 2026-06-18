@@ -46,7 +46,7 @@ public abstract class WorldUtilsMixin_LitematicaProtocolCompat
 		//附着方块默认行为
 		int wallProtocolValue = 0;
 		boolean isWallBlock = false;
-		if(	block.asItem() instanceof VerticallyAttachableBlockItem verticallyAttachableBlockItem)
+		if(block.asItem() instanceof VerticallyAttachableBlockItem verticallyAttachableBlockItem)
 		{
 			isWallBlock = true;
 			

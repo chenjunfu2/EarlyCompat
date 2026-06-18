@@ -22,7 +22,7 @@ public class EasyPlaceExtraProtocolHelper
 	
 	public static double encodeProtocolValueToHitX(double relativeHitX, int protocolValue)
 	{
-		return relativeHitX + (double)(protocolValue << 1 + 2);
+		return relativeHitX + (double)((protocolValue << 1) + 2);
 	}
 	
 	public static int extraProtocolValueToRawProtocolValue(int protocolValue)

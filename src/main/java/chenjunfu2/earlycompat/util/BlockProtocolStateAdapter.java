@@ -16,8 +16,7 @@ public interface BlockProtocolStateAdapter
 	}
 	
 	/*
-	
-	对于VerticallyAttachableBlock来说，默认情况下，protocol的最低位始终用来区分是Wall(1)还是Norm(0)，bit0使用后自动丢弃，用户不可知
-	如果是Wall情况，那么还会使用bit1~bit2用来存储4个方向，剩余的值作为自定义空间，且必须设置状态为REPLACE
-	 */
+		对于VerticallyAttachableBlock来说，默认情况下，protocol的最低位始终用来区分是Wall(1)还是Norm(0)，bit0使用后自动丢弃，用户不可知
+		如果是Wall情况，那么还会使用bit1~bit2用来存储4个方向，使用后自动丢弃，用户不可知，剩余的值作为自定义空间，且必须设置状态为REPLACE，否则结果不正确
+	*/
 }

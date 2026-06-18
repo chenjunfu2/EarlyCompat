@@ -5,27 +5,24 @@ import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.Property;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Vec3d;
 import org.jetbrains.annotations.Nullable;
 
-import static chenjunfu2.earlycompat.util.EasyPlaceExtraProtocolHelper.decodeProtocolValue;
+import static chenjunfu2.earlycompat.util.EasyPlaceExtraProtocolHelper.decodeProtocolValueFromHitX;
+import static chenjunfu2.earlycompat.util.EasyPlaceExtraProtocolHelper.getRelativeHitX;
 
 public class BlockPlacer
 {
 	public static @Nullable BlockState alternativeBlockPlacement(Block block, Block wallBlock, Direction verticalAttachmentDirection, ItemPlacementContext context)
 	{
-		Vec3d hitPos = context.getHitPos();
-		BlockPos blockPos = context.getBlockPos();
-		double relativeHitX = hitPos.x - (double)blockPos.getX();
+		double relativeHitX = getRelativeHitX(context.getHitPos(), context.getBlockPos());
 		if(relativeHitX < (double)2.0F)//不是协议值
 		{
 			return null;
 		}
 		
 		//最低bit0留给浮点误差兼容，protocolValue已进行摘除处理
-		int protocolValue = decodeProtocolValue(relativeHitX);//注意，特殊路径非Extra协议，全部bit都可利用
+		int protocolValue = decodeProtocolValueFromHitX(relativeHitX);//注意，特殊路径非Extra协议，全部bit都可利用
 		
 		BlockState blockState = null;
 		boolean isWallType = (protocolValue & 0b0000_0001) == 0b0000_0001;
@@ -46,6 +43,7 @@ public class BlockPlacer
 				Direction facing = Direction.values()[facingIndex];
 				blockState2 = blockState2.with(directionProperty, facing);
 			}
+			protocolValue >>>= 2;//使用完毕，丢弃
 			
 			if(wallBlock instanceof BlockProtocolStateAdapter wallBlockProtocolStateAdapter)
 			{

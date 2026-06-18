@@ -67,7 +67,7 @@ public abstract class WorldUtilsMixin_LitematicaProtocolCompat
 		{
 			if(isWallBlock)//不是自定义类型并且是墙上方块类型，默认协议处理
 			{
-				cir.setReturnValue(encodeProtocolRawValue(wallProtocolValue, hitVecIn));//注意，非Extra
+				cir.setReturnValue(encodeProtocolValueToHitVec(wallProtocolValue, hitVecIn));//注意，非Extra
 				cir.cancel();
 			}
 			return;
@@ -78,9 +78,19 @@ public abstract class WorldUtilsMixin_LitematicaProtocolCompat
 			return;//如果不是替换模式，那么什么也不做
 		}
 		
-		Vec3d returnValue = isWallBlock
-			? encodeProtocolRawValue(blockProtocolStateAdapter.earlycompat$toProtocolValue(wallProtocolValue, state), hitVecIn)//注意，非Extra
-			: encodeExtraProtocolRawValue(blockProtocolStateAdapter.earlycompat$toProtocolValue(0, state), hitVecIn);
+		
+		int protocolRawValue = blockProtocolStateAdapter.earlycompat$toProtocolValue(0, state);//获取原始值
+		
+		Vec3d returnValue = null;
+		if(isWallBlock)
+		{
+			protocolRawValue = (protocolRawValue << 3) | (wallProtocolValue & 0b0000_0111);//墙面方块额外拼接低位
+			returnValue = encodeProtocolValueToHitVec(protocolRawValue, hitVecIn);//注意，非Extra
+		}
+		else
+		{
+			returnValue = encodeExtraProtocolValueToHitVec(protocolRawValue, hitVecIn);
+		}
 		
 		cir.setReturnValue(returnValue);
 		cir.cancel();

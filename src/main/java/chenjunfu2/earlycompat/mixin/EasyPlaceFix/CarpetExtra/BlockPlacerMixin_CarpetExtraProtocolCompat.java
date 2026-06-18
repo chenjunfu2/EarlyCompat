@@ -43,7 +43,7 @@ public abstract class BlockPlacerMixin_CarpetExtraProtocolCompat
 		}
 		
 		//最低bit0留给浮点误差兼容，protocolValue已进行摘除处理
-		int protocolValue = decodeProtocolValue(relativeHitX);
+		int protocolValue = decodeProtocolValueFromHitX(relativeHitX);
 		if(!isExtraProtocol(protocolValue))
 		{
 			return;//不是扩展协议
@@ -60,7 +60,7 @@ public abstract class BlockPlacerMixin_CarpetExtraProtocolCompat
 			return;//如果不是替换模式，那么什么也不做
 		}
 		
-		int extraProtocolValue = decodeExtraProtocolRawValue(protocolValue);
+		int extraProtocolValue = extraProtocolValueToRawProtocolValue(protocolValue);
 		cir.setReturnValue(blockProtocolStateAdapter.earlycompat$fromProtocolValue(extraProtocolValue, state));
 		cir.cancel();
 	}
@@ -114,7 +114,7 @@ public abstract class BlockPlacerMixin_CarpetExtraProtocolCompat
 		}
 		
 		//最低bit0留给浮点误差兼容，protocolValue已进行摘除处理
-		int protocolValue = decodeProtocolValue(relativeHitX);
+		int protocolValue = decodeProtocolValueFromHitX(relativeHitX);
 		if(!isExtraProtocol(protocolValue))
 		{
 			return state;//不是扩展协议

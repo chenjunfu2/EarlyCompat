@@ -19,8 +19,8 @@ public abstract class DoorBlockMixin_VanillaProtocolCompat implements BlockProto
 		boolean isOpen = fromState.get(DoorBlock.OPEN);
 		int bits =
 			(facingOrdinal & 0b0000_0011) |
-				(hingeOrdinal & 0b0000_0001) << 2 |
-				(isOpen ? 0b0000_1000 : 0b0000_0000);
+			(hingeOrdinal & 0b0000_0001) << 2 |
+			(isOpen ? 0b0000_1000 : 0b0000_0000);
 		return bits;
 	}
 	

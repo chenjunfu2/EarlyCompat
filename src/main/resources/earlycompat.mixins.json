@@ -32,6 +32,7 @@
     "EasyPlaceFix.Vanilla.Protocol.RepeaterBlockMixin_VanillaProtocolCompat",
     "EasyPlaceFix.Vanilla.Protocol.SignBlockMixin_VanillaProtocolCompat",
     "EasyPlaceFix.Vanilla.Protocol.SkullBlockMixin_VanillaProtocolCompat",
+    "EasyPlaceFix.Vanilla.Protocol.StairsBlockMixin_VanillaProtocolCompat",
     "EasyPlaceFix.Vanilla.Protocol.StructureBlockMixin_VanillaProtocolCompat",
     "EasyPlaceFix.Vanilla.Protocol.TrapdoorBlockMixin_VanillaProtocolCompat",
     "EasyPlaceFix.Vanilla.Protocol.WallMountedBlockMixin_VanillaProtocolCompat",

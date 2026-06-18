@@ -1,6 +1,6 @@
-package chenjunfu2.earlycompat.mixin.EasyPlaceFix.CarpetExtra;
+package chenjunfu2.earlycompat.mixin.EasyPlaceFix.Vanilla.Protocol;
 
-import carpetextra.CarpetExtraSettings;
+import chenjunfu2.earlycompat.accessor.CarpetExtraSettingsAccessor;
 import chenjunfu2.earlycompat.util.BlockPlacer;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import static chenjunfu2.earlycompat.EarlyCompat.isExtraProtocolServerEnabled;
 
 @Mixin(VerticallyAttachableBlockItem.class)
-public class VerticallyAttachableBlockItemMixin_CarpetExtraProtocolCompat extends BlockItem
+public class VerticallyAttachableBlockItemMixin_VanillaProtocolCompat extends BlockItem
 {
 	@Final
 	@Shadow
@@ -27,7 +27,7 @@ public class VerticallyAttachableBlockItemMixin_CarpetExtraProtocolCompat extend
 	@Shadow
 	private Direction verticalAttachmentDirection;
 	
-	public VerticallyAttachableBlockItemMixin_CarpetExtraProtocolCompat(Block block, Settings settings)
+	public VerticallyAttachableBlockItemMixin_VanillaProtocolCompat(Block block, Settings settings)
 	{
 		super(block, settings);
 	}
@@ -40,7 +40,7 @@ public class VerticallyAttachableBlockItemMixin_CarpetExtraProtocolCompat extend
 	)
 	void getAlternatePlacement(ItemPlacementContext context, CallbackInfoReturnable<BlockState> cir)
 	{
-		if(!isExtraProtocolServerEnabled || !CarpetExtraSettings.accurateBlockPlacement)
+		if(!isExtraProtocolServerEnabled || ! CarpetExtraSettingsAccessor.getAccurateBlockPlacement())
 		{
 			return;//啥都不做
 		}

@@ -1,10 +1,12 @@
-package chenjunfu2.earlycompat.mixin.EasyPlaceFix.CarpetExtra;
+package chenjunfu2.earlycompat.client.mixin.EasyPlaceFix.Litematica;
 
-import carpetextra.utils.BlockPlacer;
 import chenjunfu2.earlycompat.util.BlockProtocolStateAdapter;
 import com.llamalad7.mixinextras.sugar.Local;
-import net.minecraft.block.*;
-import net.minecraft.item.ItemPlacementContext;
+import fi.dy.masa.litematica.util.PlacementHandler;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -12,35 +14,33 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import static chenjunfu2.earlycompat.EarlyCompat.isExtraProtocolServerEnabled;
+import static chenjunfu2.earlycompat.client.EarlyCompatClient.isExtraProtocolClientEnabled;
 import static chenjunfu2.earlycompat.util.EasyPlaceExtraProtocolHelper.*;
 
-@Mixin(BlockPlacer.class)
-public abstract class BlockPlacerMixin_CarpetExtraProtocolCompat
+@Mixin(PlacementHandler.class)
+@Environment(EnvType.CLIENT)
+public class PlacementHandlerMixin_LitematicaProtocolCompat
 {
 	@Inject
 	(
-		method = "Lcarpetextra/utils/BlockPlacer;alternativeBlockPlacement(Lnet/minecraft/block/Block;Lnet/minecraft/item/ItemPlacementContext;)Lnet/minecraft/block/BlockState;",
+		method = "Lfi/dy/masa/litematica/util/PlacementHandler;applyPlacementProtocolV2(Lnet/minecraft/block/BlockState;Lfi/dy/masa/litematica/util/PlacementHandler$UseContext;)Lnet/minecraft/block/BlockState;",
 		cancellable = true,
 		at = @At
 		(
 			value = "INVOKE",
-			target = "Lcarpetextra/utils/BlockPlacer;getFirstDirectionProperty(Lnet/minecraft/block/BlockState;)Lnet/minecraft/state/property/DirectionProperty;",
+			target = "Lfi/dy/masa/malilib/util/BlockUtils;getFirstDirectionProperty(Lnet/minecraft/block/BlockState;)Lnet/minecraft/state/property/DirectionProperty;",
 			ordinal = 0
 		)
 	)
-	private static void replaceExtraProtocol
-	(
-		Block block,
-		ItemPlacementContext context,
-		CallbackInfoReturnable<BlockState> cir,
-		@Local(name = "state") BlockState state,
-		@Local(name = "relativeHitX") double relativeHitX
-	)
+	private static void replaceExtraProtocol(BlockState state, PlacementHandler.UseContext context, CallbackInfoReturnable<BlockState> cir)
 	{
-		if(!isExtraProtocolServerEnabled)//未开启扩展协议
+		if(!isExtraProtocolClientEnabled)//未开启扩展协议
 		{
 			return;
 		}
+		
+		Block block = state.getBlock();
+		double relativeHitX = getRelativeHitX(context.getHitVec(), context.getPos());
 		
 		//最低bit0留给浮点误差兼容，protocolValue已进行摘除处理
 		int protocolValue = decodeProtocolValueFromHitX(relativeHitX);
@@ -65,13 +65,14 @@ public abstract class BlockPlacerMixin_CarpetExtraProtocolCompat
 		cir.cancel();
 	}
 	
+	
 	@ModifyVariable
 	(
-		method = "Lcarpetextra/utils/BlockPlacer;alternativeBlockPlacement(Lnet/minecraft/block/Block;Lnet/minecraft/item/ItemPlacementContext;)Lnet/minecraft/block/BlockState;",
+		method = "Lfi/dy/masa/litematica/util/PlacementHandler;applyPlacementProtocolV2(Lnet/minecraft/block/BlockState;Lfi/dy/masa/litematica/util/PlacementHandler$UseContext;)Lnet/minecraft/block/BlockState;",
 		at = @At
 		(
 			value = "INVOKE_ASSIGN",
-			target = "Lnet/minecraft/block/BlockState;get(Lnet/minecraft/state/property/Property;)Ljava/lang/Comparable;",
+			target = "Lfi/dy/masa/malilib/util/BlockUtils;getFirstDirectionProperty(Lnet/minecraft/block/BlockState;)Lnet/minecraft/state/property/DirectionProperty;",
 			ordinal = 0
 		),
 		name = "protocolValue"
@@ -81,7 +82,7 @@ public abstract class BlockPlacerMixin_CarpetExtraProtocolCompat
 		int protocolValue
 	)
 	{
-		if(!isExtraProtocolServerEnabled)//未开启扩展协议
+		if(!isExtraProtocolClientEnabled)//未开启扩展协议
 		{
 			return protocolValue;
 		}
@@ -91,27 +92,29 @@ public abstract class BlockPlacerMixin_CarpetExtraProtocolCompat
 	
 	@ModifyVariable
 	(
-		method = "Lcarpetextra/utils/BlockPlacer;alternativeBlockPlacement(Lnet/minecraft/block/Block;Lnet/minecraft/item/ItemPlacementContext;)Lnet/minecraft/block/BlockState;",
+		method = "Lfi/dy/masa/litematica/util/PlacementHandler;applyPlacementProtocolV2(Lnet/minecraft/block/BlockState;Lfi/dy/masa/litematica/util/PlacementHandler$UseContext;)Lnet/minecraft/block/BlockState;",
 		at = @At
 		(
 			value = "RETURN",
 			ordinal = 2,
 			shift = At.Shift.BY,
-			by = -1//前移一条指令，在ASTORE 6之前才能修改state
+			by = -1//前移一条指令，在ALOAD 0之前才能修改state
 		),
 		name = "state"
 	)
 	private static BlockState addExtraProtocol
 	(
 		BlockState state,
-		@Local(name = "block") Block block,
-		@Local(name = "relativeHitX") double relativeHitX
+		@Local(name = "context") PlacementHandler.UseContext context
 	)
 	{
-		if(!isExtraProtocolServerEnabled)//未开启扩展协议
+		if(!isExtraProtocolClientEnabled)//未开启扩展协议
 		{
 			return state;
 		}
+		
+		Block block = state.getBlock();
+		double relativeHitX = getRelativeHitX(context.getHitVec(), context.getPos());
 		
 		//最低bit0留给浮点误差兼容，protocolValue已进行摘除处理
 		int protocolValue = decodeProtocolValueFromHitX(relativeHitX);
@@ -134,4 +137,5 @@ public abstract class BlockPlacerMixin_CarpetExtraProtocolCompat
 		BlockState newState = blockProtocolStateAdapter.earlycompat$fromProtocolValue(protocolValue, state);//使用原值，不解包
 		return newState;
 	}
+
 }

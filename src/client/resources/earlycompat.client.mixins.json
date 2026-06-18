@@ -5,9 +5,10 @@
   "plugin": "chenjunfu2.earlycompat.mixin.MixinPlugin",
   "client": [
     "EasyPlaceFix.Litematica.WorldUtilsMixin_LitematicaProtocolCompat",
+    "EasyPlaceFix.Vanilla.VerticallyAttachableBlockItemMixin_VanillaProtocolCompat",
     "InventoryPreviewFix.Tweakeroo.RenderUtilsMixin_TweakerooCrafterEarlyCompat",
     "InventoryPreviewFix.Tweakeroo.RenderUtilsMixin_TweakerooVanillaCompat",
-    "EasyPlaceFix.Vanilla.VerticallyAttachableBlockItemMixin_VanillaProtocolCompat"
+    "EasyPlaceFix.Litematica.PlacementHandlerMixin_LitematicaProtocolCompat"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -86,7 +86,8 @@ public class PlacementHandlerMixin_LitematicaProtocolCompat
 			return protocolValue;
 		}
 		
-		return removeExtraProtocolBit(protocolValue);//防止ADDED模式下自定义扩展bit对原始逻辑的影响，所有模式下协议值都从原始浮点内读出，此处修改不影响自定义协议处理效果
+		//注意投影这里的处理时，原始值没有丢弃最低位，要和carpet extra一样必须先右移才是协议值，清理extra扩展位后复原
+		return removeExtraProtocolBit(protocolValue >>> 1) << 1;//防止ADDED模式下自定义扩展bit对原始逻辑的影响，所有模式下协议值都从原始浮点内读出，此处修改不影响自定义协议处理效果
 	}
 	
 	@ModifyVariable

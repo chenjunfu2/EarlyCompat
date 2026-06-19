@@ -6,16 +6,16 @@ import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.text.Text;
 
+import static chenjunfu2.earlycompat.EarlyCompat.isExtraProtocolClientEnabled;
+
 public class EarlyCompatClient implements ClientModInitializer
 {
-	public static boolean isExtraProtocolClientEnabled = true;
-	
 	@Override
 	public void onInitializeClient()
 	{
 		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) ->
 		{
-			var rootCommand = CommandManager.literal("earlycompat")
+			var rootCommand = CommandManager.literal("cearlycompat")
 			.then(CommandManager.literal("set")
 			.then(CommandManager.literal("ExtraProtocolClientEnabled")
 			.then(

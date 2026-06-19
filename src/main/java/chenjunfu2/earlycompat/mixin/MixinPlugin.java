@@ -5,6 +5,7 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.SemanticVersion;
 import net.fabricmc.loader.api.VersionParsingException;
 import org.objectweb.asm.tree.ClassNode;
+import org.spongepowered.asm.mixin.MixinEnvironment;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
 import chenjunfu2.earlycompat.EarlyCompat;
@@ -109,12 +110,12 @@ public class MixinPlugin implements IMixinConfigPlugin
 	@Override
 	public void onLoad(String mixinPackage)
 	{
-		EnvType env = FabricLoader.getInstance().getEnvironmentType();
-		if(env == EnvType.CLIENT)
+		MixinEnvironment.Side side = MixinEnvironment.getCurrentEnvironment().getSide();
+		if(side == MixinEnvironment.Side.CLIENT)
 		{
 			EarlyCompat.LOGGER.info("onLoad environment: CLIENT");
 		}
-		else if(env == EnvType.SERVER)
+		else if(side == MixinEnvironment.Side.SERVER)
 		{
 			EarlyCompat.LOGGER.info("onLoad environment: SERVER");
 		}

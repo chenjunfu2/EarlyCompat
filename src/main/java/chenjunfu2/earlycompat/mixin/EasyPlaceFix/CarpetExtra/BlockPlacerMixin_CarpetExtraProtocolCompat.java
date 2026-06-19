@@ -60,8 +60,8 @@ public abstract class BlockPlacerMixin_CarpetExtraProtocolCompat
 			return;//如果不是替换模式，那么什么也不做
 		}
 		
-		int extraProtocolValue = extraProtocolValueToRawProtocolValue(protocolValue);
-		cir.setReturnValue(blockProtocolStateAdapter.earlycompat$fromProtocolValue(extraProtocolValue, state));
+		int rawProtocolValue = extraProtocolValueToRawProtocolValue(protocolValue);
+		cir.setReturnValue(blockProtocolStateAdapter.earlycompat$fromProtocolValue(rawProtocolValue, state));
 		cir.cancel();
 	}
 	

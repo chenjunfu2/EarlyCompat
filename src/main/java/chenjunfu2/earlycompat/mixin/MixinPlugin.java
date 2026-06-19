@@ -130,17 +130,17 @@ public class MixinPlugin implements IMixinConfigPlugin
 		
 		//Carpet家族（协议提供者）
 		isFabricCarpetAvailable = checkModVersion("Carpet","carpet","1.4.112+");
-		isCarpetExtraAvailable = isFabricCarpetAvailable && checkModVersion("CarpetExtra","carpet-extra","1.4.115+");
-		isPluslsCarpetAdditionAvailable = isFabricCarpetAvailable && checkModVersion("PluslsCarpetAddition","pca-1_20_1","0.3.190+");
+		isCarpetExtraAvailable = checkModVersion("CarpetExtra","carpet-extra","1.4.115+") && isFabricCarpetAvailable;
+		isPluslsCarpetAdditionAvailable = checkModVersion("PluslsCarpetAddition","pca-1_20_1","0.3.190+") && isFabricCarpetAvailable;
 		
 		//前置库（库提供者）
 		isMagicLibAvailable = checkModVersion("MagicLib","magiclib","0.8.576+");
 		isMalilibAvailable = checkModVersion("MaLiLib", "malilib", "0.16.0+");
 		
 		//MASA家族（协议使用者）
-		isMasaGadgetAvailable = isMagicLibAvailable && isMalilibAvailable && checkModVersion("MasaGadget","masa_gadget_mod","4.0.373+");
-		isTweakerooAvailable = isMalilibAvailable && checkModVersion("Tweakeroo","tweakeroo","0.17.1+");
-		isLitematicaAvailable = isMalilibAvailable && checkModVersion("Litematica","litematica","0.15.4+");
+		isMasaGadgetAvailable = checkModVersion("MasaGadget","masa_gadget_mod","4.0.373+") && isMagicLibAvailable && isMalilibAvailable;
+		isTweakerooAvailable = checkModVersion("Tweakeroo","tweakeroo","0.17.1+") && isMalilibAvailable;
+		isLitematicaAvailable = checkModVersion("Litematica","litematica","0.15.4+") && isMalilibAvailable;
 	}
 	
 	@Override
@@ -203,7 +203,7 @@ public class MixinPlugin implements IMixinConfigPlugin
 		// 原版协议实现
 		if(mixinClassName.contains("VanillaProtocolCompat"))
 		{
-			return true;
+			return isLitematicaAvailable || isCarpetExtraAvailable;
 		}
 		
 		// 铜灯协议实现

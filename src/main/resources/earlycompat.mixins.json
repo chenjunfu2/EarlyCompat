@@ -4,7 +4,7 @@
   "compatibilityLevel": "JAVA_17",
   "plugin": "chenjunfu2.earlycompat.mixin.MixinPlugin",
   "mixins": [
-    "accessor.CarpetExtraSettingsAccessorMixin_CarpetExtraProtocolCompat",
+    "EasyPlaceFix.CarpetExtra.CarpetExtraSettingsAccessorMixin_CarpetExtraProtocolCompat",
     "EasyPlaceFix.CarpetExtra.BlockPlacerMixin_CarpetExtraProtocolCompat",
     "EasyPlaceFix.Vanilla.Protocol.VerticallyAttachableBlockItemMixin_VanillaProtocolCompat",
     "EasyPlaceFix.CopperBulbEarly.Protocol.BulbBlockMixin_CopperBlubEarlyProtocolCompat",

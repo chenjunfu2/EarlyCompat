@@ -1,4 +1,4 @@
-package chenjunfu2.earlycompat.mixin.accessor;
+package chenjunfu2.earlycompat.mixin.EasyPlaceFix.CarpetExtra;
 
 import carpetextra.CarpetExtraSettings;
 import chenjunfu2.earlycompat.accessor.CarpetExtraSettingsAccessor;

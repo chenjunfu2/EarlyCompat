@@ -12,6 +12,7 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
 import net.minecraft.util.collection.DefaultedList;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -43,11 +44,12 @@ public class RenderUtilsMixin_MalilibVanillaCompat
 		}
 		
 		NbtCompound nbt = stack.getNbt();
-		if(nbt == null)
+		if (nbt == null || !nbt.contains("BlockEntityTag", NbtElement.COMPOUND_TYPE))
 		{
 			return original.call(items);
 		}
 		
-		return new CrafterSimpleInventory(items, nbt);
+		NbtCompound tagBlockEntity = nbt.getCompound("BlockEntityTag");
+		return new CrafterSimpleInventory(items, tagBlockEntity);
 	}
 }

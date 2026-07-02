@@ -52,7 +52,6 @@ public class CrafterSimpleInventory implements Inventory
 		
 		
 		int[] is = nbt.getIntArray("disabled_slots");
-
         for(int i = 0; i < 9; ++i)
 		{
             this.propertyDelegate.set(i, 0);

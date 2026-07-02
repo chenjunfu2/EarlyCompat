@@ -7,6 +7,8 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.util.collection.DefaultedList;
 
+import static java.lang.Integer.min;
+
 public class CrafterSimpleInventory implements Inventory
 {
 	DefaultedList<ItemStack> inputStacks;
@@ -14,7 +16,12 @@ public class CrafterSimpleInventory implements Inventory
 	
 	public CrafterSimpleInventory(DefaultedList<ItemStack> inputStacks, NbtCompound nbt)
 	{
-		this.inputStacks = inputStacks;
+		this.inputStacks = DefaultedList.ofSize(this.size(), ItemStack.EMPTY);
+		for(int i = 0, size = min(inputStacks.size(), this.size()); i < size; ++i)
+		{
+			this.inputStacks.set(i, inputStacks.get(i));
+		}
+		
 		this.propertyDelegate = new PropertyDelegate()
 		{
             private final int[] disabledSlots = new int[9];

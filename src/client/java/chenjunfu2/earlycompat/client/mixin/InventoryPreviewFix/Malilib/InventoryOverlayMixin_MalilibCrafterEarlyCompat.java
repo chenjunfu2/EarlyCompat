@@ -1,10 +1,13 @@
 package chenjunfu2.earlycompat.client.mixin.InventoryPreviewFix.Malilib;
 
+import chenjunfu2.earlycompat.client.util.CrafterSimpleInventory;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.sugar.Local;
 import fi.dy.masa.malilib.render.InventoryOverlay;
 import net.chenjunfu2.block.CrafterBlock;
 import net.chenjunfu2.block.entity.CrafterBlockEntity;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.block.Block;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
@@ -20,6 +23,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(InventoryOverlay.class)
+@Environment(EnvType.CLIENT)
 public class InventoryOverlayMixin_MalilibCrafterEarlyCompat
 {
 	@ModifyReturnValue
@@ -97,6 +101,19 @@ public class InventoryOverlayMixin_MalilibCrafterEarlyCompat
 				}
 			}
 		}
+		else if(inv instanceof CrafterSimpleInventory crafterInv)
+		{
+			for (int i = 0; i < crafterInv.size(); i++)
+			{
+				int row = i / 3;
+				int col = i % 3;
+				int sx = startX - 1 + col * 18;
+				int sy = startY - 1 + row * 18;
+				if (crafterInv.isSlotDisabled(i))
+				{
+					drawContext.drawTexture(earlycompat$CRAFTER_DISABLED_SLOT_TEXTURE, sx, sy, 0, 0, 18, 18);
+				}
+			}
+		}
 	}
-
 }

@@ -5,6 +5,8 @@ import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.sugar.Local;
 import fi.dy.masa.malilib.render.InventoryOverlay;
 import net.chenjunfu2.block.CrafterBlock;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.block.Block;
 import net.minecraft.block.ChiseledBookshelfBlock;
 import net.minecraft.block.entity.ChiseledBookshelfBlockEntity;
@@ -16,6 +18,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(InventoryOverlay.class)
+@Environment(EnvType.CLIENT)
 public abstract class InventoryOverlayMixin_MalilibVanillaCompat
 {
 	@ModifyReturnValue

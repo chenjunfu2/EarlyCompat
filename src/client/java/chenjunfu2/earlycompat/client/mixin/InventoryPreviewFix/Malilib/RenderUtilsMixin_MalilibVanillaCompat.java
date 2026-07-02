@@ -2,16 +2,11 @@ package chenjunfu2.earlycompat.client.mixin.InventoryPreviewFix.Malilib;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import com.llamalad7.mixinextras.sugar.Local;
 import fi.dy.masa.malilib.render.RenderUtils;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.block.Block;
-import net.minecraft.block.ChestBlock;
 import net.minecraft.block.ChiseledBookshelfBlock;
-import net.minecraft.block.ShulkerBoxBlock;
 import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.collection.DefaultedList;
 import org.spongepowered.asm.mixin.Mixin;

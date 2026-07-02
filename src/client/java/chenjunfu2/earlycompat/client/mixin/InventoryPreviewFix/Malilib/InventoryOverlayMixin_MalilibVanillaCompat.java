@@ -4,7 +4,6 @@ import chenjunfu2.earlycompat.client.Accessor.InventoryRenderTypeAccessor;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.sugar.Local;
 import fi.dy.masa.malilib.render.InventoryOverlay;
-import net.chenjunfu2.block.CrafterBlock;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.Block;

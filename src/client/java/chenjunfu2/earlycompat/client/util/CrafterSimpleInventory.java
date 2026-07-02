@@ -15,7 +15,8 @@ public class CrafterSimpleInventory implements Inventory
 	public CrafterSimpleInventory(DefaultedList<ItemStack> inputStacks, NbtCompound nbt)
 	{
 		this.inputStacks = inputStacks;
-		this.propertyDelegate = new PropertyDelegate(this) {
+		this.propertyDelegate = new PropertyDelegate()
+		{
             private final int[] disabledSlots = new int[9];
             private int triggered = 0;
 

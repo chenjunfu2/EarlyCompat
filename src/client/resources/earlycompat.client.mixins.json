@@ -10,7 +10,8 @@
     "InventoryPreviewFix.Malilib.InventoryOverlayMixin_MalilibCrafterEarlyCompat",
     "InventoryPreviewFix.Malilib.InventoryOverlayMixin_MalilibVanillaCompat",
     "InventoryPreviewFix.Malilib.InventoryRenderTypeMixin_MalilibVanillaCompat",
-    "InventoryPreviewFix.Malilib.InventoryUtilsMixin_MalilibVanillaCompat"
+    "InventoryPreviewFix.Malilib.InventoryUtilsMixin_MalilibVanillaCompat",
+    "InventoryPreviewFix.Malilib.RenderUtilsMixin_MalilibVanillaCompat"
   ],
   "injectors": {
     "defaultRequire": 1

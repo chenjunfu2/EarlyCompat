@@ -19,7 +19,7 @@ import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(RenderUtils.class)
 @Environment(EnvType.CLIENT)
-public class RenderUtilsMixin_MalilibCrafterEarlyCompat
+public abstract class RenderUtilsMixin_MalilibCrafterEarlyCompat
 {
 	@WrapOperation
 	(

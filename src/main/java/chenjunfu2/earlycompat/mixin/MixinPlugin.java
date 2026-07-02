@@ -27,7 +27,6 @@ public class MixinPlugin implements IMixinConfigPlugin
 	private boolean isMalilibAvailable = false;
 	
 	private boolean isMasaGadgetAvailable = false;
-	private boolean isTweakerooAvailable = false;
 	private boolean isLitematicaAvailable = false;
 	
 	private boolean checkVersionConstraint(SemanticVersion installed, String constraint) throws VersionParsingException
@@ -140,7 +139,6 @@ public class MixinPlugin implements IMixinConfigPlugin
 		
 		//MASA家族（协议使用者）
 		isMasaGadgetAvailable = checkModVersion("MasaGadget","masa_gadget_mod","4.0.373+") && isMagicLibAvailable && isMalilibAvailable;
-		isTweakerooAvailable = checkModVersion("Tweakeroo","tweakeroo","0.17.1+") && isMalilibAvailable;
 		isLitematicaAvailable = checkModVersion("Litematica","litematica","0.15.4+") && isMalilibAvailable;
 	}
 	
@@ -189,16 +187,16 @@ public class MixinPlugin implements IMixinConfigPlugin
 			return isMasaGadgetAvailable && isCrafterEarlyAvailable;
 		}
 		
-		// Tweakeroo原版修复
-		if(mixinClassName.contains("TweakerooVanillaCompat"))
+		// Malilib原版修复
+		if(mixinClassName.contains("MalilibVanillaCompat"))
 		{
-			return isTweakerooAvailable;
+			return isMalilibAvailable;
 		}
 		
-		// Tweakeroo合成器移植修复
-		if(mixinClassName.contains("TweakerooCrafterEarlyCompat"))
+		// Malilib合成器移植修复
+		if(mixinClassName.contains("MalilibCrafterEarlyCompat"))
 		{
-			return isTweakerooAvailable && isCrafterEarlyAvailable;
+			return isMalilibAvailable && isCrafterEarlyAvailable;
 		}
 		
 		// 原版协议实现

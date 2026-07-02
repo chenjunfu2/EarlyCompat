@@ -4,16 +4,19 @@
   "compatibilityLevel": "JAVA_17",
   "plugin": "chenjunfu2.earlycompat.mixin.MixinPlugin",
   "client": [
+    "EasyPlaceFix.Litematica.PlacementHandlerMixin_LitematicaProtocolCompat",
     "EasyPlaceFix.Litematica.WorldUtilsMixin_LitematicaProtocolCompat",
     "EasyPlaceFix.Vanilla.VerticallyAttachableBlockItemMixin_VanillaProtocolCompat",
-    "InventoryPreviewFix.Tweakeroo.RenderUtilsMixin_TweakerooCrafterEarlyCompat",
-    "InventoryPreviewFix.Tweakeroo.RenderUtilsMixin_TweakerooVanillaCompat",
-    "EasyPlaceFix.Litematica.PlacementHandlerMixin_LitematicaProtocolCompat"
+    "InventoryPreviewFix.Malilib.InventoryOverlayMixin_MalilibVanillaCompat",
+    "InventoryPreviewFix.Malilib.InventoryRenderTypeMixin_MalilibVanillaCompat"
   ],
   "injectors": {
     "defaultRequire": 1
   },
   "overwrites": {
     "requireAnnotations": true
-  }
+  },
+  "mixins": [
+    "InventoryPreviewFix.Malilib.InventoryOverlayMixin_MalilibCrafterEarlyCompat"
+  ]
 }

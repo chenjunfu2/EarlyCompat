@@ -30,16 +30,14 @@ public abstract class InventoryUtilsMixin_MalilibVanillaCompat
 	)
 	private static void processSingleItem0(ItemStack stackIn, int slotCount, CallbackInfoReturnable<DefaultedList<ItemStack>> cir, @Local(name = "tagBlockEntity") NbtCompound tagBlockEntity)
 	{
-		if (tagBlockEntity.contains("item", NbtElement.COMPOUND_TYPE))
+		var item = getSingleItem(tagBlockEntity);
+		if(item == null)
 		{
-			NbtCompound tag = tagBlockEntity.getCompound("item");
-			ItemStack stack = ItemStack.fromNbt(tag);
-			DefaultedList<ItemStack> item = DefaultedList.of();
-			item.add(stack);
-			
-			cir.setReturnValue(item);
-			cir.cancel();
+			return;
 		}
+		
+		cir.setReturnValue(item);
+		cir.cancel();
 	}
 	
 	@Inject
@@ -55,15 +53,40 @@ public abstract class InventoryUtilsMixin_MalilibVanillaCompat
 	)
 	private static void processSingleItem1(ItemStack stackIn, CallbackInfoReturnable<DefaultedList<ItemStack>> cir, @Local(name = "tagBlockEntity") NbtCompound tagBlockEntity)
 	{
+		var item = getSingleItem(tagBlockEntity);
+		if(item == null)
+		{
+			return;
+		}
+		
+		cir.setReturnValue(item);
+		cir.cancel();
+	}
+	
+	
+	private static DefaultedList<ItemStack> getSingleItem(NbtCompound tagBlockEntity)
+	{
+		NbtCompound itemTag;
 		if (tagBlockEntity.contains("item", NbtElement.COMPOUND_TYPE))
 		{
-			NbtCompound tag = tagBlockEntity.getCompound("item");
-			ItemStack stack = ItemStack.fromNbt(tag);
-			DefaultedList<ItemStack> item = DefaultedList.of();
-			item.add(stack);
-			
-			cir.setReturnValue(item);
-			cir.cancel();
+			itemTag = tagBlockEntity.getCompound("item");
 		}
+		else if(tagBlockEntity.contains("RecordItem", NbtElement.COMPOUND_TYPE))
+		{
+			itemTag = tagBlockEntity.getCompound("RecordItem");
+		}
+		else if(tagBlockEntity.contains("Book", NbtElement.COMPOUND_TYPE))
+		{
+			itemTag = tagBlockEntity.getCompound("RecordItem");
+		}
+		else
+		{
+			return null;
+		}
+		
+		DefaultedList<ItemStack> item = DefaultedList.of();
+		item.add(ItemStack.fromNbt(itemTag));
+		return item;
 	}
+	
 }

@@ -19,6 +19,6 @@
     "requireAnnotations": true
   },
   "mixins": [
-    "InventoryPreviewFix.Malilib.RenderUtilsMixin_MalilibVanillaCompat"
+    "InventoryPreviewFix.Malilib.RenderUtilsMixin_MalilibCrafterEarlyCompat"
   ]
 }

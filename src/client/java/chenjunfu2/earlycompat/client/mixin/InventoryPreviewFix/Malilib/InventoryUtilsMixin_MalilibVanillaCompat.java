@@ -77,7 +77,7 @@ public abstract class InventoryUtilsMixin_MalilibVanillaCompat
 		}
 		else if(tagBlockEntity.contains("Book", NbtElement.COMPOUND_TYPE))
 		{
-			itemTag = tagBlockEntity.getCompound("RecordItem");
+			itemTag = tagBlockEntity.getCompound("Book");
 		}
 		else
 		{

@@ -6,6 +6,8 @@ import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import fi.dy.masa.malilib.render.RenderUtils;
 import net.chenjunfu2.block.CrafterBlock;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
@@ -15,6 +17,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(RenderUtils.class)
+@Environment(EnvType.CLIENT)
 public class RenderUtilsMixin_MalilibVanillaCompat
 {
 	@WrapOperation
@@ -24,7 +27,8 @@ public class RenderUtilsMixin_MalilibVanillaCompat
 		(
 			value = "INVOKE",
 			target = "Lfi/dy/masa/malilib/util/InventoryUtils;getAsInventory(Lnet/minecraft/util/collection/DefaultedList;)Lnet/minecraft/inventory/Inventory;"
-		)
+		),
+		remap = false
 	)
 	private static Inventory modifyInventoryToCrafterSimpleInventory(DefaultedList<ItemStack> items, Operation<Inventory> original, @Local(name = "stack") ItemStack stack)
 	{

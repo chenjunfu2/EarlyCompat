@@ -18,7 +18,7 @@ import static chenjunfu2.earlycompat.client.Accessor.InventoryRenderTypeAccessor
 @Environment(EnvType.CLIENT)
 public abstract class InventoryRenderTypeMixin_MalilibVanillaCompat
 {
-	@Shadow
+	@Shadow(remap = false)
 	@Final
 	@Mutable
 	private static InventoryOverlay.InventoryRenderType[] $VALUES;
@@ -32,7 +32,8 @@ public abstract class InventoryRenderTypeMixin_MalilibVanillaCompat
 	@Inject
 	(
 		method = "<clinit>",
-		at = @At(value = "RETURN")
+		at = @At(value = "RETURN"),
+		remap = false
 	)
 	private static void onStaticInit(CallbackInfo ci)
 	{

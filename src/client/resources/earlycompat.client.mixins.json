@@ -11,15 +11,13 @@
     "InventoryPreviewFix.Malilib.InventoryOverlayMixin_MalilibVanillaCompat",
     "InventoryPreviewFix.Malilib.InventoryRenderTypeMixin_MalilibVanillaCompat",
     "InventoryPreviewFix.Malilib.InventoryUtilsMixin_MalilibVanillaCompat",
-    "InventoryPreviewFix.Malilib.RenderUtilsMixin_MalilibVanillaCompat"
+    "InventoryPreviewFix.Malilib.RenderUtilsMixin_MalilibVanillaCompat",
+    "InventoryPreviewFix.Malilib.RenderUtilsMixin_MalilibCrafterEarlyCompat"
   ],
   "injectors": {
     "defaultRequire": 1
   },
   "overwrites": {
     "requireAnnotations": true
-  },
-  "mixins": [
-    "InventoryPreviewFix.Malilib.RenderUtilsMixin_MalilibCrafterEarlyCompat"
-  ]
+  }
 }

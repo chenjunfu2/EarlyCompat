@@ -23,8 +23,7 @@ public abstract class RenderUtilsMixin_MalilibVanillaCompat
 		(
 			value = "INVOKE",
 			target = "Lfi/dy/masa/malilib/util/InventoryUtils;getStoredItems(Lnet/minecraft/item/ItemStack;I)Lnet/minecraft/util/collection/DefaultedList;"
-		),
-		remap = false
+		)
 	)
 	private static DefaultedList<ItemStack> modifyInventoryToCrafterSimpleInventory(ItemStack stackIn, int slotCount, Operation<DefaultedList<ItemStack>> original)
 	{

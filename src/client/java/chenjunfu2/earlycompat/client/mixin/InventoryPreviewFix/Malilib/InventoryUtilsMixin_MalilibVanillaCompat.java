@@ -25,8 +25,7 @@ public abstract class InventoryUtilsMixin_MalilibVanillaCompat
 			value = "INVOKE_ASSIGN",
 			target = "Lnet/minecraft/nbt/NbtCompound;getCompound(Ljava/lang/String;)Lnet/minecraft/nbt/NbtCompound;"
 		),
-		cancellable = true,
-		remap = false
+		cancellable = true
 	)
 	private static void processSingleItem0(ItemStack stackIn, int slotCount, CallbackInfoReturnable<DefaultedList<ItemStack>> cir, @Local(name = "tagBlockEntity") NbtCompound tagBlockEntity)
 	{
@@ -48,8 +47,7 @@ public abstract class InventoryUtilsMixin_MalilibVanillaCompat
 			value = "INVOKE_ASSIGN",
 			target = "Lnet/minecraft/nbt/NbtCompound;getCompound(Ljava/lang/String;)Lnet/minecraft/nbt/NbtCompound;"
 		),
-		cancellable = true,
-		remap = false
+		cancellable = true
 	)
 	private static void processSingleItem1(ItemStack stackIn, CallbackInfoReturnable<DefaultedList<ItemStack>> cir, @Local(name = "tagBlockEntity") NbtCompound tagBlockEntity)
 	{

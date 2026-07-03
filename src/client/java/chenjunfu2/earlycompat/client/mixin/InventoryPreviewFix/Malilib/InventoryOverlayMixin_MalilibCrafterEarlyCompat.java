@@ -33,8 +33,7 @@ public class InventoryOverlayMixin_MalilibCrafterEarlyCompat
 		(
 			value = "RETURN",
 			ordinal = 7
-		),
-		remap = false
+		)
 	)
 	private static InventoryOverlay.InventoryRenderType modifyInventoryTypeInv(InventoryOverlay.InventoryRenderType original, @Local(name = "inv") Inventory inv)
 	{
@@ -53,8 +52,7 @@ public class InventoryOverlayMixin_MalilibCrafterEarlyCompat
 		(
 			value = "RETURN",
 			ordinal = 5
-		),
-		remap = false
+		)
 	)
 	private static InventoryOverlay.InventoryRenderType modifyInventoryTypeStack(InventoryOverlay.InventoryRenderType original, @Local(name = "stack") ItemStack stack)
 	{
@@ -80,8 +78,7 @@ public class InventoryOverlayMixin_MalilibCrafterEarlyCompat
 		at = @At
 		(
 			value = "HEAD"
-		),
-		remap = false
+		)
 	)
 	private static void drawCrafterDisableSlots(InventoryOverlay.InventoryRenderType type, Inventory inv, int startX, int startY, int slotsPerRow, int startSlot, int maxSlots, MinecraftClient mc, DrawContext drawContext, CallbackInfo ci)
 	{

@@ -28,8 +28,7 @@ public abstract class RenderUtilsMixin_MalilibCrafterEarlyCompat
 		(
 			value = "INVOKE",
 			target = "Lfi/dy/masa/malilib/util/InventoryUtils;getAsInventory(Lnet/minecraft/util/collection/DefaultedList;)Lnet/minecraft/inventory/Inventory;"
-		),
-		remap = false
+		)
 	)
 	private static Inventory modifyInventoryToCrafterSimpleInventory(DefaultedList<ItemStack> items, Operation<Inventory> original, @Local(name = "stack") ItemStack stack)
 	{

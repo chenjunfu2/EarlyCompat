@@ -27,8 +27,7 @@ public abstract class InventoryOverlayMixin_MalilibVanillaCompat
 		(
 			value = "RETURN",
 			ordinal = 7
-		),
-		remap = false
+		)
 	)
 	private static InventoryOverlay.InventoryRenderType modifyInventoryTypeInv(InventoryOverlay.InventoryRenderType original, @Local(name = "inv") Inventory inv)
 	{
@@ -47,8 +46,7 @@ public abstract class InventoryOverlayMixin_MalilibVanillaCompat
 		(
 			value = "RETURN",
 			ordinal = 5
-		),
-		remap = false
+		)
 	)
 	private static InventoryOverlay.InventoryRenderType modifyInventoryTypeStack(InventoryOverlay.InventoryRenderType original, @Local(name = "stack") ItemStack stack)
 	{
@@ -72,8 +70,7 @@ public abstract class InventoryOverlayMixin_MalilibVanillaCompat
 		(
 			value = "RETURN",
 			ordinal = 0
-		),
-		remap = false
+		)
 	)
 	private static InventoryOverlay.InventoryProperties modifyInventoryOverlay(InventoryOverlay.InventoryProperties original, @Local(name = "type") InventoryOverlay.InventoryRenderType type)
 	{
@@ -86,6 +83,4 @@ public abstract class InventoryOverlayMixin_MalilibVanillaCompat
 		
 		return original;
 	}
-	
-
 }

@@ -17,7 +17,7 @@ public abstract class InventoryPreviewSyncDataUtilMixin_MasaVanillaCompat
 {
 	@Inject
 	(
-		method = "onHitCallback(Lnet/minecraft/util/hit/HitResult;ZZ)V",
+		method = "Lcom/plusls/MasaGadget/util/InventoryPreviewSyncDataUtil;onHitCallback(Lnet/minecraft/util/hit/HitResult;ZZ)V",
 		cancellable = true,
 		at =
 		@At

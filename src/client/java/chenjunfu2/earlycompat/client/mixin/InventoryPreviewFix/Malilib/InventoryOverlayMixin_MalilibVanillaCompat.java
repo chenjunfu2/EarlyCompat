@@ -70,7 +70,8 @@ public abstract class InventoryOverlayMixin_MalilibVanillaCompat
 		(
 			value = "RETURN",
 			ordinal = 0
-		)
+		),
+		remap = false
 	)
 	private static InventoryOverlay.InventoryProperties modifyInventoryOverlay(InventoryOverlay.InventoryProperties original, @Local(name = "type") InventoryOverlay.InventoryRenderType type)
 	{

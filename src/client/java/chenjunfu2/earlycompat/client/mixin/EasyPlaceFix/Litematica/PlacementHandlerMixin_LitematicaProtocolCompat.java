@@ -1,6 +1,6 @@
 package chenjunfu2.earlycompat.client.mixin.EasyPlaceFix.Litematica;
 
-import chenjunfu2.earlycompat.network.EarlyCompatS2ClientHandler;
+import chenjunfu2.earlycompat.client.network.EarlyCompatS2ClientHandler;
 import chenjunfu2.earlycompat.util.BlockProtocolStateAdapter;
 import com.llamalad7.mixinextras.sugar.Local;
 import fi.dy.masa.litematica.util.PlacementHandler;

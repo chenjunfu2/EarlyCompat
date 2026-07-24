@@ -11,41 +11,31 @@ import java.util.function.Consumer;
 
 public class EarlyCompatNetwork
 {
-      private static final PacketId<EarlyCompatPacket> PACKET_TYPE = PacketId.of("earlycompat", "network");
+	public static final PacketId<EarlyCompatPacket> PACKET_TYPE = PacketId.of("earlycompat", "network");
 
-      public static class C2S
-	  {
-          public static final int HI = 0;
-      }
+	public static class C2S
+	{
+	    public static final int HI = 0;
+	}
 
-      public static class S2C
-	  {
-          public static final int HI_ACK = 0;
-      }
+	public static class S2C
+	{
+	    public static final int HI_ACK = 0;
+	}
 
-      // 创建 C2S 包
-      public static CustomPayloadC2SPacket createC2S(int packetId, Consumer<NbtCompound> builder)
-	  {
-          NbtCompound nbt = new NbtCompound();
-          builder.accept(nbt);
-          return FanetlibPackets.createC2S(PACKET_TYPE, new EarlyCompatPacket(packetId, nbt));
-      }
+	// 创建 C2S 包
+	public static CustomPayloadC2SPacket createC2S(int packetId, Consumer<NbtCompound> builder)
+	{
+	    NbtCompound nbt = new NbtCompound();
+	    builder.accept(nbt);
+	    return FanetlibPackets.createC2S(PACKET_TYPE, new EarlyCompatPacket(packetId, nbt));
+	}
 
-      // 创建 S2C 包
-      public static CustomPayloadS2CPacket createS2C(int packetId, Consumer<NbtCompound> builder)
-	  {
-          NbtCompound nbt = new NbtCompound();
-          builder.accept(nbt);
-          return FanetlibPackets.createS2C(PACKET_TYPE, new EarlyCompatPacket(packetId, nbt));
-      }
-
-      // 注册（由 Mixin 钩子调用）
-      public static void initPackets() {
-          FanetlibPackets.registerDual(
-			  PACKET_TYPE,
-              PacketCodec.of(EarlyCompatPacket::write, EarlyCompatPacket::new),
-              (packet, ctx) -> EarlyCompatC2ServerHandler.handle(packet, ctx.getPlayer()),//server
-              (packet, ctx) -> EarlyCompatS2ClientHandler.handle(packet, ctx.getPlayer())//client
-          );
-      }
+	// 创建 S2C 包
+	public static CustomPayloadS2CPacket createS2C(int packetId, Consumer<NbtCompound> builder)
+	{
+	    NbtCompound nbt = new NbtCompound();
+	    builder.accept(nbt);
+	    return FanetlibPackets.createS2C(PACKET_TYPE, new EarlyCompatPacket(packetId, nbt));
+	}
 }

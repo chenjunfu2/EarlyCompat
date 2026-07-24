@@ -1,6 +1,8 @@
-package chenjunfu2.earlycompat.network;
+package chenjunfu2.earlycompat.client.network;
 
 import chenjunfu2.earlycompat.EarlyCompat;
+import chenjunfu2.earlycompat.network.EarlyCompatNetwork;
+import chenjunfu2.earlycompat.network.EarlyCompatPacket;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.nbt.NbtCompound;

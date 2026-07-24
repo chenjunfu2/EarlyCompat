@@ -145,12 +145,6 @@ public class MixinPlugin implements IMixinConfigPlugin
 	@Override
 	public boolean shouldApplyMixin(String targetClassName, String mixinClassName)
 	{
-		// 协议相关
-		if(mixinClassName.endsWith("_Network"))
-		{
-			return true;
-		}
-		
 		// 原版BUG修复
 		if(mixinClassName.endsWith("_VanillaBugFix"))
 		{

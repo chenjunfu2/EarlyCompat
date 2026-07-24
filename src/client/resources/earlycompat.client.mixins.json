@@ -12,8 +12,7 @@
     "InventoryPreviewFix.Malilib.InventoryRenderTypeMixin_MalilibVanillaCompat",
     "InventoryPreviewFix.Malilib.InventoryUtilsMixin_MalilibVanillaCompat",
     "InventoryPreviewFix.Malilib.RenderUtilsMixin_MalilibCrafterEarlyCompat",
-    "InventoryPreviewFix.Malilib.RenderUtilsMixin_MalilibVanillaCompat",
-    "network.FanetlibPacketRegistrationCenterMixin_Client_Network"
+    "InventoryPreviewFix.Malilib.RenderUtilsMixin_MalilibVanillaCompat"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -1,24 +1,23 @@
 package chenjunfu2.earlycompat.mixin.EasyPlaceFix.Vanilla.Protocol;
 
 import chenjunfu2.earlycompat.accessor.CarpetExtraSettingsAccessor;
+import chenjunfu2.earlycompat.network.EarlyCompatC2ServerHandler;
 import chenjunfu2.earlycompat.util.BlockPlacer;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.VerticallyAttachableBlockItem;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.Direction;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import static chenjunfu2.earlycompat.EarlyCompat.isExtraProtocolServerEnabled;
+import static chenjunfu2.earlycompat.EarlyCompat.IS_SERVER_ENV;
 
 @Mixin(VerticallyAttachableBlockItem.class)
 public class VerticallyAttachableBlockItemMixin_VanillaProtocolCompat extends BlockItem
@@ -35,9 +34,6 @@ public class VerticallyAttachableBlockItemMixin_VanillaProtocolCompat extends Bl
 		super(block, settings);
 	}
 	
-	@Unique
-	private static final boolean earlycompat$IS_SERVER_ENV = FabricLoader.getInstance().getEnvironmentType() == EnvType.SERVER;
-	
 	@Inject
 	(
 		method = "Lnet/minecraft/item/VerticallyAttachableBlockItem;getPlacementState(Lnet/minecraft/item/ItemPlacementContext;)Lnet/minecraft/block/BlockState;",
@@ -46,7 +42,7 @@ public class VerticallyAttachableBlockItemMixin_VanillaProtocolCompat extends Bl
 	)
 	void getAlternatePlacement(ItemPlacementContext context, CallbackInfoReturnable<BlockState> cir)
 	{
-		if(!isExtraProtocolServerEnabled || (earlycompat$IS_SERVER_ENV && !CarpetExtraSettingsAccessor.getAccurateBlockPlacement()))//不是客户端并且carpet规则被关闭
+		if(!EarlyCompatC2ServerHandler.isExtraProtocolPlayer((ServerPlayerEntity)context.getPlayer()) || (IS_SERVER_ENV && !CarpetExtraSettingsAccessor.getAccurateBlockPlacement()))//玩家没有扩展协议或不是客户端并且carpet规则被关闭
 		{
 			return;//啥都不做
 		}

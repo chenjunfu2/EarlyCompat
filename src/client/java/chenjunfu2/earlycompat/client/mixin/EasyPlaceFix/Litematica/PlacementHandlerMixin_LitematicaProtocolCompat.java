@@ -1,5 +1,6 @@
 package chenjunfu2.earlycompat.client.mixin.EasyPlaceFix.Litematica;
 
+import chenjunfu2.earlycompat.network.EarlyCompatS2ClientHandler;
 import chenjunfu2.earlycompat.util.BlockProtocolStateAdapter;
 import com.llamalad7.mixinextras.sugar.Local;
 import fi.dy.masa.litematica.util.PlacementHandler;
@@ -13,7 +14,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import static chenjunfu2.earlycompat.EarlyCompat.isExtraProtocolClientEnabled;
 import static chenjunfu2.earlycompat.util.EasyPlaceExtraProtocolHelper.*;
 
 @Mixin(PlacementHandler.class)
@@ -33,7 +33,7 @@ public class PlacementHandlerMixin_LitematicaProtocolCompat
 	)
 	private static void replaceExtraProtocol(BlockState state, PlacementHandler.UseContext context, CallbackInfoReturnable<BlockState> cir)
 	{
-		if(!isExtraProtocolClientEnabled)//未开启扩展协议
+		if(!EarlyCompatS2ClientHandler.isServerSupportsExtraProtocol())//当前服务器未开启扩展协议
 		{
 			return;
 		}
@@ -81,7 +81,7 @@ public class PlacementHandlerMixin_LitematicaProtocolCompat
 		int protocolValue
 	)
 	{
-		if(!isExtraProtocolClientEnabled)//未开启扩展协议
+		if(!EarlyCompatS2ClientHandler.isServerSupportsExtraProtocol())//未开启扩展协议
 		{
 			return protocolValue;
 		}
@@ -108,7 +108,7 @@ public class PlacementHandlerMixin_LitematicaProtocolCompat
 		@Local(name = "context") PlacementHandler.UseContext context
 	)
 	{
-		if(!isExtraProtocolClientEnabled)//未开启扩展协议
+		if(!EarlyCompatS2ClientHandler.isServerSupportsExtraProtocol())//未开启扩展协议
 		{
 			return state;
 		}

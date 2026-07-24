@@ -11,9 +11,7 @@ import java.util.function.Consumer;
 
 public class EarlyCompatNetwork
 {
-// 通道名：用你的 MOD_ID + 路径
-      private static final PacketId<EarlyCompatPacket> PACKET_TYPE =
-          PacketId.of("earlycompat", "network");
+      private static final PacketId<EarlyCompatPacket> PACKET_TYPE = PacketId.of("earlycompat", "network");
 
       public static class C2S
 	  {
@@ -22,7 +20,7 @@ public class EarlyCompatNetwork
 
       public static class S2C
 	  {
-          public static final int HI = 0;
+          public static final int HI_ACK = 0;
       }
 
       // 创建 C2S 包
@@ -46,8 +44,8 @@ public class EarlyCompatNetwork
           FanetlibPackets.registerDual(
 			  PACKET_TYPE,
               PacketCodec.of(EarlyCompatPacket::write, EarlyCompatPacket::new),
-              (p, c) -> EarlyCompatC2SHandler.handle(p, c.getPlayer()),
-              (p, c) -> EarlyCompatS2CHandler.handle(p, c.getPlayer())
+              (packet, ctx) -> EarlyCompatC2ServerHandler.handle(packet, ctx.getPlayer()),//server
+              (packet, ctx) -> EarlyCompatS2ClientHandler.handle(packet, ctx.getPlayer())//client
           );
       }
 }

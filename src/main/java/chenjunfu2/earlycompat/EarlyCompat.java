@@ -1,12 +1,9 @@
 package chenjunfu2.earlycompat;
 
-import com.mojang.brigadier.arguments.BoolArgumentType;
+import net.fabricmc.api.EnvType;
 import net.fabricmc.api.ModInitializer;
 
-import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.server.command.CommandManager;
-import net.minecraft.text.Text;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,40 +11,17 @@ public class EarlyCompat implements ModInitializer
 {
 	public static final String MOD_ID = "earlycompat";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
-	public static String VERSION = "NaN";
 	
-	public static boolean isExtraProtocolClientEnabled = true;
-	public static boolean isExtraProtocolServerEnabled = true;
+	public static boolean IS_SERVER_ENV = false;
+	public static String VERSION = "NaN";
 	
 	@Override
 	public void onInitialize()
 	{
-		//设置版本信息
-		VERSION = FabricLoader.getInstance().getModContainer(MOD_ID).orElseThrow(RuntimeException::new).getMetadata().getVersion().getFriendlyString();
+		var loaderInstance = FabricLoader.getInstance();
 		
-		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) ->
-		{
-			var rootCommand = CommandManager.literal("earlycompat")
-			.requires(source -> source.hasPermissionLevel(2))
-			.then(CommandManager.literal("set")
-			.then(CommandManager.literal("ExtraProtocolServerEnabled")
-			.then(
-				CommandManager.argument("ExtraProtocolServerEnabled", BoolArgumentType.bool())
-				.executes
-				(context ->
-					{
-						isExtraProtocolServerEnabled = BoolArgumentType.getBool(context, "ExtraProtocolServerEnabled");
-						context.getSource().
-							sendFeedback(
-								() -> Text.literal("set ExtraProtocolServerEnabled " + (isExtraProtocolServerEnabled ? "true" : "false")),
-								true
-							);
-						return 1;
-					}
-				)
-			)));
-			
-			dispatcher.register(rootCommand);
-		});
+		//设置信息
+		IS_SERVER_ENV = loaderInstance.getEnvironmentType() == EnvType.SERVER;
+		VERSION = loaderInstance.getModContainer(MOD_ID).orElseThrow(RuntimeException::new).getMetadata().getVersion().getFriendlyString();
 	}
 }

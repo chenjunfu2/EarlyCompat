@@ -1,6 +1,7 @@
 package chenjunfu2.earlycompat.client.mixin.EasyPlaceFix.Litematica;
 
 import chenjunfu2.earlycompat.client.Accessor.VerticallyAttachableBlockItemAccessor;
+import chenjunfu2.earlycompat.network.EarlyCompatS2ClientHandler;
 import chenjunfu2.earlycompat.util.BlockPlacer;
 import chenjunfu2.earlycompat.util.BlockProtocolStateAdapter;
 import com.llamalad7.mixinextras.sugar.Local;
@@ -18,7 +19,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import static chenjunfu2.earlycompat.EarlyCompat.isExtraProtocolClientEnabled;
 import static chenjunfu2.earlycompat.util.EasyPlaceExtraProtocolHelper.*;
 
 @Mixin(WorldUtils.class)
@@ -33,7 +33,7 @@ public abstract class WorldUtilsMixin_LitematicaProtocolCompat
 	)
 	private static void replaceExtraProtocol(BlockPos pos, BlockState state, Vec3d hitVecIn, CallbackInfoReturnable<Vec3d> cir)
 	{
-		if(!isExtraProtocolClientEnabled)//未开启扩展协议
+		if(!EarlyCompatS2ClientHandler.isServerSupportsExtraProtocol())//未开启扩展协议
 		{
 			return;
 		}
@@ -117,7 +117,7 @@ public abstract class WorldUtilsMixin_LitematicaProtocolCompat
 	)
 	private static int addExtraProtocol(int protocolValue, @Local(name = "state") BlockState state)
 	{
-		if(!isExtraProtocolClientEnabled)//未开启扩展协议
+		if(!EarlyCompatS2ClientHandler.isServerSupportsExtraProtocol())//未开启扩展协议
 		{
 			return protocolValue;
 		}

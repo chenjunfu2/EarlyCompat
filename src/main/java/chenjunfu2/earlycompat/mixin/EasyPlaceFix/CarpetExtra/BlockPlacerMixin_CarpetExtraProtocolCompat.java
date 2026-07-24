@@ -1,17 +1,18 @@
 package chenjunfu2.earlycompat.mixin.EasyPlaceFix.CarpetExtra;
 
 import carpetextra.utils.BlockPlacer;
+import chenjunfu2.earlycompat.network.EarlyCompatC2ServerHandler;
 import chenjunfu2.earlycompat.util.BlockProtocolStateAdapter;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.block.*;
 import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.server.network.ServerPlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import static chenjunfu2.earlycompat.EarlyCompat.isExtraProtocolServerEnabled;
 import static chenjunfu2.earlycompat.util.EasyPlaceExtraProtocolHelper.*;
 
 @Mixin(BlockPlacer.class)
@@ -37,7 +38,7 @@ public abstract class BlockPlacerMixin_CarpetExtraProtocolCompat
 		@Local(name = "relativeHitX") double relativeHitX
 	)
 	{
-		if(!isExtraProtocolServerEnabled)//未开启扩展协议
+		if(!EarlyCompatC2ServerHandler.isExtraProtocolPlayer((ServerPlayerEntity)context.getPlayer()))//玩家没有扩展协议
 		{
 			return;
 		}
@@ -78,10 +79,11 @@ public abstract class BlockPlacerMixin_CarpetExtraProtocolCompat
 	)
 	private static int replaceExtraProtocolValue
 	(
-		int protocolValue
+		int protocolValue,
+		@Local(name = "context") ItemPlacementContext context
 	)
 	{
-		if(!isExtraProtocolServerEnabled)//未开启扩展协议
+		if(!EarlyCompatC2ServerHandler.isExtraProtocolPlayer((ServerPlayerEntity)context.getPlayer()))//玩家没有扩展协议
 		{
 			return protocolValue;
 		}
@@ -105,10 +107,11 @@ public abstract class BlockPlacerMixin_CarpetExtraProtocolCompat
 	(
 		BlockState state,
 		@Local(name = "block") Block block,
+		@Local(name = "context") ItemPlacementContext context,
 		@Local(name = "relativeHitX") double relativeHitX
 	)
 	{
-		if(!isExtraProtocolServerEnabled)//未开启扩展协议
+		if(!EarlyCompatC2ServerHandler.isExtraProtocolPlayer((ServerPlayerEntity)context.getPlayer()))//玩家没有扩展协议
 		{
 			return state;
 		}

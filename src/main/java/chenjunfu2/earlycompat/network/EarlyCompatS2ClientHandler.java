@@ -5,7 +5,7 @@ import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 
-public class EarlyCompatS2CHandler
+public class EarlyCompatS2ClientHandler
 {
 	private static NbtCompound serverExtraProtocolInfo = null;
 	
@@ -13,7 +13,7 @@ public class EarlyCompatS2CHandler
 	{
         switch (packet.getPacketId())
 		{
-            case EarlyCompatNetwork.S2C.HI:
+            case EarlyCompatNetwork.S2C.HI_ACK://接收到S2C HI_ACK
 			{
 				serverExtraProtocolInfo = packet.getNbt();
                 break;
@@ -26,7 +26,7 @@ public class EarlyCompatS2CHandler
 	{
         serverExtraProtocolInfo = null;  // reset
         handler.sendPacket(EarlyCompatNetwork.createC2S(
-            EarlyCompatNetwork.C2S.HI,
+            EarlyCompatNetwork.C2S.HI,//发送C2S
             nbt -> nbt.putString("mod_version", EarlyCompat.VERSION)
         ));
     }

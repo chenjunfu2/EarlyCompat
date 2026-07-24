@@ -145,86 +145,92 @@ public class MixinPlugin implements IMixinConfigPlugin
 	@Override
 	public boolean shouldApplyMixin(String targetClassName, String mixinClassName)
 	{
+		// 协议相关
+		if(mixinClassName.endsWith("_Newtork"))
+		{
+			return true;
+		}
+		
 		// 原版BUG修复
-		if(mixinClassName.contains("VanillaBugFix"))
+		if(mixinClassName.endsWith("_VanillaBugFix"))
 		{
 			return true;
 		}
 		
 		// PCA原版修复
-		if(mixinClassName.contains("PcaVanillaCompat"))
+		if(mixinClassName.endsWith("_PcaVanillaCompat"))
 		{
 			return isPluslsCarpetAdditionAvailable;
 		}
 		
 		// PCA陶罐移植修复
-		if (mixinClassName.contains("PcaDecoratedPotEarlyCompat"))
+		if (mixinClassName.endsWith("_PcaDecoratedPotEarlyCompat"))
 		{
 			return isPluslsCarpetAdditionAvailable && isDecoratedPotEarlyAvailable;
 		}
 		
 		// PCA合成器移植修复
-		if (mixinClassName.contains("PcaCrafterEarlyCompat"))
+		if (mixinClassName.endsWith("_PcaCrafterEarlyCompat"))
 		{
 			return isPluslsCarpetAdditionAvailable && isCrafterEarlyAvailable;
 		}
 		
 		// Masa原版方块同步修复
-		if(mixinClassName.contains("MasaVanillaCompat"))
+		if(mixinClassName.endsWith("_MasaVanillaCompat"))
 		{
 			return isMasaGadgetAvailable;
 		}
 		
 		// Masa陶罐移植同步修复
-		if(mixinClassName.contains("MasaDecoratedPotEarlyCompat"))
+		if(mixinClassName.endsWith("_MasaDecoratedPotEarlyCompat"))
 		{
 			return isMasaGadgetAvailable && isDecoratedPotEarlyAvailable;
 		}
 		
 		// Masa合成器方块同步修复
-		if(mixinClassName.contains("MasaCrafterEarlyCompat"))
+		if(mixinClassName.endsWith("_MasaCrafterEarlyCompat"))
 		{
 			return isMasaGadgetAvailable && isCrafterEarlyAvailable;
 		}
 		
 		// Malilib原版修复
-		if(mixinClassName.contains("MalilibVanillaCompat"))
+		if(mixinClassName.endsWith("_MalilibVanillaCompat"))
 		{
 			return isMalilibAvailable;
 		}
 		
 		// Malilib合成器移植修复
-		if(mixinClassName.contains("MalilibCrafterEarlyCompat"))
+		if(mixinClassName.endsWith("_MalilibCrafterEarlyCompat"))
 		{
 			return isMalilibAvailable && isCrafterEarlyAvailable;
 		}
 		
 		// 原版协议实现
-		if(mixinClassName.contains("VanillaProtocolCompat"))
+		if(mixinClassName.endsWith("_VanillaProtocolCompat"))
 		{
 			return isLitematicaAvailable || isCarpetExtraAvailable;
 		}
 		
 		// 铜灯协议实现
-		if(mixinClassName.contains("CopperBlubEarlyProtocolCompat"))
+		if(mixinClassName.endsWith("_CopperBlubEarlyProtocolCompat"))
 		{
 			return isCopperBulbEarlyAvailable;
 		}
 		
 		// 合成器协议实现
-		if(mixinClassName.contains("CrafterEarlyProtocolCompat"))
+		if(mixinClassName.endsWith("_CrafterEarlyProtocolCompat"))
 		{
 			return isCrafterEarlyAvailable;
 		}
 		
 		// Carpet Extra轻松放置协议修复
-		if(mixinClassName.contains("CarpetExtraProtocolCompat"))
+		if(mixinClassName.endsWith("_CarpetExtraProtocolCompat"))
 		{
 			return isCarpetExtraAvailable;
 		}
 		
 		// Litematica轻松放置协议修复
-		if(mixinClassName.contains("LitematicaProtocolCompat"))
+		if(mixinClassName.endsWith("_LitematicaProtocolCompat"))
 		{
 			return isLitematicaAvailable;
 		}

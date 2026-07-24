@@ -7,7 +7,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import java.util.HashMap;
 import java.util.Map;
 
-public class EarlyCompatC2SHandler
+public class EarlyCompatC2ServerHandler
 {
 	private static final Map<ServerPlayerEntity, NbtCompound> extraProtocolPlayers = new HashMap<>();
 
@@ -15,13 +15,13 @@ public class EarlyCompatC2SHandler
 	{
 		switch (packet.getPacketId())
 		{
-			case EarlyCompatNetwork.C2S.HI:
+			case EarlyCompatNetwork.C2S.HI://接受到C2S
 			{
 				extraProtocolPlayers.put(player, packet.getNbt());
 				 
 				 // 回复握手
 				player.networkHandler.sendPacket(EarlyCompatNetwork.createS2C(
-            	    EarlyCompatNetwork.S2C.HI,
+            	    EarlyCompatNetwork.S2C.HI_ACK,//发送S2C
             	    nbt -> nbt.putString("mod_version", EarlyCompat.VERSION)
             	));
 				break;

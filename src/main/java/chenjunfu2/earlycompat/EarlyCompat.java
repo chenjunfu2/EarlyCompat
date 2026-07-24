@@ -4,6 +4,7 @@ import com.mojang.brigadier.arguments.BoolArgumentType;
 import net.fabricmc.api.ModInitializer;
 
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.text.Text;
 import org.slf4j.Logger;
@@ -13,6 +14,7 @@ public class EarlyCompat implements ModInitializer
 {
 	public static final String MOD_ID = "earlycompat";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+	public static String VERSION = "NaN";
 	
 	public static boolean isExtraProtocolClientEnabled = true;
 	public static boolean isExtraProtocolServerEnabled = true;
@@ -20,6 +22,9 @@ public class EarlyCompat implements ModInitializer
 	@Override
 	public void onInitialize()
 	{
+		//设置版本信息
+		VERSION = FabricLoader.getInstance().getModContainer(MOD_ID).orElseThrow(RuntimeException::new).getMetadata().getVersion().getFriendlyString();
+		
 		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) ->
 		{
 			var rootCommand = CommandManager.literal("earlycompat")

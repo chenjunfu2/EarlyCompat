@@ -146,7 +146,7 @@ public class MixinPlugin implements IMixinConfigPlugin
 	public boolean shouldApplyMixin(String targetClassName, String mixinClassName)
 	{
 		// 协议相关
-		if(mixinClassName.endsWith("_Newtork"))
+		if(mixinClassName.endsWith("_Network"))
 		{
 			return true;
 		}

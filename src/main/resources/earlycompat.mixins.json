@@ -36,7 +36,7 @@
     "EasyPlaceFix.Vanilla.Protocol.VerticallyAttachableBlockItemMixin_VanillaProtocolCompat",
     "EasyPlaceFix.Vanilla.Protocol.WallMountedBlockMixin_VanillaProtocolCompat",
     "EasyPlaceFix.Vanilla.Protocol.WallRedstoneTorchBlockMixin_VanillaProtocolCompat",
-    "network.FanetlibPacketRegistrationCenterMixin_Newtork",
+    "network.FanetlibPacketRegistrationCenterMixin_Server_Network",
     "PcaProtocolFix.Masa.InventoryPreviewSyncDataUtilMixin_MasaCrafterEarlyCompat",
     "PcaProtocolFix.Masa.InventoryPreviewSyncDataUtilMixin_MasaDecoratedPotEarlyCompat",
     "PcaProtocolFix.Masa.InventoryPreviewSyncDataUtilMixin_MasaVanillaCompat",

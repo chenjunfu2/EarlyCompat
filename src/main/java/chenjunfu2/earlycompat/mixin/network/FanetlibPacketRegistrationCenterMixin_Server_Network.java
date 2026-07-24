@@ -1,5 +1,6 @@
 package chenjunfu2.earlycompat.mixin.network;
 
+import chenjunfu2.earlycompat.EarlyCompat;
 import chenjunfu2.earlycompat.network.EarlyCompatC2ServerHandler;
 import chenjunfu2.earlycompat.network.EarlyCompatNetwork;
 import chenjunfu2.earlycompat.network.EarlyCompatPacket;
@@ -13,11 +14,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 
 @Mixin(FanetlibPacketRegistrationCenter.class)
-public class FanetlibPacketRegistrationCenterMixin_Newtork
+public class FanetlibPacketRegistrationCenterMixin_Server_Network
 {
 	@Inject(method = "c2s", at = @At("HEAD"), remap = false)
     private static void register(CallbackInfo ci)
     {
+		EarlyCompat.LOGGER.info("MAIN mixin register called!");
         FanetlibPackets.registerC2S(//server
 			EarlyCompatNetwork.PACKET_TYPE,
 			PacketCodec.of(EarlyCompatPacket::write, EarlyCompatPacket::new),

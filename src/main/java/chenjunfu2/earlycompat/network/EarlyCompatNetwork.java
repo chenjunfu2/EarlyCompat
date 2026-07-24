@@ -1,5 +1,7 @@
 package chenjunfu2.earlycompat.network;
 
+import me.fallenbreath.fanetlib.api.event.FanetlibClientEvents;
+import me.fallenbreath.fanetlib.api.event.FanetlibServerEvents;
 import me.fallenbreath.fanetlib.api.packet.PacketCodec;
 import me.fallenbreath.fanetlib.api.packet.PacketId;
 import net.minecraft.nbt.NbtCompound;
@@ -37,5 +39,38 @@ public class EarlyCompatNetwork
 	    NbtCompound nbt = new NbtCompound();
 	    builder.accept(nbt);
 	    return FanetlibPackets.createS2C(PACKET_TYPE, new EarlyCompatPacket(packetId, nbt));
+	}
+	
+	public static void registerPackets()
+	{
+		FanetlibPackets.registerDual(
+			EarlyCompatNetwork.PACKET_TYPE,
+			PacketCodec.of(EarlyCompatPacket::write, EarlyCompatPacket::new),
+			EarlyCompatC2ServerHandler::handle,//server
+			EarlyCompatS2ClientHandler::handle//client
+		);
+	}
+	
+	public static void registerServerEvents()
+	{
+		FanetlibServerEvents.registerPlayerJoinListener(
+			EarlyCompatC2ServerHandler::onPlayerJoin
+		);
+		FanetlibServerEvents.registerPlayerDisconnectListener(
+			EarlyCompatC2ServerHandler::onPlayerDisconnect
+		);
+	}
+	
+	public static void registerClientEvents()
+	{
+		FanetlibClientEvents.registerGameJoinListener(
+        	EarlyCompatS2ClientHandler::onGameJoin
+        );
+        FanetlibClientEvents.registerPlayerRespawnListener(
+        	EarlyCompatS2ClientHandler::onPlayerRespawn
+        );
+		FanetlibClientEvents.registerDisconnectListener(
+			EarlyCompatS2ClientHandler::onDisconnect
+		);
 	}
 }

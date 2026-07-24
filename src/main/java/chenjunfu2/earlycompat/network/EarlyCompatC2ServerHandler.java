@@ -1,7 +1,10 @@
 package chenjunfu2.earlycompat.network;
 
 import chenjunfu2.earlycompat.EarlyCompat;
+import me.fallenbreath.fanetlib.api.packet.PacketHandlerC2S;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 
 import java.util.HashMap;
@@ -11,8 +14,10 @@ public class EarlyCompatC2ServerHandler
 {
 	private static final Map<ServerPlayerEntity, NbtCompound> extraProtocolPlayers = new HashMap<>();
 
-    public static void handle(EarlyCompatPacket packet, ServerPlayerEntity player)
+    public static void handle(EarlyCompatPacket packet, PacketHandlerC2S.Context ctx)
 	{
+		ServerPlayerEntity player = ctx.getPlayer();
+		
 		switch (packet.getPacketId())
 		{
 			case EarlyCompatNetwork.C2S.HI://接受到C2S
@@ -33,10 +38,14 @@ public class EarlyCompatC2ServerHandler
 	{
         return extraProtocolPlayers.containsKey(player);
     }
-
-	//在玩家离开服务器后调用
-    public static void onPlayerLeave(ServerPlayerEntity player)
+	
+	public static void onPlayerJoin(MinecraftServer server, ServerPlayNetworkHandler networkHandler, ServerPlayerEntity player)
 	{
-        extraProtocolPlayers.remove(player);
-    }
+		//wait hi packet
+	}
+	
+	public static void onPlayerDisconnect(MinecraftServer server, ServerPlayNetworkHandler networkHandler, ServerPlayerEntity player)
+	{
+		extraProtocolPlayers.remove(player);
+	}
 }

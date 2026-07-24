@@ -1,6 +1,7 @@
 package chenjunfu2.earlycompat.mixin.EasyPlaceFix.Vanilla.Protocol;
 
 import chenjunfu2.earlycompat.accessor.CarpetExtraSettingsAccessor;
+import chenjunfu2.earlycompat.accessor.VerticallyAttachableBlockItemAccessor;
 import chenjunfu2.earlycompat.network.EarlyCompatC2ServerHandler;
 import chenjunfu2.earlycompat.util.BlockPlacer;
 import net.minecraft.block.Block;
@@ -20,7 +21,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import static chenjunfu2.earlycompat.EarlyCompat.IS_SERVER_ENV;
 
 @Mixin(VerticallyAttachableBlockItem.class)
-public class VerticallyAttachableBlockItemMixin_VanillaProtocolCompat extends BlockItem
+public class VerticallyAttachableBlockItemMixin_VanillaProtocolCompat extends BlockItem implements VerticallyAttachableBlockItemAccessor
 {
 	@Final
 	@Shadow
@@ -32,6 +33,12 @@ public class VerticallyAttachableBlockItemMixin_VanillaProtocolCompat extends Bl
 	public VerticallyAttachableBlockItemMixin_VanillaProtocolCompat(Block block, Settings settings)
 	{
 		super(block, settings);
+	}
+	
+	@Override
+	public Block esrlycompat$getWallBlock()
+	{
+		return wallBlock;
 	}
 	
 	@Inject

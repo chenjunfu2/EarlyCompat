@@ -1,4 +1,4 @@
-package chenjunfu2.earlycompat.client.Accessor;
+package chenjunfu2.earlycompat.accessor;
 
 import fi.dy.masa.malilib.render.InventoryOverlay;
 

@@ -1,4 +1,4 @@
-package chenjunfu2.earlycompat.client.util;
+package chenjunfu2.earlycompat.util;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;

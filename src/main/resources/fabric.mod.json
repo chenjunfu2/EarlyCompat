@@ -17,17 +17,10 @@
 	"entrypoints": {
 		"main": [
 			"chenjunfu2.earlycompat.EarlyCompat"
-		],
-		"client": [
-			"chenjunfu2.earlycompat.client.EarlyCompatClient"
 		]
 	},
 	"mixins": [
-		"earlycompat.mixins.json",
-		{
-			"config": "earlycompat.client.mixins.json",
-			"environment": "client"
-		}
+		"earlycompat.mixins.json"
 	],
 	"depends": {
 		"fabricloader": ">=0.16.0",

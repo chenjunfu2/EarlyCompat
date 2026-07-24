@@ -19,12 +19,9 @@ repositories {
 }
 
 loom {
-	splitEnvironmentSourceSets()
-
 	mods {
 		"earlycompat" {
 			sourceSet sourceSets.main
-			sourceSet sourceSets.client
 		}
 	}
 

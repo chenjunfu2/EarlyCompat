@@ -1,4 +1,4 @@
-package chenjunfu2.earlycompat.client.mixin.InventoryPreviewFix.Malilib;
+package chenjunfu2.earlycompat.mixin.InventoryPreviewFix.Malilib;
 
 import fi.dy.masa.malilib.render.InventoryOverlay;
 import net.fabricmc.api.EnvType;
@@ -11,8 +11,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Arrays;
 
-import static chenjunfu2.earlycompat.client.Accessor.InventoryRenderTypeAccessor.CHISELEDBOOKSHELF;
-import static chenjunfu2.earlycompat.client.Accessor.InventoryRenderTypeAccessor.nameCHISELEDBOOKSHELF;
+import static chenjunfu2.earlycompat.accessor.InventoryRenderTypeAccessor.CHISELEDBOOKSHELF;
+import static chenjunfu2.earlycompat.accessor.InventoryRenderTypeAccessor.nameCHISELEDBOOKSHELF;
 
 @Mixin(InventoryOverlay.InventoryRenderType.class)
 @Environment(EnvType.CLIENT)

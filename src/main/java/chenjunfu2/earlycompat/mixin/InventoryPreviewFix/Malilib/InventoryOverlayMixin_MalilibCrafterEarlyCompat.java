@@ -1,6 +1,6 @@
-package chenjunfu2.earlycompat.client.mixin.InventoryPreviewFix.Malilib;
+package chenjunfu2.earlycompat.mixin.InventoryPreviewFix.Malilib;
 
-import chenjunfu2.earlycompat.client.util.CrafterSimpleInventory;
+import chenjunfu2.earlycompat.util.CrafterSimpleInventory;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.sugar.Local;
 import fi.dy.masa.malilib.render.InventoryOverlay;

@@ -1,4 +1,4 @@
-package chenjunfu2.earlycompat.client.mixin.InventoryPreviewFix.Malilib;
+package chenjunfu2.earlycompat.mixin.InventoryPreviewFix.Malilib;
 
 import com.llamalad7.mixinextras.sugar.Local;
 import fi.dy.masa.malilib.util.InventoryUtils;

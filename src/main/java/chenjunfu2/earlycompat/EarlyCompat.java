@@ -3,6 +3,8 @@ package chenjunfu2.earlycompat;
 import chenjunfu2.earlycompat.network.EarlyCompatC2ServerHandler;
 import chenjunfu2.earlycompat.network.EarlyCompatNetwork;
 import chenjunfu2.earlycompat.network.EarlyCompatPacket;
+import chenjunfu2.earlycompat.network.EarlyCompatS2ClientHandler;
+import me.fallenbreath.fanetlib.api.event.FanetlibClientEvents;
 import me.fallenbreath.fanetlib.api.packet.FanetlibPackets;
 import me.fallenbreath.fanetlib.api.packet.PacketCodec;
 import me.fallenbreath.fanetlib.api.packet.PacketHandlerS2C;
@@ -21,6 +23,7 @@ public class EarlyCompat implements ModInitializer
     public static PacketHandlerS2C<EarlyCompatPacket> packetS2ClientHandler = null;
 	
 	public static boolean IS_SERVER_ENV = false;
+	public static boolean IS_CLIENT_ENV = false;
 	public static String VERSION = "NaN";
 	
 	@Override
@@ -30,6 +33,8 @@ public class EarlyCompat implements ModInitializer
 		
 		//设置信息
 		IS_SERVER_ENV = loaderInstance.getEnvironmentType() == EnvType.SERVER;
+		IS_CLIENT_ENV = loaderInstance.getEnvironmentType() == EnvType.CLIENT;
+		
 		VERSION = loaderInstance.getModContainer(MOD_ID).orElseThrow(RuntimeException::new).getMetadata().getVersion().getFriendlyString();
 		
 		//注册
@@ -50,5 +55,19 @@ public class EarlyCompat implements ModInitializer
 				}
 			}
 	    );
+		
+		EarlyCompat.packetS2ClientHandler = (packet, ctx) -> EarlyCompatS2ClientHandler.handle(packet, ctx.getPlayer());
+		
+		if (IS_CLIENT_ENV)
+		{
+			FanetlibClientEvents.registerGameJoinListener(
+        		(client, networkHandler) -> EarlyCompatS2ClientHandler.sendHi(networkHandler)
+        	);
+        	FanetlibClientEvents.registerPlayerRespawnListener(
+        		(client, networkHandler) -> EarlyCompatS2ClientHandler.sendHi(networkHandler)
+        	);
+		}
+		
+		
 	}
 }

@@ -46,6 +46,16 @@
     "PcaProtocolFix.Vanilla.ChiseledBookshelfBlockEntityMixin_VanillaBugFix",
     "PcaProtocolFix.Vanilla.JukeboxBlockEntityMixin_VanillaBugFix"
   ],
+  "client": [
+    "EasyPlaceFix.Litematica.PlacementHandlerMixin_LitematicaProtocolCompat",
+    "EasyPlaceFix.Litematica.WorldUtilsMixin_LitematicaProtocolCompat",
+    "InventoryPreviewFix.Malilib.InventoryOverlayMixin_MalilibCrafterEarlyCompat",
+    "InventoryPreviewFix.Malilib.InventoryOverlayMixin_MalilibVanillaCompat",
+    "InventoryPreviewFix.Malilib.InventoryRenderTypeMixin_MalilibVanillaCompat",
+    "InventoryPreviewFix.Malilib.InventoryUtilsMixin_MalilibVanillaCompat",
+    "InventoryPreviewFix.Malilib.RenderUtilsMixin_MalilibCrafterEarlyCompat",
+    "InventoryPreviewFix.Malilib.RenderUtilsMixin_MalilibVanillaCompat"
+  ],
   "injectors": {
     "defaultRequire": 1
   },

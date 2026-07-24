@@ -42,9 +42,13 @@ public class VerticallyAttachableBlockItemMixin_VanillaProtocolCompat extends Bl
 	)
 	void getAlternatePlacement(ItemPlacementContext context, CallbackInfoReturnable<BlockState> cir)
 	{
-		if(!EarlyCompatC2ServerHandler.isExtraProtocolPlayer((ServerPlayerEntity)context.getPlayer()) || (IS_SERVER_ENV && !CarpetExtraSettingsAccessor.getAccurateBlockPlacement()))//玩家没有扩展协议或不是客户端并且carpet规则被关闭
+		if(IS_SERVER_ENV)//不是客户端
 		{
-			return;//啥都不做
+			if (!EarlyCompatC2ServerHandler.isExtraProtocolPlayer((ServerPlayerEntity)context.getPlayer()) ||
+				!CarpetExtraSettingsAccessor.getAccurateBlockPlacement())//玩家没有扩展协议或carpet规则被关闭
+			{
+				return;//啥都不做
+			}
 		}
 		
 		BlockState tryAlternative = BlockPlacer.alternativeBlockPlacement(this.getBlock(), wallBlock, verticalAttachmentDirection, context);

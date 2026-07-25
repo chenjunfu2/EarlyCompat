@@ -67,7 +67,7 @@ public abstract class WorldUtilsMixin_LitematicaProtocolCompat
 		{
 			if(isWallBlock)//不是自定义类型并且是墙上方块类型，默认协议处理
 			{
-				cir.setReturnValue(encodeProtocolValueToHitVec(wallProtocolValue, hitVecIn));//注意，非Extra
+				cir.setReturnValue(encodeProtocolValueToHitVec(wallProtocolValue,0, hitVecIn));//注意，非Extra
 				cir.cancel();
 			}
 			return;
@@ -78,8 +78,13 @@ public abstract class WorldUtilsMixin_LitematicaProtocolCompat
 			return;//如果不是替换模式，那么什么也不做
 		}
 		
-		
 		int protocolRawValue = blockProtocolStateAdapter.earlycompat$toProtocolValue(0, state);//获取原始值
+		
+		int protocolAdditionValue = 0;
+		if(blockProtocolStateAdapter.earlycompat$useProtocolAddition())//使用z扩展，因为z总是自己的，所以完全不需要进行扩展协议验证和摘除
+		{
+			protocolAdditionValue = blockProtocolStateAdapter.earlycompat$toProtocolValueAddition(state);
+		}
 		
 		Vec3d returnValue = null;
 		if(isWallBlock)
@@ -93,11 +98,11 @@ public abstract class WorldUtilsMixin_LitematicaProtocolCompat
 				protocolRawValue <<= 1;//仅移动1bit作为最低为识别
 			}
 			
-			returnValue = encodeProtocolValueToHitVec(protocolRawValue, hitVecIn);//注意，非Extra
+			returnValue = encodeProtocolValueToHitVec(protocolRawValue, protocolAdditionValue, hitVecIn);//注意，非Extra
 		}
 		else
 		{
-			returnValue = encodeExtraProtocolValueToHitVec(protocolRawValue, hitVecIn);
+			returnValue = encodeExtraProtocolValueToHitVec(protocolRawValue, protocolAdditionValue, hitVecIn);
 		}
 		
 		cir.setReturnValue(returnValue);
@@ -136,4 +141,44 @@ public abstract class WorldUtilsMixin_LitematicaProtocolCompat
 		int newProtocolValue = addExtraProtocolBit(blockProtocolStateAdapter.earlycompat$toProtocolValue(protocolValue, state));
 		return newProtocolValue;
 	}
+	
+	@ModifyVariable
+	(
+		method = "Lfi/dy/masa/litematica/util/WorldUtils;applyCarpetProtocolHitVec(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;Lnet/minecraft/util/math/Vec3d;)Lnet/minecraft/util/math/Vec3d;",
+		at = @At
+		(
+			value = "INVOKE_ASSIGN",
+			target = "Lfi/dy/masa/litematica/util/WorldUtils;applySlabOrStairHitVecY(DLnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;)D"
+		),
+		name = "z"
+	)
+	private static double addExtraProtocolAddition(double z, @Local(name = "state") BlockState state)
+	{
+		if(!EarlyCompatS2ClientHandler.isServerSupportsExtraProtocol())//未开启扩展协议
+		{
+			return z;
+		}
+		
+		if(!(state.getBlock() instanceof BlockProtocolStateAdapter blockProtocolStateAdapter))
+		{
+			return z;//不是已知方块，跳过处理，有可能是其它mixin的协议
+		}
+		
+		if(blockProtocolStateAdapter.earlycompat$getProtocolType() != BlockProtocolStateAdapter.ProtocolType.ADDED)
+		{
+			return z;//如果不是添加模式，那么什么也不做
+		}
+		
+		//添加新值
+		int protocolAdditionValue = 0;
+		
+		if(blockProtocolStateAdapter.earlycompat$useProtocolAddition())//使用z扩展，因为z总是自己的，所以完全不需要进行扩展协议验证和摘除
+		{
+			protocolAdditionValue = blockProtocolStateAdapter.earlycompat$toProtocolValueAddition(state);
+		}
+		
+		double newZ = encodeProtocolValueToHitDim(z, protocolAdditionValue);
+		return newZ;
+	}
+	
 }

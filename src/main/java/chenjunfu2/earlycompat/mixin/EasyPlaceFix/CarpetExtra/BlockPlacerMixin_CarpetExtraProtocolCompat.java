@@ -43,26 +43,36 @@ public abstract class BlockPlacerMixin_CarpetExtraProtocolCompat
 			return;
 		}
 		
-		//最低bit0留给浮点误差兼容，protocolValue已进行摘除处理
-		int protocolValue = decodeProtocolValueFromHitX(relativeHitX);
-		if(!isExtraProtocol(protocolValue))
-		{
-			return;//不是扩展协议
-		}
-		
 		//只处理扩展协议内已知的方块
 		if(!(block instanceof BlockProtocolStateAdapter blockProtocolStateAdapter))
 		{
 			return;//不是已知方块，跳过处理，有可能是其它mixin的协议
 		}
 		
+		//最低bit0留给浮点误差兼容，protocolValue已进行摘除处理
+		int protocolValue = decodeProtocolValueFromHitDim(relativeHitX);
+		if(!isExtraProtocol(protocolValue))
+		{
+			return;//不是扩展协议
+		}
+
 		if(blockProtocolStateAdapter.earlycompat$getProtocolType() != BlockProtocolStateAdapter.ProtocolType.REPLACE)
 		{
 			return;//如果不是替换模式，那么什么也不做
 		}
 		
 		int rawProtocolValue = extraProtocolValueToRawProtocolValue(protocolValue);
-		cir.setReturnValue(blockProtocolStateAdapter.earlycompat$fromProtocolValue(rawProtocolValue, state));
+		BlockState newState = blockProtocolStateAdapter.earlycompat$fromProtocolValue(rawProtocolValue, state);
+		
+		// carpet的ServerPlayNetworkHandlerMixin已经拦截掉了hitpos的所有维度，重放差值为0，所以可以直接利用别的，比如z
+		if(blockProtocolStateAdapter.earlycompat$useProtocolAddition())//使用z扩展，因为z总是自己的，所以完全不需要进行扩展协议验证和摘除
+		{
+			double relativeHitZ = context.getHitPos().z - (double)context.getBlockPos().getZ();
+			int rawAdditionProtocolValue = decodeProtocolValueFromHitDim(relativeHitZ);
+			newState = blockProtocolStateAdapter.earlycompat$fromProtocolValueAddition(rawAdditionProtocolValue, newState);
+		}
+
+		cir.setReturnValue(newState);
 		cir.cancel();
 	}
 	
@@ -116,17 +126,17 @@ public abstract class BlockPlacerMixin_CarpetExtraProtocolCompat
 			return state;
 		}
 		
-		//最低bit0留给浮点误差兼容，protocolValue已进行摘除处理
-		int protocolValue = decodeProtocolValueFromHitX(relativeHitX);
-		if(!isExtraProtocol(protocolValue))
-		{
-			return state;//不是扩展协议
-		}
-		
 		//只处理扩展协议内已知的方块
 		if(!(block instanceof BlockProtocolStateAdapter blockProtocolStateAdapter))
 		{
 			return state;//不是已知方块，跳过处理，有可能是其它mixin的协议
+		}
+		
+		//最低bit0留给浮点误差兼容，protocolValue已进行摘除处理
+		int protocolValue = decodeProtocolValueFromHitDim(relativeHitX);
+		if(!isExtraProtocol(protocolValue))
+		{
+			return state;//不是扩展协议
 		}
 		
 		if(blockProtocolStateAdapter.earlycompat$getProtocolType() != BlockProtocolStateAdapter.ProtocolType.ADDED)
@@ -135,6 +145,15 @@ public abstract class BlockPlacerMixin_CarpetExtraProtocolCompat
 		}
 		
 		BlockState newState = blockProtocolStateAdapter.earlycompat$fromProtocolValue(protocolValue, state);//使用原值，不解包
+		
+		// carpet的ServerPlayNetworkHandlerMixin已经拦截掉了hitpos的所有维度，重放差值为0，所以可以直接利用别的，比如z
+		if(blockProtocolStateAdapter.earlycompat$useProtocolAddition())//使用z扩展，因为z总是自己的，所以完全不需要进行扩展协议验证和摘除
+		{
+			double relativeHitZ = context.getHitPos().z - (double)context.getBlockPos().getZ();
+			int rawAdditionProtocolValue = decodeProtocolValueFromHitDim(relativeHitZ);
+			newState = blockProtocolStateAdapter.earlycompat$fromProtocolValueAddition(rawAdditionProtocolValue, newState);
+		}
+		
 		return newState;
 	}
 }

@@ -33,25 +33,26 @@ public class PlacementHandlerMixin_LitematicaProtocolCompat
 	)
 	private static void replaceExtraProtocol(BlockState state, PlacementHandler.UseContext context, CallbackInfoReturnable<BlockState> cir)
 	{
-		if(!EarlyCompatS2ClientHandler.isServerSupportsExtraProtocol())//当前服务器未开启扩展协议
+		if(!EarlyCompatS2ClientHandler.isServerSupportsExtraProtocol())//服务端不是拓展协议端
 		{
 			return;
 		}
 		
 		Block block = state.getBlock();
-		double relativeHitX = getRelativeHitX(context.getHitVec(), context.getPos());
-		
-		//最低bit0留给浮点误差兼容，protocolValue已进行摘除处理
-		int protocolValue = decodeProtocolValueFromHitX(relativeHitX);
-		if(!isExtraProtocol(protocolValue))
-		{
-			return;//不是扩展协议
-		}
 		
 		//只处理扩展协议内已知的方块
 		if(!(block instanceof BlockProtocolStateAdapter blockProtocolStateAdapter))
 		{
 			return;//不是已知方块，跳过处理，有可能是其它mixin的协议
+		}
+		
+		double relativeHitX = getRelativeHitX(context.getHitVec(), context.getPos());
+		
+		//最低bit0留给浮点误差兼容，protocolValue已进行摘除处理
+		int protocolValue = decodeProtocolValueFromHitDim(relativeHitX);
+		if(!isExtraProtocol(protocolValue))
+		{
+			return;//不是扩展协议
 		}
 		
 		if(blockProtocolStateAdapter.earlycompat$getProtocolType() != BlockProtocolStateAdapter.ProtocolType.REPLACE)
@@ -60,7 +61,17 @@ public class PlacementHandlerMixin_LitematicaProtocolCompat
 		}
 		
 		int rawProtocolValue = extraProtocolValueToRawProtocolValue(protocolValue);
-		cir.setReturnValue(blockProtocolStateAdapter.earlycompat$fromProtocolValue(rawProtocolValue, state));
+		BlockState newState = blockProtocolStateAdapter.earlycompat$fromProtocolValue(rawProtocolValue, state);
+		
+		// litematica的ServerPlayNetworkHandlerMixin已经拦截掉了hitpos的所有维度，重放差值为0，所以可以直接利用别的，比如z
+		if(blockProtocolStateAdapter.earlycompat$useProtocolAddition())//使用z扩展，因为z总是自己的，所以完全不需要进行扩展协议验证和摘除
+		{
+			double relativeHitZ = context.getHitVec().z - (double)context.getPos().getZ();
+			int rawAdditionProtocolValue = decodeProtocolValueFromHitDim(relativeHitZ);
+			newState = blockProtocolStateAdapter.earlycompat$fromProtocolValueAddition(rawAdditionProtocolValue, newState);
+		}
+		
+		cir.setReturnValue(newState);
 		cir.cancel();
 	}
 	
@@ -81,7 +92,7 @@ public class PlacementHandlerMixin_LitematicaProtocolCompat
 		int protocolValue
 	)
 	{
-		if(!EarlyCompatS2ClientHandler.isServerSupportsExtraProtocol())//未开启扩展协议
+		if(!EarlyCompatS2ClientHandler.isServerSupportsExtraProtocol())//服务端不是拓展协议端
 		{
 			return protocolValue;
 		}
@@ -108,25 +119,26 @@ public class PlacementHandlerMixin_LitematicaProtocolCompat
 		@Local(name = "context") PlacementHandler.UseContext context
 	)
 	{
-		if(!EarlyCompatS2ClientHandler.isServerSupportsExtraProtocol())//未开启扩展协议
+		if(!EarlyCompatS2ClientHandler.isServerSupportsExtraProtocol())//服务端不是拓展协议端
 		{
 			return state;
 		}
 		
 		Block block = state.getBlock();
-		double relativeHitX = getRelativeHitX(context.getHitVec(), context.getPos());
-		
-		//最低bit0留给浮点误差兼容，protocolValue已进行摘除处理
-		int protocolValue = decodeProtocolValueFromHitX(relativeHitX);
-		if(!isExtraProtocol(protocolValue))
-		{
-			return state;//不是扩展协议
-		}
 		
 		//只处理扩展协议内已知的方块
 		if(!(block instanceof BlockProtocolStateAdapter blockProtocolStateAdapter))
 		{
 			return state;//不是已知方块，跳过处理，有可能是其它mixin的协议
+		}
+		
+		double relativeHitX = getRelativeHitX(context.getHitVec(), context.getPos());
+		
+		//最低bit0留给浮点误差兼容，protocolValue已进行摘除处理
+		int protocolValue = decodeProtocolValueFromHitDim(relativeHitX);
+		if(!isExtraProtocol(protocolValue))
+		{
+			return state;//不是扩展协议
 		}
 		
 		if(blockProtocolStateAdapter.earlycompat$getProtocolType() != BlockProtocolStateAdapter.ProtocolType.ADDED)
@@ -135,6 +147,15 @@ public class PlacementHandlerMixin_LitematicaProtocolCompat
 		}
 		
 		BlockState newState = blockProtocolStateAdapter.earlycompat$fromProtocolValue(protocolValue, state);//使用原值，不解包
+		
+		// litematica的ServerPlayNetworkHandlerMixin已经拦截掉了hitpos的所有维度，重放差值为0，所以可以直接利用别的，比如z
+		if(blockProtocolStateAdapter.earlycompat$useProtocolAddition())//使用z扩展，因为z总是自己的，所以完全不需要进行扩展协议验证和摘除
+		{
+			double relativeHitZ = context.getHitVec().z - (double)context.getPos().getZ();
+			int rawAdditionProtocolValue = decodeProtocolValueFromHitDim(relativeHitZ);
+			newState = blockProtocolStateAdapter.earlycompat$fromProtocolValueAddition(rawAdditionProtocolValue, newState);
+		}
+		
 		return newState;
 	}
 

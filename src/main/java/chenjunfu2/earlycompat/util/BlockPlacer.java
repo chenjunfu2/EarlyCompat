@@ -8,7 +8,7 @@ import net.minecraft.state.property.Property;
 import net.minecraft.util.math.Direction;
 import org.jetbrains.annotations.Nullable;
 
-import static chenjunfu2.earlycompat.util.EasyPlaceExtraProtocolHelper.decodeProtocolValueFromHitX;
+import static chenjunfu2.earlycompat.util.EasyPlaceExtraProtocolHelper.decodeProtocolValueFromHitDim;
 import static chenjunfu2.earlycompat.util.EasyPlaceExtraProtocolHelper.getRelativeHitX;
 
 public class BlockPlacer
@@ -22,7 +22,7 @@ public class BlockPlacer
 		}
 		
 		//最低bit0留给浮点误差兼容，protocolValue已进行摘除处理
-		int protocolValue = decodeProtocolValueFromHitX(relativeHitX);//注意，特殊路径非Extra协议，全部bit都可利用
+		int protocolValue = decodeProtocolValueFromHitDim(relativeHitX);//注意，特殊路径非Extra协议，全部bit都可利用
 		
 		BlockState blockState = null;
 		boolean isWallType = (protocolValue & 0b0000_0001) == 0b0000_0001;

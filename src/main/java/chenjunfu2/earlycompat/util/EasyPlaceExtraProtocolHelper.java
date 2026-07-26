@@ -14,15 +14,19 @@ public class EasyPlaceExtraProtocolHelper
 	{
 		return hitPos.x - (double)blockPos.getX();
 	}
-	
-	public static int decodeProtocolValueFromHitX(double relativeHitX)
+	public static double getRelativeHitZ(Vec3d hitPos, BlockPos blockPos)
 	{
-		return ((int)relativeHitX - 2) >>> 1;
+		return hitPos.z - (double)blockPos.getZ();
 	}
 	
-	public static double encodeProtocolValueToHitX(double relativeHitX, int protocolValue)
+	public static int decodeProtocolValueFromHitDim(double relativeHitDim)
 	{
-		return relativeHitX + (double)((protocolValue << 1) + 2);
+		return ((int)relativeHitDim - 2) >>> 1;
+	}
+	
+	public static double encodeProtocolValueToHitDim(double relativeHitDim, int protocolValue)
+	{
+		return relativeHitDim + (double)((protocolValue << 1) + 2);
 	}
 	
 	public static int extraProtocolValueToRawProtocolValue(int protocolValue)
@@ -46,14 +50,14 @@ public class EasyPlaceExtraProtocolHelper
 	}
 	
 	
-	public static Vec3d encodeProtocolValueToHitVec(int protocolValue, Vec3d hitVec)
+	public static Vec3d encodeProtocolValueToHitVecX(int protocolValue, Vec3d hitVec)
 	{
-		return new Vec3d(encodeProtocolValueToHitX(hitVec.x, protocolValue), hitVec.y, hitVec.z);
+		return new Vec3d(encodeProtocolValueToHitDim(hitVec.x, protocolValue), hitVec.y, hitVec.z);
 	}
 	
-	public static Vec3d encodeExtraProtocolValueToHitVec(int protocolValue, Vec3d hitVec)//值最多7bit
+	public static Vec3d encodeExtraProtocolValueToHitVecX(int protocolValue, Vec3d hitVec)//值最多7bit
 	{
 		int extraProtocolValue = rawProtocolValueToExtraProtocolValue(protocolValue);
-		return encodeProtocolValueToHitVec(extraProtocolValue, hitVec);
+		return encodeProtocolValueToHitVecX(extraProtocolValue, hitVec);
 	}
 }

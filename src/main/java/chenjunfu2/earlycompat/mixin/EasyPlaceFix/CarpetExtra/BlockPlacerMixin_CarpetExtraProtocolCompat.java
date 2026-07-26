@@ -44,7 +44,7 @@ public abstract class BlockPlacerMixin_CarpetExtraProtocolCompat
 		}
 		
 		//最低bit0留给浮点误差兼容，protocolValue已进行摘除处理
-		int protocolValue = decodeProtocolValueFromHitX(relativeHitX);
+		int protocolValue = decodeProtocolValueFromHitDim(relativeHitX);
 		if(!isExtraProtocol(protocolValue))
 		{
 			return;//不是扩展协议
@@ -117,7 +117,7 @@ public abstract class BlockPlacerMixin_CarpetExtraProtocolCompat
 		}
 		
 		//最低bit0留给浮点误差兼容，protocolValue已进行摘除处理
-		int protocolValue = decodeProtocolValueFromHitX(relativeHitX);
+		int protocolValue = decodeProtocolValueFromHitDim(relativeHitX);
 		if(!isExtraProtocol(protocolValue))
 		{
 			return state;//不是扩展协议

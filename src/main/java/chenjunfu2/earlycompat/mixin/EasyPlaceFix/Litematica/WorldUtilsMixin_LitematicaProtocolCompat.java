@@ -67,7 +67,7 @@ public abstract class WorldUtilsMixin_LitematicaProtocolCompat
 		{
 			if(isWallBlock)//不是自定义类型并且是墙上方块类型，默认协议处理
 			{
-				cir.setReturnValue(encodeProtocolValueToHitVec(wallProtocolValue, hitVecIn));//注意，非Extra
+				cir.setReturnValue(encodeProtocolValueToHitVecX(wallProtocolValue, hitVecIn));//注意，非Extra
 				cir.cancel();
 			}
 			return;
@@ -93,11 +93,11 @@ public abstract class WorldUtilsMixin_LitematicaProtocolCompat
 				protocolRawValue <<= 1;//仅移动1bit作为最低为识别
 			}
 			
-			returnValue = encodeProtocolValueToHitVec(protocolRawValue, hitVecIn);//注意，非Extra
+			returnValue = encodeProtocolValueToHitVecX(protocolRawValue, hitVecIn);//注意，非Extra
 		}
 		else
 		{
-			returnValue = encodeExtraProtocolValueToHitVec(protocolRawValue, hitVecIn);
+			returnValue = encodeExtraProtocolValueToHitVecX(protocolRawValue, hitVecIn);
 		}
 		
 		cir.setReturnValue(returnValue);

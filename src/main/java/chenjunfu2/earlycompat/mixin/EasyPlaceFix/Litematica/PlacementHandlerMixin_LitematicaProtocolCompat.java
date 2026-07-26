@@ -42,7 +42,7 @@ public class PlacementHandlerMixin_LitematicaProtocolCompat
 		double relativeHitX = getRelativeHitX(context.getHitVec(), context.getPos());
 		
 		//最低bit0留给浮点误差兼容，protocolValue已进行摘除处理
-		int protocolValue = decodeProtocolValueFromHitX(relativeHitX);
+		int protocolValue = decodeProtocolValueFromHitDim(relativeHitX);
 		if(!isExtraProtocol(protocolValue))
 		{
 			return;//不是扩展协议
@@ -117,7 +117,7 @@ public class PlacementHandlerMixin_LitematicaProtocolCompat
 		double relativeHitX = getRelativeHitX(context.getHitVec(), context.getPos());
 		
 		//最低bit0留给浮点误差兼容，protocolValue已进行摘除处理
-		int protocolValue = decodeProtocolValueFromHitX(relativeHitX);
+		int protocolValue = decodeProtocolValueFromHitDim(relativeHitX);
 		if(!isExtraProtocol(protocolValue))
 		{
 			return state;//不是扩展协议

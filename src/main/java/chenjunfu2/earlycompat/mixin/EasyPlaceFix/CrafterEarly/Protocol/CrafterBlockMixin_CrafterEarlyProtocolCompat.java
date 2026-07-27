@@ -53,7 +53,7 @@ public abstract class CrafterBlockMixin_CrafterEarlyProtocolCompat implements Bl
 		}
 		NbtCompound tagBlockEntity = nbt.getCompound("BlockEntityTag");
 		
-		if(!nbt.contains("disabled_slots", NbtElement.INT_ARRAY_TYPE))
+		if(!tagBlockEntity.contains("disabled_slots", NbtElement.INT_ARRAY_TYPE))
 		{
 			return 0;//全不锁
 		}
@@ -82,6 +82,11 @@ public abstract class CrafterBlockMixin_CrafterEarlyProtocolCompat implements Bl
 		}
 		
 		int dis_count = Integer.bitCount(extraProtocolValue & 0b0001_1111_1111);//9bit
+		if(dis_count == 0)
+		{
+			return fromStack;//啥都没有
+		}
+		
 		int[] dis_slots = new int[dis_count];
 		
 		int slot_idx = 0;

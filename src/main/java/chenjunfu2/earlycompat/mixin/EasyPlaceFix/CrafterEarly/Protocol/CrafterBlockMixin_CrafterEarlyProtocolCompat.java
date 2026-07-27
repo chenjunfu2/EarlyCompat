@@ -57,7 +57,7 @@ public abstract class CrafterBlockMixin_CrafterEarlyProtocolCompat implements Bl
 		{
 			return 0;//全不锁
 		}
-		int[] dis_slots = nbt.getIntArray("disabled_slots");
+		int[] dis_slots = tagBlockEntity.getIntArray("disabled_slots");
 
 		int bits = 0;
 		int mask = 1;

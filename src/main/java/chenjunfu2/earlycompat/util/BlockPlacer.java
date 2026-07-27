@@ -11,6 +11,7 @@ import org.jetbrains.annotations.Nullable;
 import static chenjunfu2.earlycompat.util.EasyPlaceExtraProtocolHelper.decodeProtocolValueFromHitDim;
 import static chenjunfu2.earlycompat.util.EasyPlaceExtraProtocolHelper.getRelativeHitX;
 
+//客户端与服务端双端解析
 public class BlockPlacer
 {
 	public static @Nullable BlockState alternativeBlockPlacement(Block block, Block wallBlock, Direction verticalAttachmentDirection, ItemPlacementContext context)
@@ -47,6 +48,13 @@ public class BlockPlacer
 			
 			if(wallBlock instanceof BlockProtocolStateAdapter wallBlockProtocolStateAdapter)
 			{
+				if(wallBlockProtocolStateAdapter.earlycompat$useProtocolAddition())
+				{
+					double relativeHitZ = context.getHitPos().z - (double)context.getBlockPos().getZ();
+					int rawAdditionProtocolValue = decodeProtocolValueFromHitDim(relativeHitZ);
+					blockState2 = wallBlockProtocolStateAdapter.earlycompat$fromProtocolValueAddition(rawAdditionProtocolValue, blockState2);
+				}
+				
 				blockState = wallBlockProtocolStateAdapter.earlycompat$fromProtocolValue(protocolValue, blockState2);
 			}
 			else
@@ -62,12 +70,20 @@ public class BlockPlacer
 			}
 			
 			BlockState blockState2 = block.getPlacementState(context);
+			
 			if(blockState2 == null)
 			{
 				return null;
 			}
 			
 			blockState = blockProtocolStateAdapter.earlycompat$fromProtocolValue(protocolValue, blockState2);
+			
+			if(blockProtocolStateAdapter.earlycompat$useProtocolAddition())
+			{
+				double relativeHitZ = context.getHitPos().z - (double)context.getBlockPos().getZ();
+				int rawAdditionProtocolValue = decodeProtocolValueFromHitDim(relativeHitZ);
+				blockState = blockProtocolStateAdapter.earlycompat$fromProtocolValueAddition(rawAdditionProtocolValue, blockState);
+			}
 		}
 		
 		return blockState;

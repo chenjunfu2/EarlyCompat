@@ -107,7 +107,6 @@ public abstract class CrafterBlockMixin_CrafterEarlyProtocolCompat implements Bl
 		nbt.put("BlockEntityTag", tagBlockEntity);
 		
 		fromStack.setNbt(nbt);
-		
 		return fromStack;
 	}
 }

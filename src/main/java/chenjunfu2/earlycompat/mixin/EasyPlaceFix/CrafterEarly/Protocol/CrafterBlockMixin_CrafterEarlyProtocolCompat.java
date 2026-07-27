@@ -40,19 +40,13 @@ public abstract class CrafterBlockMixin_CrafterEarlyProtocolCompat implements Bl
 	@Override
 	public int earlycompat$toProtocolValueAddition(ItemStack fromStack)
 	{
-		NbtCompound nbt = fromStack.getNbt();
-		if(nbt == null)
+		NbtCompound tagBlockEntity = fromStack.getSubNbt("BlockEntityTag");
+		if(tagBlockEntity == null)
 		{
 			return 0;//全不锁
 		}
 		
 		//9个bit存储9个槽位锁定状态
-		if(!nbt.contains("BlockEntityTag", NbtElement.COMPOUND_TYPE))
-		{
-			return 0;//全不锁
-		}
-		NbtCompound tagBlockEntity = nbt.getCompound("BlockEntityTag");
-		
 		if(!tagBlockEntity.contains("disabled_slots", NbtElement.INT_ARRAY_TYPE))
 		{
 			return 0;//全不锁
@@ -106,7 +100,9 @@ public abstract class CrafterBlockMixin_CrafterEarlyProtocolCompat implements Bl
 		nbt = new NbtCompound();
 		nbt.put("BlockEntityTag", tagBlockEntity);
 		
-		fromStack.setNbt(nbt);
-		return fromStack;
+		//务必拷贝返回，禁止修改原对象
+		var stackCopy = fromStack.copy();
+		stackCopy.setNbt(nbt);
+		return stackCopy;
 	}
 }

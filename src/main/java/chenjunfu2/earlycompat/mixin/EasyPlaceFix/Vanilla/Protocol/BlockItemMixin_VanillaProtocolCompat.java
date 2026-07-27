@@ -11,6 +11,8 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
@@ -22,33 +24,36 @@ public abstract class BlockItemMixin_VanillaProtocolCompat
 	@WrapOperation
 	(
 		method = "Lnet/minecraft/item/BlockItem;place(Lnet/minecraft/item/ItemPlacementContext;)Lnet/minecraft/util/ActionResult;",
-		at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemPlacementContext;getStack()Lnet/minecraft/item/ItemStack;")
+		at = @At(value = "INVOKE", target = "Lnet/minecraft/item/BlockItem;postPlacement(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/world/World;Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/item/ItemStack;Lnet/minecraft/block/BlockState;)Z")
 	)
-	ItemStack replaceItemStack(ItemPlacementContext instance, Operation<ItemStack> original, @Local(name = "blockState") BlockState blockState, @Local(name = "playerEntity") PlayerEntity playerEntity)
+	boolean replaceItemStack(BlockItem instance, BlockPos pos, World world, PlayerEntity player, ItemStack stack, BlockState state, Operation<Boolean> original,
+		@Local(name = "itemPlacementContext") ItemPlacementContext itemPlacementContext,
+		@Local(name = "blockState") BlockState blockState,
+		@Local(name = "playerEntity") PlayerEntity playerEntity)
 	{
-		ItemStack stack = original.call(instance);//先调用
-		
 		if (!(playerEntity instanceof ServerPlayerEntity serverPlayerEntity) ||
 			!(EarlyCompatC2ServerHandler.isExtraProtocolPlayer(serverPlayerEntity)))//玩家没有扩展协议或不是服务端
 		{
-			return stack;//原封不动返回
+			return original.call(instance, pos, world, player,stack, state);//原封不动返回
 		}
 		
 		if(!(blockState.getBlock() instanceof ItemStackProtocolDataAdapter itemStackProtocolDataAdapter))
 		{
-			return stack;//原封不动返回
+			return original.call(instance, pos, world, player,stack, state);//原封不动返回
 		}
 		
-		double relativeHitZ = getRelativeHitZ(instance.getHitPos(),instance.getBlockPos());
+		double relativeHitZ = getRelativeHitZ(itemPlacementContext.getHitPos(),itemPlacementContext.getBlockPos());
 		if(!isProtocol(relativeHitZ))
 		{
-			return stack;//原封不动返回
+			return original.call(instance, pos, world, player,stack, state);//原封不动返回
 		}
 		
 		//获取协议值
 		int protocolAdditionValue = decodeProtocolValueFromHitDim(relativeHitZ);
+		ItemStack newStack = itemStackProtocolDataAdapter.earlycompat$fromProtocolValueAddition(protocolAdditionValue, stack);
 		
-		return itemStackProtocolDataAdapter.earlycompat$fromProtocolValueAddition(protocolAdditionValue, stack);
+		//使用修改的stack调用
+		return original.call(instance, pos, world, player, newStack, state);
 	}
 
 }

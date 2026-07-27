@@ -11,6 +11,7 @@
     "EasyPlaceFix.CrafterEarly.Protocol.CrafterBlockMixin_CrafterEarlyProtocolCompat",
     "EasyPlaceFix.Vanilla.Protocol.BannerBlockMixin_VanillaProtocolCompat",
     "EasyPlaceFix.Vanilla.Protocol.BellBlockMixin_VanillaProtocolCompat",
+    "EasyPlaceFix.Vanilla.Protocol.BlockItemMixin_VanillaProtocolCompat",
     "EasyPlaceFix.Vanilla.Protocol.CampfireBlockMixin_VanillaProtocolCompat",
     "EasyPlaceFix.Vanilla.Protocol.CandleBlockMixin_VanillaProtocolCompat",
     "EasyPlaceFix.Vanilla.Protocol.CommandBlockMixin_VanillaProtocolCompat",

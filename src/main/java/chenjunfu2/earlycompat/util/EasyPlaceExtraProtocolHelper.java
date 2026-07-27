@@ -5,6 +5,11 @@ import net.minecraft.util.math.Vec3d;
 
 public class EasyPlaceExtraProtocolHelper
 {
+	public static boolean isProtocol(double relativeHitDim)
+	{
+		return relativeHitDim >= (double)2.0F;
+	}
+	
 	public static boolean isExtraProtocol(int protocolValue)
 	{
 		return (protocolValue & 0b0000_1000) == 0b0000_1000;//判断bit3是否为1，是的话则为扩展协议
@@ -53,6 +58,11 @@ public class EasyPlaceExtraProtocolHelper
 	public static Vec3d encodeProtocolValueToHitVecX(int protocolValue, Vec3d hitVec)
 	{
 		return new Vec3d(encodeProtocolValueToHitDim(hitVec.x, protocolValue), hitVec.y, hitVec.z);
+	}
+	
+	public static Vec3d encodeProtocolValueToHitVecZ(int protocolAdditionValue, Vec3d hitVec)
+	{
+		return new Vec3d(hitVec.x, hitVec.y, encodeProtocolValueToHitDim(hitVec.z, protocolAdditionValue));
 	}
 	
 	public static Vec3d encodeExtraProtocolValueToHitVecX(int protocolValue, Vec3d hitVec)//值最多7bit

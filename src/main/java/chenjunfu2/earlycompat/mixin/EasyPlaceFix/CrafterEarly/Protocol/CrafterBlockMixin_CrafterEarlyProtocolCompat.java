@@ -1,15 +1,20 @@
 package chenjunfu2.earlycompat.mixin.EasyPlaceFix.CrafterEarly.Protocol;
 
 import chenjunfu2.earlycompat.util.BlockProtocolStateAdapter;
+import chenjunfu2.earlycompat.util.ItemStackProtocolDataAdapter;
 import net.chenjunfu2.block.CrafterBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.enums.JigsawOrientation;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
 import net.minecraft.state.property.Properties;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 
+
 @Mixin(CrafterBlock.class)
-public abstract class CrafterBlockMixin_CrafterEarlyProtocolCompat implements BlockProtocolStateAdapter
+public abstract class CrafterBlockMixin_CrafterEarlyProtocolCompat implements BlockProtocolStateAdapter, ItemStackProtocolDataAdapter
 {
 	@Override
 	public int earlycompat$toProtocolValue(int protocolValue, BlockState fromState)
@@ -30,5 +35,74 @@ public abstract class CrafterBlockMixin_CrafterEarlyProtocolCompat implements Bl
 	public @NotNull ProtocolType earlycompat$getProtocolType()
 	{
 		return ProtocolType.REPLACE;
+	}
+	
+	@Override
+	public int earlycompat$toProtocolValueAddition(ItemStack fromStack)
+	{
+		NbtCompound nbt = fromStack.getNbt();
+		if(nbt == null)
+		{
+			return 0;//全不锁
+		}
+		
+		//9个bit存储9个槽位锁定状态
+		if(!nbt.contains("BlockEntityTag", NbtElement.COMPOUND_TYPE))
+		{
+			return 0;//全不锁
+		}
+		NbtCompound tagBlockEntity = nbt.getCompound("BlockEntityTag");
+		
+		if(!nbt.contains("disabled_slots", NbtElement.INT_ARRAY_TYPE))
+		{
+			return 0;//全不锁
+		}
+		int[] dis_slots = nbt.getIntArray("disabled_slots");
+
+		int bits = 0;
+		int mask = 1;
+		for(int slot_idx : dis_slots)
+		{
+			if(slot_idx > -1 && slot_idx < 9)
+			{
+				bits |= (mask << slot_idx);
+			}
+		}
+		
+		return bits & 0b0001_1111_1111;//9bit
+	}
+	
+	@Override
+	public @NotNull ItemStack earlycompat$fromProtocolValueAddition(int extraProtocolValue, ItemStack fromStack)
+	{
+		NbtCompound nbt = fromStack.getNbt();
+		if(nbt != null)
+		{
+			return fromStack;//已有数据，不可覆盖，回退
+		}
+		
+		int dis_count = Integer.bitCount(extraProtocolValue & 0b0001_1111_1111);//9bit
+		int[] dis_slots = new int[dis_count];
+		
+		int slot_idx = 0;
+		int mask = 1;
+		for(int i = 0; i < 9; ++i)
+		{
+			if((extraProtocolValue & mask) == mask)
+			{
+				dis_slots[slot_idx++] = i;
+			}
+			mask <<= 1;
+		}
+		
+		NbtCompound tagBlockEntity = new NbtCompound();
+		tagBlockEntity.putIntArray("disabled_slots", dis_slots);
+		
+		nbt = new NbtCompound();
+		nbt.put("BlockEntityTag", tagBlockEntity);
+		
+		fromStack.setNbt(nbt);
+		
+		return fromStack;
 	}
 }

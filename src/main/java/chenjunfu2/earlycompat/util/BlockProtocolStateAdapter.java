@@ -9,20 +9,6 @@ public interface BlockProtocolStateAdapter
 	@NotNull BlockState earlycompat$fromProtocolValue(int extraProtocolValue, BlockState fromState);
 	@NotNull ProtocolType earlycompat$getProtocolType();
 	
-	default int earlycompat$toProtocolValueAddition(BlockState fromState)
-	{
-		return 0;
-	}
-	@NotNull
-	default BlockState earlycompat$fromProtocolValueAddition(int extraProtocolValue, BlockState fromState)
-	{
-		return null;
-	}
-	default boolean earlycompat$useProtocolAddition()
-	{
-		return false;
-	}
-	
 	enum ProtocolType
 	{
 		ADDED,//添加模式-在原协议值上添加额外状态->协议识别位(bit3)不可使用，协议方向位(bit0~2)不可使用，协议高位根据实际情况选择使用

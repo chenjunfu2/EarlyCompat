@@ -4,15 +4,19 @@ import chenjunfu2.earlycompat.accessor.VerticallyAttachableBlockItemAccessor;
 import chenjunfu2.earlycompat.network.EarlyCompatS2ClientHandler;
 import chenjunfu2.earlycompat.util.BlockPlacer;
 import chenjunfu2.earlycompat.util.BlockProtocolStateAdapter;
+import chenjunfu2.earlycompat.util.ItemStackProtocolDataAdapter;
 import com.llamalad7.mixinextras.sugar.Local;
 import fi.dy.masa.litematica.util.WorldUtils;
 import net.fabricmc.api.EnvType;import net.fabricmc.api.Environment;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.VerticallyAttachableBlockItem;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -136,4 +140,41 @@ public abstract class WorldUtilsMixin_LitematicaProtocolCompat
 		int newProtocolValue = addExtraProtocolBit(blockProtocolStateAdapter.earlycompat$toProtocolValue(protocolValue, state));
 		return newProtocolValue;
 	}
+	
+	@ModifyVariable
+	(
+		method = "Lfi/dy/masa/litematica/util/WorldUtils;doEasyPlaceAction(Lnet/minecraft/client/MinecraftClient;)Lnet/minecraft/util/ActionResult;",
+		at = @At(value = "INVOKE_ASSIGN", target = "Lfi/dy/masa/litematica/util/WorldUtils;applyCarpetProtocolHitVec(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;Lnet/minecraft/util/math/Vec3d;)Lnet/minecraft/util/math/Vec3d;"),
+		name = "hitPos"
+	)
+	private static Vec3d replaceHitPos(Vec3d hitPos, @Local(name = "pos") BlockPos pos, @Local(name = "world") World world, @Local(name = "stateSchematic") BlockState stateSchematic)
+	{
+		if(!EarlyCompatS2ClientHandler.isServerSupportsExtraProtocol())//未开启扩展协议
+		{
+			return hitPos;//不变
+		}
+		
+		//不是重载方块
+		Block block = stateSchematic.getBlock();
+		if(!(block instanceof ItemStackProtocolDataAdapter itemStackProtocolDataAdapter))
+		{
+			return hitPos;//不变
+		}
+		
+		//没有方块实体
+		BlockEntity blockEntity = world.getBlockEntity(pos);
+		if(blockEntity == null)
+		{
+			return hitPos;//不变
+		}
+		
+		//获取物品nbt
+		ItemStack itemStack = block.asItem().getDefaultStack();
+		blockEntity.setStackNbt(itemStack);
+		
+		//协议映射
+		int protocolAdditionValue = itemStackProtocolDataAdapter.earlycompat$toProtocolValueAddition(itemStack);
+		return encodeProtocolValueToHitVecZ(protocolAdditionValue,hitPos);
+	}
+	
 }

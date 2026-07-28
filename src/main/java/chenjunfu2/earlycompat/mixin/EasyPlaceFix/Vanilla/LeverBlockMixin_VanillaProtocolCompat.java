@@ -84,7 +84,7 @@ public abstract class LeverBlockMixin_VanillaProtocolCompat extends WallMountedB
 		
         if (!world.isClient && state.get(LeverBlock.POWERED))//更新一下附着方块的临近
 		{
-			world.updateNeighborsAlways(pos, (LeverBlock)(Object)this);
+			//world.updateNeighborsAlways(pos, (LeverBlock)(Object)this);
             world.updateNeighborsAlways(pos.offset(getDirection(state).getOpposite()), (LeverBlock)(Object)this);
         }
     }

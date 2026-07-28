@@ -26,7 +26,6 @@
     "EasyPlaceFix.Vanilla.LeverBlockMixin_VanillaProtocolCompat",
     "EasyPlaceFix.Vanilla.LightBlockMixin_VanillaProtocolCompat",
     "EasyPlaceFix.Vanilla.MushroomBlockMixin_VanillaProtocolCompat",
-    "EasyPlaceFix.Vanilla.Protocol.NeighborUpdaterMixin_VanillaProtocolCompat",
     "EasyPlaceFix.Vanilla.NoteBlockMixin_VanillaProtocolCompat",
     "EasyPlaceFix.Vanilla.PoweredRailBlockMixin_VanillaProtocolCompat",
     "EasyPlaceFix.Vanilla.RailBlockMixin_VanillaProtocolCompat",

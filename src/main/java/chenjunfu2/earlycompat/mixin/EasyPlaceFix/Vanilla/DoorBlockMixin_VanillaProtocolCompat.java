@@ -17,7 +17,7 @@ public abstract class DoorBlockMixin_VanillaProtocolCompat implements BlockProto
 	{
 		int facingOrdinal = fromState.get(DoorBlock.FACING).ordinal() - 2;
 		int hingeOrdinal = fromState.get(DoorBlock.HINGE).ordinal();
-		boolean isOpen = fromState.get(DoorBlock.OPEN) && !fromState.getBlock().equals(Blocks.IRON_DOOR);
+		boolean isOpen = fromState.get(DoorBlock.OPEN);//客户端直接编码
 		int bits =
 			(facingOrdinal & 0b0000_0011) |
 			(hingeOrdinal & 0b0000_0001) << 2 |
@@ -30,11 +30,18 @@ public abstract class DoorBlockMixin_VanillaProtocolCompat implements BlockProto
 	{
 		int facingOrdinal = (extraProtocolValue & 0b0000_0011) + 2;
 		int hingeOrdinal = (extraProtocolValue & 0b0000_0100) >>> 2;//0~1
-		boolean isOpen = (extraProtocolValue & 0b0000_1000) == 0b0000_1000 && !fromState.getBlock().equals(Blocks.IRON_DOOR);
-		return fromState
+		boolean isOpen = (extraProtocolValue & 0b0000_1000) == 0b0000_1000;
+		
+		BlockState newState = fromState
 			.with(DoorBlock.FACING, Direction.values()[facingOrdinal])
-			.with(DoorBlock.HINGE, DoorHinge.values()[hingeOrdinal])
-			.with(DoorBlock.OPEN, isOpen);
+			.with(DoorBlock.HINGE, DoorHinge.values()[hingeOrdinal]);
+			
+		if(!fromState.getBlock().equals(Blocks.IRON_DOOR))//服务端特判
+		{
+			newState = newState.with(DoorBlock.OPEN, isOpen);
+		}
+		
+		return newState;
 	}
 	
 	@Override

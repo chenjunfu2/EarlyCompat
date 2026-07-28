@@ -17,7 +17,7 @@ public abstract class TrapdoorBlockMixin_VanillaProtocolCompat implements BlockP
 	{
 		int facingOrdinal = fromState.get(TrapdoorBlock.FACING).ordinal() - 2;
 		int halfOrdinal = fromState.get(TrapdoorBlock.HALF).ordinal();
-		boolean isOpen = fromState.get(TrapdoorBlock.OPEN) && !fromState.getBlock().equals(Blocks.IRON_TRAPDOOR);
+		boolean isOpen = fromState.get(TrapdoorBlock.OPEN);//客户端正常编码，无需特判
 		int bits =
 			(facingOrdinal & 0b0000_0011) |
 			(halfOrdinal & 0b0000_0001) << 2 |
@@ -30,11 +30,18 @@ public abstract class TrapdoorBlockMixin_VanillaProtocolCompat implements BlockP
 	{
 		int facingOrdinal = (extraProtocolValue & 0b0000_0011) + 2;
 		int halfOrdinal = (extraProtocolValue & 0b0000_0100) >>> 2;//0~1
-		boolean isOpen = (extraProtocolValue & 0b0000_1000) == 0b0000_1000 && !fromState.getBlock().equals(Blocks.IRON_TRAPDOOR);
-		return fromState
+		boolean isOpen = (extraProtocolValue & 0b0000_1000) == 0b0000_1000;
+		
+		BlockState newState = fromState
 			.with(TrapdoorBlock.FACING, Direction.values()[facingOrdinal])
-			.with(TrapdoorBlock.HALF, BlockHalf.values()[halfOrdinal])
-			.with(TrapdoorBlock.OPEN, isOpen);
+			.with(TrapdoorBlock.HALF, BlockHalf.values()[halfOrdinal]);
+		
+		if(!fromState.getBlock().equals(Blocks.IRON_TRAPDOOR))//服务器特判
+		{
+			newState = newState.with(TrapdoorBlock.OPEN, isOpen);
+		}
+		
+		return newState;
 	}
 	
 	@Override

@@ -2,6 +2,7 @@ package chenjunfu2.earlycompat.mixin.EasyPlaceFix.Vanilla;
 
 import chenjunfu2.earlycompat.util.BlockProtocolStateAdapter;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.TrapdoorBlock;
 import net.minecraft.block.enums.BlockHalf;
 import net.minecraft.util.math.Direction;
@@ -16,7 +17,7 @@ public abstract class TrapdoorBlockMixin_VanillaProtocolCompat implements BlockP
 	{
 		int facingOrdinal = fromState.get(TrapdoorBlock.FACING).ordinal() - 2;
 		int halfOrdinal = fromState.get(TrapdoorBlock.HALF).ordinal();
-		boolean isOpen = fromState.get(TrapdoorBlock.OPEN);
+		boolean isOpen = fromState.get(TrapdoorBlock.OPEN) && !fromState.getBlock().equals(Blocks.IRON_TRAPDOOR);
 		int bits =
 			(facingOrdinal & 0b0000_0011) |
 			(halfOrdinal & 0b0000_0001) << 2 |
@@ -29,7 +30,7 @@ public abstract class TrapdoorBlockMixin_VanillaProtocolCompat implements BlockP
 	{
 		int facingOrdinal = (extraProtocolValue & 0b0000_0011) + 2;
 		int halfOrdinal = (extraProtocolValue & 0b0000_0100) >>> 2;//0~1
-		boolean isOpen = (extraProtocolValue & 0b0000_1000) == 0b0000_1000;
+		boolean isOpen = (extraProtocolValue & 0b0000_1000) == 0b0000_1000 && !fromState.getBlock().equals(Blocks.IRON_TRAPDOOR);
 		return fromState
 			.with(TrapdoorBlock.FACING, Direction.values()[facingOrdinal])
 			.with(TrapdoorBlock.HALF, BlockHalf.values()[halfOrdinal])

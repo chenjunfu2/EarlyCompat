@@ -2,6 +2,7 @@ package chenjunfu2.earlycompat.mixin.EasyPlaceFix.Vanilla;
 
 import chenjunfu2.earlycompat.util.BlockProtocolStateAdapter;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.DoorBlock;
 import net.minecraft.block.enums.DoorHinge;
 import net.minecraft.util.math.Direction;
@@ -16,7 +17,7 @@ public abstract class DoorBlockMixin_VanillaProtocolCompat implements BlockProto
 	{
 		int facingOrdinal = fromState.get(DoorBlock.FACING).ordinal() - 2;
 		int hingeOrdinal = fromState.get(DoorBlock.HINGE).ordinal();
-		boolean isOpen = fromState.get(DoorBlock.OPEN);
+		boolean isOpen = fromState.get(DoorBlock.OPEN) && !fromState.getBlock().equals(Blocks.IRON_DOOR);
 		int bits =
 			(facingOrdinal & 0b0000_0011) |
 			(hingeOrdinal & 0b0000_0001) << 2 |
@@ -29,7 +30,7 @@ public abstract class DoorBlockMixin_VanillaProtocolCompat implements BlockProto
 	{
 		int facingOrdinal = (extraProtocolValue & 0b0000_0011) + 2;
 		int hingeOrdinal = (extraProtocolValue & 0b0000_0100) >>> 2;//0~1
-		boolean isOpen = (extraProtocolValue & 0b0000_1000) == 0b0000_1000;
+		boolean isOpen = (extraProtocolValue & 0b0000_1000) == 0b0000_1000 && !fromState.getBlock().equals(Blocks.IRON_DOOR);
 		return fromState
 			.with(DoorBlock.FACING, Direction.values()[facingOrdinal])
 			.with(DoorBlock.HINGE, DoorHinge.values()[hingeOrdinal])

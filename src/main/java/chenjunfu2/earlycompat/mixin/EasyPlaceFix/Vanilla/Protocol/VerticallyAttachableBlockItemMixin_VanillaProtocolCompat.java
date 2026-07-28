@@ -51,7 +51,8 @@ public class VerticallyAttachableBlockItemMixin_VanillaProtocolCompat extends Bl
 	{
 		if(IS_SERVER_ENV)//不是客户端
 		{
-			if (!EarlyCompatC2ServerHandler.isExtraProtocolPlayer((ServerPlayerEntity)context.getPlayer()) ||
+			if (!(context.getPlayer() instanceof ServerPlayerEntity serverPlayerEntity) ||
+				!EarlyCompatC2ServerHandler.isExtraProtocolPlayer(serverPlayerEntity) ||
 				!CarpetExtraSettingsAccessor.getAccurateBlockPlacement())//玩家没有扩展协议或carpet规则被关闭
 			{
 				return;//啥都不做

@@ -1,5 +1,6 @@
 package chenjunfu2.earlycompat.mixin.EasyPlaceFix.Vanilla.Protocol;
 
+import chenjunfu2.earlycompat.accessor.PlaceStateAccessor;
 import chenjunfu2.earlycompat.network.EarlyCompatC2ServerHandler;
 import chenjunfu2.earlycompat.util.ItemStackProtocolDataAdapter;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
@@ -11,15 +12,19 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import static chenjunfu2.earlycompat.util.EasyPlaceExtraProtocolHelper.*;
 
 @Mixin(BlockItem.class)
-public abstract class BlockItemMixin_VanillaProtocolCompat
+public abstract class BlockItemMixin_VanillaProtocolCompat implements PlaceStateAccessor
 {
 	@WrapOperation
 	(
@@ -55,5 +60,37 @@ public abstract class BlockItemMixin_VanillaProtocolCompat
 		//使用修改的stack调用
 		return original.call(instance, pos, world, player, newStack, state);
 	}
+	
+	@Unique
+	private static boolean earlycompat$isEasyPlaceState = false;
+	
+	@Override
+	public boolean earlycompat$isEasyPlaceState()
+	{
+		return earlycompat$isEasyPlaceState;
+	}
 
+	@Inject
+	(
+		method = "Lnet/minecraft/item/BlockItem;place(Lnet/minecraft/item/ItemPlacementContext;)Lnet/minecraft/util/ActionResult;",
+		at = @At(value = "HEAD")
+	)
+	void setPlaceState(ItemPlacementContext context, CallbackInfoReturnable<ActionResult> cir)
+	{
+		if(isProtocol(getRelativeHitX(context.getHitPos(), context.getBlockPos())))
+		{
+			earlycompat$isEasyPlaceState = true;
+		}
+	}
+	
+	@Inject
+	(
+		method = "Lnet/minecraft/item/BlockItem;place(Lnet/minecraft/item/ItemPlacementContext;)Lnet/minecraft/util/ActionResult;",
+		at = @At(value = "RETURN")
+	)
+	void clearPlaceState(ItemPlacementContext context, CallbackInfoReturnable<ActionResult> cir)
+	{
+		earlycompat$isEasyPlaceState = false;
+	}
+	
 }

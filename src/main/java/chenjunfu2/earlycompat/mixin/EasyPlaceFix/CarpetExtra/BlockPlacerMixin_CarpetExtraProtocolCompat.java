@@ -38,7 +38,8 @@ public abstract class BlockPlacerMixin_CarpetExtraProtocolCompat
 		@Local(name = "relativeHitX") double relativeHitX
 	)
 	{
-		if(!EarlyCompatC2ServerHandler.isExtraProtocolPlayer((ServerPlayerEntity)context.getPlayer()))//玩家没有扩展协议
+		if (!(context.getPlayer() instanceof ServerPlayerEntity serverPlayerEntity) ||
+			!EarlyCompatC2ServerHandler.isExtraProtocolPlayer(serverPlayerEntity))//玩家没有扩展协议
 		{
 			return;
 		}
@@ -83,7 +84,8 @@ public abstract class BlockPlacerMixin_CarpetExtraProtocolCompat
 		@Local(name = "context") ItemPlacementContext context
 	)
 	{
-		if(!EarlyCompatC2ServerHandler.isExtraProtocolPlayer((ServerPlayerEntity)context.getPlayer()))//玩家没有扩展协议
+		if (!(context.getPlayer() instanceof ServerPlayerEntity serverPlayerEntity) ||
+			!EarlyCompatC2ServerHandler.isExtraProtocolPlayer(serverPlayerEntity))//玩家没有扩展协议
 		{
 			return protocolValue;
 		}
@@ -111,7 +113,8 @@ public abstract class BlockPlacerMixin_CarpetExtraProtocolCompat
 		@Local(name = "relativeHitX") double relativeHitX
 	)
 	{
-		if(!EarlyCompatC2ServerHandler.isExtraProtocolPlayer((ServerPlayerEntity)context.getPlayer()))//玩家没有扩展协议
+		if (!(context.getPlayer() instanceof ServerPlayerEntity serverPlayerEntity) ||
+			!EarlyCompatC2ServerHandler.isExtraProtocolPlayer(serverPlayerEntity))//玩家没有扩展协议
 		{
 			return state;
 		}

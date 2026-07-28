@@ -48,13 +48,6 @@ public class BlockPlacer
 			
 			if(wallBlock instanceof BlockProtocolStateAdapter wallBlockProtocolStateAdapter)
 			{
-				if(wallBlockProtocolStateAdapter.earlycompat$useProtocolAddition())
-				{
-					double relativeHitZ = context.getHitPos().z - (double)context.getBlockPos().getZ();
-					int rawAdditionProtocolValue = decodeProtocolValueFromHitDim(relativeHitZ);
-					blockState2 = wallBlockProtocolStateAdapter.earlycompat$fromProtocolValueAddition(rawAdditionProtocolValue, blockState2);
-				}
-				
 				blockState = wallBlockProtocolStateAdapter.earlycompat$fromProtocolValue(protocolValue, blockState2);
 			}
 			else
@@ -77,13 +70,6 @@ public class BlockPlacer
 			}
 			
 			blockState = blockProtocolStateAdapter.earlycompat$fromProtocolValue(protocolValue, blockState2);
-			
-			if(blockProtocolStateAdapter.earlycompat$useProtocolAddition())
-			{
-				double relativeHitZ = context.getHitPos().z - (double)context.getBlockPos().getZ();
-				int rawAdditionProtocolValue = decodeProtocolValueFromHitDim(relativeHitZ);
-				blockState = blockProtocolStateAdapter.earlycompat$fromProtocolValueAddition(rawAdditionProtocolValue, blockState);
-			}
 		}
 		
 		return blockState;

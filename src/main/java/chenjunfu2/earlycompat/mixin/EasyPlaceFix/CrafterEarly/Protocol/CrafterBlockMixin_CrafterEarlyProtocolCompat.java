@@ -69,16 +69,33 @@ public abstract class CrafterBlockMixin_CrafterEarlyProtocolCompat implements Bl
 	@Override
 	public @NotNull ItemStack earlycompat$fromProtocolValueAddition(int extraProtocolValue, ItemStack fromStack)
 	{
-		NbtCompound nbt = fromStack.getNbt();
-		if(nbt != null)
-		{
-			return fromStack;//已有数据，不可覆盖，回退
-		}
-		
 		int dis_count = Integer.bitCount(extraProtocolValue & 0b0001_1111_1111);//9bit
 		if(dis_count == 0)
 		{
 			return fromStack;//啥都没有
+		}
+		
+		//务必拷贝返回，禁止修改原对象
+		NbtCompound tagBlockEntity = fromStack.getSubNbt("BlockEntityTag");//尝试获取be
+		if(tagBlockEntity != null && tagBlockEntity.contains("disabled_slots"))
+		{
+			return fromStack;//已有数据，不可覆盖，回退
+		}
+		
+		//拷贝并修改
+		ItemStack stackCopy = fromStack.copy();
+		tagBlockEntity = stackCopy.getSubNbt("BlockEntityTag");
+		if(tagBlockEntity == null)
+		{
+			NbtCompound nbt = stackCopy.getNbt();
+			if(nbt == null)
+			{
+				nbt = new NbtCompound();
+				stackCopy.setNbt(nbt);
+			}
+			
+			tagBlockEntity = new NbtCompound();
+			nbt.put("BlockEntityTag", tagBlockEntity);
 		}
 		
 		int[] dis_slots = new int[dis_count];
@@ -94,15 +111,8 @@ public abstract class CrafterBlockMixin_CrafterEarlyProtocolCompat implements Bl
 			mask <<= 1;
 		}
 		
-		NbtCompound tagBlockEntity = new NbtCompound();
+		//插入并返回
 		tagBlockEntity.putIntArray("disabled_slots", dis_slots);
-		
-		nbt = new NbtCompound();
-		nbt.put("BlockEntityTag", tagBlockEntity);
-		
-		//务必拷贝返回，禁止修改原对象
-		var stackCopy = fromStack.copy();
-		stackCopy.setNbt(nbt);
 		return stackCopy;
 	}
 }

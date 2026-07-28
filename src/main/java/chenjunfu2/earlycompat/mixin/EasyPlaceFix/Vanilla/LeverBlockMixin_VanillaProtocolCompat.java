@@ -1,5 +1,6 @@
 package chenjunfu2.earlycompat.mixin.EasyPlaceFix.Vanilla;
 
+import chenjunfu2.earlycompat.accessor.PlaceStateAccessor;
 import chenjunfu2.earlycompat.util.BlockProtocolStateAdapter;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -69,9 +70,22 @@ public abstract class LeverBlockMixin_VanillaProtocolCompat extends WallMountedB
     )
     private void onPlaced(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack, CallbackInfo ci)
 	{
+		//不执行更新，当前必须当前是轻松放置的状态
+		if(!(state.getBlock().asItem() instanceof PlaceStateAccessor blockItemPlaceStateAccessor))
+		{
+			return;//首先必须要是PlaceStateAccessor
+		}
+		
+		//然后获取轻松放置状态
+		if(!blockItemPlaceStateAccessor.earlycompat$isEasyPlaceState())
+		{
+			return;//当前不是轻松放置，跳过
+		}
+		
         if (!world.isClient && state.get(LeverBlock.POWERED))//更新一下附着方块的临近
 		{
-            world.updateNeighborsAlways(pos.offset(getDirection(state).getOpposite()), (Block)(Object)this);
+			world.updateNeighborsAlways(pos, (LeverBlock)(Object)this);
+            world.updateNeighborsAlways(pos.offset(getDirection(state).getOpposite()), (LeverBlock)(Object)this);
         }
     }
 }

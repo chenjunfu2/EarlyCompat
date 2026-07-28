@@ -15,8 +15,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(AbstractRailBlock.class)
 public class AbstractRailBlockMixin_VanillaProtocolCompat
 {
-	@Inject(method = "Lnet/minecraft/block/AbstractRailBlock;updateCurves(Lnet/minecraft/block/BlockState;Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Z)Lnet/minecraft/block/BlockState;", at = @At("HEAD"), cancellable = true)
-    private void cancelUpdate0(BlockState state, World world, BlockPos pos, boolean notify, CallbackInfoReturnable<BlockState> cir)
+	@Inject
+	(
+		method = "Lnet/minecraft/block/AbstractRailBlock;updateBlockState(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;Z)Lnet/minecraft/block/BlockState;",
+		at = @At("HEAD"),
+		cancellable = true
+	)
+    private void cancelUpdate0(World world, BlockPos pos, BlockState state, boolean forceUpdate, CallbackInfoReturnable<BlockState> cir)
 	{
     	//不执行更新，当前必须当前是轻松放置的状态
 		if(!(state.getBlock().asItem() instanceof PlaceStateAccessor blockItemPlaceStateAccessor))

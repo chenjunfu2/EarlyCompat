@@ -2,15 +2,14 @@ package chenjunfu2.earlycompat.mixin.EasyPlaceFix.Vanilla;
 
 import chenjunfu2.earlycompat.accessor.PlaceStateAccessor;
 import chenjunfu2.earlycompat.util.BlockProtocolStateAdapter;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.LeverBlock;
 import net.minecraft.block.WallMountedBlock;
 import net.minecraft.block.enums.WallMountLocation;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -40,7 +39,7 @@ public abstract class LeverBlockMixin_VanillaProtocolCompat extends WallMountedB
 	}
 	
 	@Override
-	public @NotNull BlockState earlycompat$fromProtocolValue(int extraProtocolValue, BlockState fromState)
+	public @Nullable BlockState earlycompat$fromProtocolValue(int extraProtocolValue, BlockState fromState, ItemPlacementContext context)
 	{
 		int faceOridinal = ((extraProtocolValue & 0b0011_0000) >>> 4) % 3;//0~2
 		boolean isPowered = (extraProtocolValue & 0b0100_0000) == 0b0100_0000;

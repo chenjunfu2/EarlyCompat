@@ -4,7 +4,9 @@ import chenjunfu2.earlycompat.util.BlockProtocolStateAdapter;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.RedstoneWireBlock;
 import net.minecraft.block.enums.WireConnection;
+import net.minecraft.item.ItemPlacementContext;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 
 @Mixin(RedstoneWireBlock.class)
@@ -22,7 +24,7 @@ public abstract class RedstoneWireBlockMixin_VanillaProtocolCompat implements Bl
 	}
 	
 	@Override
-	public @NotNull BlockState earlycompat$fromProtocolValue(int extraProtocolValue, BlockState fromState)
+	public @Nullable BlockState earlycompat$fromProtocolValue(int extraProtocolValue, BlockState fromState, ItemPlacementContext context)
 	{
 		boolean isDot = (extraProtocolValue & 0b0001) == 0b0001;//0bit
 		return isDot

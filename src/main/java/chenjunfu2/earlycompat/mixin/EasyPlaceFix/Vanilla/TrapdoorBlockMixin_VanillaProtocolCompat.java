@@ -5,8 +5,10 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.TrapdoorBlock;
 import net.minecraft.block.enums.BlockHalf;
+import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.util.math.Direction;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 
 @Mixin(TrapdoorBlock.class)
@@ -26,7 +28,7 @@ public abstract class TrapdoorBlockMixin_VanillaProtocolCompat implements BlockP
 	}
 	
 	@Override
-	public @NotNull BlockState earlycompat$fromProtocolValue(int extraProtocolValue, BlockState fromState)
+	public @Nullable BlockState earlycompat$fromProtocolValue(int extraProtocolValue, BlockState fromState, ItemPlacementContext context)
 	{
 		int facingOrdinal = (extraProtocolValue & 0b0000_0011) + 2;
 		int halfOrdinal = (extraProtocolValue & 0b0000_0100) >>> 2;//0~1

@@ -3,7 +3,9 @@ package chenjunfu2.earlycompat.mixin.EasyPlaceFix.Vanilla;
 import chenjunfu2.earlycompat.util.BlockProtocolStateAdapter;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.CampfireBlock;
+import net.minecraft.item.ItemPlacementContext;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 
 @Mixin(CampfireBlock.class)
@@ -18,7 +20,7 @@ public abstract class CampfireBlockMixin_VanillaProtocolCompat implements BlockP
 	}
 	
 	@Override
-	public @NotNull BlockState earlycompat$fromProtocolValue(int extraProtocolValue, BlockState fromState)
+	public @Nullable BlockState earlycompat$fromProtocolValue(int extraProtocolValue, BlockState fromState, ItemPlacementContext context)
 	{
 		boolean isLit = (extraProtocolValue & 0b0001_0000) == 0b0001_0000;
 		return fromState.with(CampfireBlock.LIT, isLit);

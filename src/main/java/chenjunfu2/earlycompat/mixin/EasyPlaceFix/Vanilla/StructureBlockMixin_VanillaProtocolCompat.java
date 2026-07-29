@@ -4,7 +4,9 @@ import chenjunfu2.earlycompat.util.BlockProtocolStateAdapter;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.StructureBlock;
 import net.minecraft.block.enums.StructureBlockMode;
+import net.minecraft.item.ItemPlacementContext;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 
 @Mixin(StructureBlock.class)
@@ -19,7 +21,7 @@ public abstract class StructureBlockMixin_VanillaProtocolCompat implements Block
 	}
 	
 	@Override
-	public @NotNull BlockState earlycompat$fromProtocolValue(int extraProtocolValue, BlockState fromState)
+	public @Nullable BlockState earlycompat$fromProtocolValue(int extraProtocolValue, BlockState fromState, ItemPlacementContext context)
 	{
 		int modeOrdinal = (extraProtocolValue & 0b0011);//0~3
 		return fromState.with(StructureBlock.MODE, StructureBlockMode.values()[modeOrdinal]);

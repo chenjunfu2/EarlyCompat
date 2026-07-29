@@ -63,7 +63,7 @@ public abstract class BlockPlacerMixin_CarpetExtraProtocolCompat
 		}
 		
 		int rawProtocolValue = extraProtocolValueToRawProtocolValue(protocolValue);
-		cir.setReturnValue(blockProtocolStateAdapter.earlycompat$fromProtocolValue(rawProtocolValue, state));
+		cir.setReturnValue(blockProtocolStateAdapter.earlycompat$fromProtocolValue(rawProtocolValue, state, context));
 		cir.cancel();
 	}
 	
@@ -137,7 +137,7 @@ public abstract class BlockPlacerMixin_CarpetExtraProtocolCompat
 			return state;//如果不是添加模式，那么什么也不做
 		}
 		
-		BlockState newState = blockProtocolStateAdapter.earlycompat$fromProtocolValue(protocolValue, state);//使用原值，不解包
+		BlockState newState = blockProtocolStateAdapter.earlycompat$fromProtocolValue(protocolValue, state, context);//使用原值，不解包
 		return newState;
 	}
 }

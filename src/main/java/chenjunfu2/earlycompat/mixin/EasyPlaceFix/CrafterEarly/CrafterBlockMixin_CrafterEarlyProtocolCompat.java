@@ -5,11 +5,13 @@ import chenjunfu2.earlycompat.util.ItemStackProtocolDataAdapter;
 import net.chenjunfu2.block.CrafterBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.enums.JigsawOrientation;
+import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.state.property.Properties;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 
 
@@ -24,7 +26,7 @@ public abstract class CrafterBlockMixin_CrafterEarlyProtocolCompat implements Bl
 	}
 	
 	@Override
-	public @NotNull BlockState earlycompat$fromProtocolValue(int extraProtocolValue, BlockState fromState)
+	public @Nullable BlockState earlycompat$fromProtocolValue(int extraProtocolValue, BlockState fromState, ItemPlacementContext context)
 	{
 		//低4bit存储12个方向
 		int orientationOrdinal = (extraProtocolValue & 0b0000_1111) % 12;//0~11

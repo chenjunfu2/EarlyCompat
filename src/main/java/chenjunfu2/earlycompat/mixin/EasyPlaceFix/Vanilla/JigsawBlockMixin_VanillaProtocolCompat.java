@@ -4,7 +4,9 @@ import chenjunfu2.earlycompat.util.BlockProtocolStateAdapter;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.JigsawBlock;
 import net.minecraft.block.enums.JigsawOrientation;
+import net.minecraft.item.ItemPlacementContext;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 
 @Mixin(JigsawBlock.class)
@@ -18,7 +20,7 @@ public abstract class JigsawBlockMixin_VanillaProtocolCompat implements BlockPro
 	}
 	
 	@Override
-	public @NotNull BlockState earlycompat$fromProtocolValue(int extraProtocolValue, BlockState fromState)
+	public @Nullable BlockState earlycompat$fromProtocolValue(int extraProtocolValue, BlockState fromState, ItemPlacementContext context)
 	{
 		int orientationOrdinal = (extraProtocolValue & 0b0000_1111) % 12;//0~11
 		return fromState.with(JigsawBlock.ORIENTATION, JigsawOrientation.values()[orientationOrdinal]);

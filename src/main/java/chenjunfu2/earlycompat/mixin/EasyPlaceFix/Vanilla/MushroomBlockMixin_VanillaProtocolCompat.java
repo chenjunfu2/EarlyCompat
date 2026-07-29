@@ -3,7 +3,9 @@ package chenjunfu2.earlycompat.mixin.EasyPlaceFix.Vanilla;
 import chenjunfu2.earlycompat.util.BlockProtocolStateAdapter;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.MushroomBlock;
+import net.minecraft.item.ItemPlacementContext;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 
 @Mixin(MushroomBlock.class)
@@ -24,7 +26,7 @@ public abstract class MushroomBlockMixin_VanillaProtocolCompat implements BlockP
 	}
 	
 	@Override
-	public @NotNull BlockState earlycompat$fromProtocolValue(int extraProtocolValue, BlockState fromState)
+	public @Nullable BlockState earlycompat$fromProtocolValue(int extraProtocolValue, BlockState fromState, ItemPlacementContext context)
 	{
 		return fromState
 				.with(MushroomBlock.NORTH,	((extraProtocolValue & 0b0000_0001) == 0b0000_0001))

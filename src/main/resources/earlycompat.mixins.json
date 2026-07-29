@@ -25,6 +25,7 @@
     "EasyPlaceFix.Vanilla.LanternBlockMixin_VanillaProtocolCompat",
     "EasyPlaceFix.Vanilla.LeverBlockMixin_VanillaProtocolCompat",
     "EasyPlaceFix.Vanilla.LightBlockMixin_VanillaProtocolCompat",
+    "EasyPlaceFix.Vanilla.MultifaceGrowthBlockMixin_VanillaProtocolCompat",
     "EasyPlaceFix.Vanilla.MushroomBlockMixin_VanillaProtocolCompat",
     "EasyPlaceFix.Vanilla.NoteBlockMixin_VanillaProtocolCompat",
     "EasyPlaceFix.Vanilla.PoweredRailBlockMixin_VanillaProtocolCompat",

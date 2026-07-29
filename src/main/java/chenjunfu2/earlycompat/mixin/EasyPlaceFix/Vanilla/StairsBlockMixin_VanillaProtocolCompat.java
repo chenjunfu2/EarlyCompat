@@ -5,8 +5,10 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.StairsBlock;
 import net.minecraft.block.enums.BlockHalf;
 import net.minecraft.block.enums.StairShape;
+import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.util.math.Direction;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 
 @Mixin(StairsBlock.class)
@@ -26,7 +28,7 @@ public abstract class StairsBlockMixin_VanillaProtocolCompat implements BlockPro
 	}
 	
 	@Override
-	public @NotNull BlockState earlycompat$fromProtocolValue(int extraProtocolValue, BlockState fromState)
+	public @Nullable BlockState earlycompat$fromProtocolValue(int extraProtocolValue, BlockState fromState, ItemPlacementContext context)
 	{
 		int facingOrdinal = (extraProtocolValue & 0b0000_0011) + 2;//0~3 2bit
 		int halfOrdinal = (extraProtocolValue & 0b0000_0100) >>> 2;//0~1 1bit

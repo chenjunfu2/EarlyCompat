@@ -60,7 +60,7 @@ public class PlacementHandlerMixin_LitematicaProtocolCompat
 		}
 		
 		int rawProtocolValue = extraProtocolValueToRawProtocolValue(protocolValue);
-		cir.setReturnValue(blockProtocolStateAdapter.earlycompat$fromProtocolValue(rawProtocolValue, state));
+		cir.setReturnValue(blockProtocolStateAdapter.earlycompat$fromProtocolValue(rawProtocolValue, state, context.getItemPlacementContext()));
 		cir.cancel();
 	}
 	
@@ -134,7 +134,7 @@ public class PlacementHandlerMixin_LitematicaProtocolCompat
 			return state;//如果不是添加模式，那么什么也不做
 		}
 		
-		BlockState newState = blockProtocolStateAdapter.earlycompat$fromProtocolValue(protocolValue, state);//使用原值，不解包
+		BlockState newState = blockProtocolStateAdapter.earlycompat$fromProtocolValue(protocolValue, state, context.getItemPlacementContext());//使用原值，不解包
 		return newState;
 	}
 

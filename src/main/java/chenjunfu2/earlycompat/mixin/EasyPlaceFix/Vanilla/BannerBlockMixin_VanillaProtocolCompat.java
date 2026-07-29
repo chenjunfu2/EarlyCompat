@@ -4,7 +4,9 @@ import chenjunfu2.earlycompat.util.BlockProtocolStateAdapter;
 import net.minecraft.block.BannerBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SignBlock;
+import net.minecraft.item.ItemPlacementContext;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 
 @Mixin(BannerBlock.class)
@@ -19,7 +21,7 @@ public abstract class BannerBlockMixin_VanillaProtocolCompat implements BlockPro
 	}
 	
 	@Override
-	public @NotNull BlockState earlycompat$fromProtocolValue(int extraProtocolValue, BlockState fromState)
+	public @Nullable BlockState earlycompat$fromProtocolValue(int extraProtocolValue, BlockState fromState, ItemPlacementContext context)
 	{
 		int rotation = (extraProtocolValue & 0b0000_1111);
 		return fromState.with(SignBlock.ROTATION, rotation);

@@ -3,7 +3,9 @@ package chenjunfu2.earlycompat.mixin.EasyPlaceFix.CopperBulbEarly;
 import chenjunfu2.earlycompat.util.BlockProtocolStateAdapter;
 import com.chenjunfu2.block.OxidizableBulbBlock;
 import net.minecraft.block.BlockState;
+import net.minecraft.item.ItemPlacementContext;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 
 @Mixin(OxidizableBulbBlock.class)
@@ -18,7 +20,7 @@ public abstract class OxidizableBulbBlockMixin_CopperBlubEarlyProtocolCompat imp
 	}
 	
 	@Override
-	public @NotNull BlockState earlycompat$fromProtocolValue(int extraProtocolValue, BlockState fromState)
+	public @Nullable BlockState earlycompat$fromProtocolValue(int extraProtocolValue, BlockState fromState, ItemPlacementContext context)
 	{
 		//两个bit，bit0是lit，bit1是powered，都是bool值
 		boolean lit = (extraProtocolValue & 0b0001) == 0b0001;//bit0

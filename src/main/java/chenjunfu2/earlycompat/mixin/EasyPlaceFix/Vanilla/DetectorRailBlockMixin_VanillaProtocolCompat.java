@@ -4,7 +4,9 @@ import chenjunfu2.earlycompat.util.BlockProtocolStateAdapter;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.DetectorRailBlock;
 import net.minecraft.block.enums.RailShape;
+import net.minecraft.item.ItemPlacementContext;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 
 @Mixin(DetectorRailBlock.class)
@@ -18,7 +20,7 @@ public class DetectorRailBlockMixin_VanillaProtocolCompat implements BlockProtoc
 	}
 	
 	@Override
-	public @NotNull BlockState earlycompat$fromProtocolValue(int extraProtocolValue, BlockState fromState)
+	public @Nullable BlockState earlycompat$fromProtocolValue(int extraProtocolValue, BlockState fromState, ItemPlacementContext context)
 	{
 		int shapeOrdinal = (extraProtocolValue & 0b0000_0111) % 6;//0~5 6种状态
 		return fromState

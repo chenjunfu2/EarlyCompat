@@ -3,7 +3,9 @@ package chenjunfu2.earlycompat.mixin.EasyPlaceFix.Vanilla;
 import chenjunfu2.earlycompat.util.BlockProtocolStateAdapter;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.DaylightDetectorBlock;
+import net.minecraft.item.ItemPlacementContext;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 
 @Mixin(DaylightDetectorBlock.class)
@@ -17,7 +19,7 @@ public abstract class DaylightDetectorBlockMixin_VanillaProtocolCompat implement
 	}
 	
 	@Override
-	public @NotNull BlockState earlycompat$fromProtocolValue(int extraProtocolValue, BlockState fromState)
+	public @Nullable BlockState earlycompat$fromProtocolValue(int extraProtocolValue, BlockState fromState, ItemPlacementContext context)
 	{
 		boolean isInverted = (extraProtocolValue & 0b0001) == 0b0001;//0bit
 		return fromState.with(DaylightDetectorBlock.INVERTED, isInverted);

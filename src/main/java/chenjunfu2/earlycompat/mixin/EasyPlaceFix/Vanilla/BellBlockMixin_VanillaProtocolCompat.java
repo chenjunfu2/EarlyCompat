@@ -4,7 +4,9 @@ import chenjunfu2.earlycompat.util.BlockProtocolStateAdapter;
 import net.minecraft.block.BellBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.enums.Attachment;
+import net.minecraft.item.ItemPlacementContext;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 
 @Mixin(BellBlock.class)
@@ -19,7 +21,7 @@ public abstract class BellBlockMixin_VanillaProtocolCompat implements BlockProto
 	}
 	
 	@Override
-	public @NotNull BlockState earlycompat$fromProtocolValue(int extraProtocolValue, BlockState fromState)
+	public @Nullable BlockState earlycompat$fromProtocolValue(int extraProtocolValue, BlockState fromState, ItemPlacementContext context)
 	{
 		int attachmentOrdinal = (extraProtocolValue & 0b0011_0000) >>> 4;//0~3
 		return fromState.with(BellBlock.ATTACHMENT, Attachment.values()[attachmentOrdinal]);

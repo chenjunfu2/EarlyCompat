@@ -1,12 +1,14 @@
 package chenjunfu2.earlycompat.util;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.item.ItemPlacementContext;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public interface BlockProtocolStateAdapter
 {
 	int earlycompat$toProtocolValue(int protocolValue, BlockState fromState);
-	@NotNull BlockState earlycompat$fromProtocolValue(int extraProtocolValue, BlockState fromState);
+	@Nullable BlockState earlycompat$fromProtocolValue(int extraProtocolValue, BlockState fromState, ItemPlacementContext context);//如果应该失败，那么返回null
 	@NotNull ProtocolType earlycompat$getProtocolType();
 	
 	enum ProtocolType

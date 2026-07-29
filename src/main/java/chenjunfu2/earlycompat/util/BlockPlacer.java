@@ -48,7 +48,7 @@ public class BlockPlacer
 			
 			if(wallBlock instanceof BlockProtocolStateAdapter wallBlockProtocolStateAdapter)
 			{
-				blockState = wallBlockProtocolStateAdapter.earlycompat$fromProtocolValue(protocolValue, blockState2);
+				blockState = wallBlockProtocolStateAdapter.earlycompat$fromProtocolValue(protocolValue, blockState2, context);
 			}
 			else
 			{
@@ -69,7 +69,7 @@ public class BlockPlacer
 				return null;
 			}
 			
-			blockState = blockProtocolStateAdapter.earlycompat$fromProtocolValue(protocolValue, blockState2);
+			blockState = blockProtocolStateAdapter.earlycompat$fromProtocolValue(protocolValue, blockState2, context);
 		}
 		
 		return blockState;

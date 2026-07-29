@@ -5,19 +5,27 @@ import chenjunfu2.earlycompat.network.EarlyCompatS2ClientHandler;
 import chenjunfu2.earlycompat.util.BlockPlacer;
 import chenjunfu2.earlycompat.util.BlockProtocolStateAdapter;
 import chenjunfu2.earlycompat.util.ItemStackProtocolDataAdapter;
+import chenjunfu2.earlycompat.util.MultiStageBlockProtocolStateAdapter;
 import com.llamalad7.mixinextras.sugar.Local;
+import fi.dy.masa.litematica.util.EasyPlaceProtocol;
 import fi.dy.masa.litematica.util.WorldUtils;
 import net.fabricmc.api.EnvType;import net.fabricmc.api.Environment;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.VerticallyAttachableBlockItem;
 import net.minecraft.state.property.DirectionProperty;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.gen.Invoker;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
@@ -177,4 +185,71 @@ public abstract class WorldUtilsMixin_LitematicaProtocolCompat
 		return encodeProtocolValueToHitVecZ(protocolAdditionValue,hitPos);
 	}
 	
+	@Invoker("cacheEasyPlacePosition")
+    static void invokeCacheEasyPlacePosition(BlockPos pos)
+	{
+        throw new AssertionError();
+    }
+	
+	//特殊多面、多物品方块处理
+	@Inject
+	(
+		method = "Lfi/dy/masa/litematica/util/WorldUtils;doEasyPlaceAction(Lnet/minecraft/client/MinecraftClient;)Lnet/minecraft/util/ActionResult;",
+		at = @At
+		(
+			value = "INVOKE_ASSIGN",
+			target = "Lfi/dy/masa/litematica/util/PlacementHandler;getEffectiveProtocolVersion()Lfi/dy/masa/litematica/util/EasyPlaceProtocol;"
+		),
+		cancellable = true
+	)
+	private static void processMuiltStageBlock(MinecraftClient mc, CallbackInfoReturnable<ActionResult> cir,
+		@Local(name = "protocol") EasyPlaceProtocol protocol,
+		@Local(name = "hand") Hand hand,
+		@Local(name = "stateClient") BlockState stateClient,
+		@Local(name = "pos") BlockPos pos,
+		@Local(name = "stateSchematic") BlockState stateSchematic,
+		@Local(name = "hitPos") Vec3d hitPos,
+		@Local(name = "side") Direction side
+	)
+	{
+		if(!EarlyCompatS2ClientHandler.isServerSupportsExtraProtocol())//未开启扩展协议
+		{
+			return;
+		}
+		
+		//不是v2
+		if(protocol != EasyPlaceProtocol.V2)
+		{
+			return;
+		}
+		
+		if(!(stateSchematic.getBlock() instanceof MultiStageBlockProtocolStateAdapter multiStageBlockProtocolStateAdapter))
+		{
+			return;
+		}
+		
+		//获取需要放置的次数，并同时放置这么多次
+		MultiStageBlockProtocolStateAdapter.LoopContext ctx = new MultiStageBlockProtocolStateAdapter.LoopContext();
+		ctx.stateSchematic = stateSchematic;
+		ctx.stateClient = stateClient;
+		
+		multiStageBlockProtocolStateAdapter.earlycompat$setLoopCount(ctx);
+		int loopCount = ctx.loopCount;
+		for(int i = 0; i < loopCount; ++i)
+		{
+			ctx.loopIndex = i;
+			int protocolRawValue = multiStageBlockProtocolStateAdapter.earlycompat$toProtocolValueLoop(ctx);
+			Vec3d protocolHitVec = encodeExtraProtocolValueToHitVecX(protocolRawValue, hitPos);//注意总是使用hitPos，因为是同一个方块
+			
+            BlockHitResult hitResult = new BlockHitResult(protocolHitVec, side, pos, false);
+            mc.interactionManager.interactBlock(mc.player, hand, hitResult);//放置方块
+			ctx.stateClient = mc.world.getBlockState(pos);//更新stateClient
+		}
+		
+		//插入cache冷却
+		invokeCacheEasyPlacePosition(pos);
+		
+		cir.setReturnValue(ActionResult.SUCCESS);
+		cir.cancel();
+	}
 }

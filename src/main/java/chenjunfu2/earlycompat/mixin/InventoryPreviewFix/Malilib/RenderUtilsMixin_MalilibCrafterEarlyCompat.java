@@ -51,4 +51,30 @@ public abstract class RenderUtilsMixin_MalilibCrafterEarlyCompat
 		NbtCompound tagBlockEntity = nbt.getCompound("BlockEntityTag");
 		return new CrafterSimpleInventory(items, tagBlockEntity);
 	}
+	
+	@WrapOperation
+	(
+		method = "Lfi/dy/masa/malilib/render/RenderUtils;renderShulkerBoxPreview(Lnet/minecraft/item/ItemStack;IIZLnet/minecraft/client/gui/DrawContext;)V",
+		at = @At
+		(
+			value = "INVOKE",
+			target = "Lnet/minecraft/util/collection/DefaultedList;size()I"
+		)
+	)
+	private static int bypassCrafterItem(DefaultedList<ItemStack> items, Operation<Integer> original, @Local(name = "stack") ItemStack stack)
+	{
+        if (!(stack.getItem() instanceof BlockItem blockItem))
+		{
+			return original.call(items);
+		}
+
+		if(!(blockItem.getBlock() instanceof CrafterBlock))
+		{
+			return original.call(items);
+		}
+		
+		//能进到这里就说明至少有nbt，那么必然返回一个非0数使得进行渲染，选择返回9，为合成器格子数
+		int ret = original.call(items);
+		return ret == 0 ? 9 : ret;
+	}
 }

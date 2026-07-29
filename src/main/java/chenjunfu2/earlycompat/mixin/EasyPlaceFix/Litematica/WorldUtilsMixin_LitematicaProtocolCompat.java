@@ -208,6 +208,7 @@ public abstract class WorldUtilsMixin_LitematicaProtocolCompat
 		@Local(name = "stateClient") BlockState stateClient,
 		@Local(name = "pos") BlockPos pos,
 		@Local(name = "stateSchematic") BlockState stateSchematic,
+		@Local(name = "stack") ItemStack stack,
 		@Local(name = "hitPos") Vec3d hitPos,
 		@Local(name = "side") Direction side
 	)
@@ -232,9 +233,16 @@ public abstract class WorldUtilsMixin_LitematicaProtocolCompat
 		MultiStageBlockProtocolStateAdapter.LoopContext ctx = new MultiStageBlockProtocolStateAdapter.LoopContext();
 		ctx.stateSchematic = stateSchematic;
 		ctx.stateClient = stateClient;
+		//ctx.itemStack = stack;
 		
+		//设置循环次数
 		multiStageBlockProtocolStateAdapter.earlycompat$setLoopCount(ctx);
-		int loopCount = ctx.loopCount;
+		
+		//获取物品栏物品个数，选最少的进行循环
+		int stackCount = stack.getCount();
+		int loopCount = Math.min(stackCount, ctx.loopCount);
+		
+		//多次放置
 		for(int i = 0; i < loopCount; ++i)
 		{
 			ctx.loopIndex = i;
@@ -246,7 +254,7 @@ public abstract class WorldUtilsMixin_LitematicaProtocolCompat
 			ctx.stateClient = mc.world.getBlockState(pos);//更新stateClient
 		}
 		
-		//插入cache冷却
+		//插入当前放置坐标进入冷却cache
 		earlycompat_shadow$cacheEasyPlacePosition(pos);
 		
 		cir.setReturnValue(ActionResult.SUCCESS);

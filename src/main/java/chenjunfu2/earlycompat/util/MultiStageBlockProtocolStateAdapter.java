@@ -1,6 +1,7 @@
 package chenjunfu2.earlycompat.util;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.item.ItemStack;
 
 public interface MultiStageBlockProtocolStateAdapter
 {
@@ -11,6 +12,7 @@ public interface MultiStageBlockProtocolStateAdapter
 	{
 		public BlockState stateSchematic = null;
 		public BlockState stateClient = null;
+		//public ItemStack itemStack = null;//暂时用不到
 		public int loopCount = 0;
 		public int loopIndex = 0;
    		public Object data;

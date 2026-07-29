@@ -24,7 +24,7 @@ public abstract class InventoryRenderTypeMixin_MalilibVanillaCompat
 	private static InventoryOverlay.InventoryRenderType[] $VALUES;
 	
 	@Invoker("<init>")
-	private static InventoryOverlay.InventoryRenderType createVariant(String name, int ordinal)
+	private static InventoryOverlay.InventoryRenderType earlycompat_shadow$createVariant(String name, int ordinal)
 	{
 		throw new AssertionError("This will be replaced by Mixin");
 	}
@@ -36,7 +36,7 @@ public abstract class InventoryRenderTypeMixin_MalilibVanillaCompat
 	)
 	private static void onStaticInit(CallbackInfo ci)
 	{
-		CHISELEDBOOKSHELF = createVariant(nameCHISELEDBOOKSHELF, $VALUES.length);//创建新枚举常量，序号用当前数组长度（新序号正好等于原数量）
+		CHISELEDBOOKSHELF = earlycompat_shadow$createVariant(nameCHISELEDBOOKSHELF, $VALUES.length);//创建新枚举常量，序号用当前数组长度（新序号正好等于原数量）
 		InventoryOverlay.InventoryRenderType[] newValues = Arrays.copyOf($VALUES, $VALUES.length + 1);
 		newValues[newValues.length - 1] = CHISELEDBOOKSHELF;
 		$VALUES = newValues;

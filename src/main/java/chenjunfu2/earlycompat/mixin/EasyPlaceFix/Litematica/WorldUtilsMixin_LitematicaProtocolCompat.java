@@ -186,7 +186,7 @@ public abstract class WorldUtilsMixin_LitematicaProtocolCompat
 	}
 	
 	@Invoker("cacheEasyPlacePosition")
-    static void invokeCacheEasyPlacePosition(BlockPos pos)
+    static void earlycompat_shadow$cacheEasyPlacePosition(BlockPos pos)
 	{
         throw new AssertionError();
     }
@@ -247,7 +247,7 @@ public abstract class WorldUtilsMixin_LitematicaProtocolCompat
 		}
 		
 		//插入cache冷却
-		invokeCacheEasyPlacePosition(pos);
+		earlycompat_shadow$cacheEasyPlacePosition(pos);
 		
 		cir.setReturnValue(ActionResult.SUCCESS);
 		cir.cancel();

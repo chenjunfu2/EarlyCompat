@@ -5,7 +5,6 @@ import chenjunfu2.earlycompat.util.MultiStageBlockProtocolStateAdapter;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.MultifaceGrowthBlock;
 import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
@@ -21,7 +20,7 @@ import java.util.List;
 
 
 @Mixin(MultifaceGrowthBlock.class)
-public class MultifaceGrowthBlockMixin_VanillaProtocolCompat implements MultiStageBlockProtocolStateAdapter, BlockProtocolStateAdapter
+public abstract class MultifaceGrowthBlockMixin_VanillaProtocolCompat implements MultiStageBlockProtocolStateAdapter, BlockProtocolStateAdapter
 {
 	@Shadow
 	@Final

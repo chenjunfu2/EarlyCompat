@@ -24,7 +24,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(InventoryOverlay.class)
 @Environment(EnvType.CLIENT)
-public class InventoryOverlayMixin_MalilibCrafterEarlyCompat
+public abstract class InventoryOverlayMixin_MalilibCrafterEarlyCompat
 {
 	@ModifyReturnValue
 	(

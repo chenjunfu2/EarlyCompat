@@ -18,7 +18,7 @@ import static chenjunfu2.earlycompat.util.EasyPlaceExtraProtocolHelper.*;
 
 @Mixin(PlacementHandler.class)
 @Environment(EnvType.CLIENT)
-public class PlacementHandlerMixin_LitematicaProtocolCompat
+public abstract class PlacementHandlerMixin_LitematicaProtocolCompat
 {
 	@Inject
 	(

@@ -21,7 +21,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import static chenjunfu2.earlycompat.EarlyCompat.IS_SERVER_ENV;
 
 @Mixin(VerticallyAttachableBlockItem.class)
-public class VerticallyAttachableBlockItemMixin_VanillaProtocolCompat extends BlockItem implements VerticallyAttachableBlockItemAccessor
+public abstract class VerticallyAttachableBlockItemMixin_VanillaProtocolCompat extends BlockItem implements VerticallyAttachableBlockItemAccessor
 {
 	@Final
 	@Shadow

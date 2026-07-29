@@ -3,25 +3,25 @@ package chenjunfu2.earlycompat.mixin.EasyPlaceFix.Vanilla;
 import chenjunfu2.earlycompat.util.BlockProtocolStateAdapter;
 import chenjunfu2.earlycompat.util.MultiStageBlockProtocolStateAdapter;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.CandleBlock;
+import net.minecraft.block.TurtleEggBlock;
 import net.minecraft.item.ItemPlacementContext;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 
-@Mixin(CandleBlock.class)
-public abstract class CandleBlockMixin_VanillaProtocolCompat implements MultiStageBlockProtocolStateAdapter, BlockProtocolStateAdapter
+@Mixin(TurtleEggBlock.class)
+public abstract class TurtleEggBlockMixin_VanillaProtocolCompat implements MultiStageBlockProtocolStateAdapter, BlockProtocolStateAdapter
 {
 	@Override
 	public void earlycompat$setLoopCount(LoopContext ctx)
 	{
-		boolean isCandle = ctx.stateClient.isOf((CandleBlock)(Object)this);
-		int curCandles = isCandle ? ctx.stateClient.get(CandleBlock.CANDLES) : 0;
-		int targetCandles = ctx.stateSchematic.get(CandleBlock.CANDLES);
+		boolean isTurtleEgg = ctx.stateClient.isOf((TurtleEggBlock)(Object)this);
+		int curEggs = isTurtleEgg ? ctx.stateClient.get(TurtleEggBlock.EGGS) : 0;
+		int targetEggs = ctx.stateSchematic.get(TurtleEggBlock.EGGS);
 		
-		if(targetCandles > curCandles)
+		if(targetEggs > curEggs)
 		{
-			ctx.loopCount = targetCandles - curCandles;
+			ctx.loopCount = targetEggs - curEggs;
 		}
 		else
 		{
@@ -32,14 +32,14 @@ public abstract class CandleBlockMixin_VanillaProtocolCompat implements MultiSta
 	@Override
 	public int earlycompat$toProtocolValueLoop(LoopContext ctx)
 	{
-		return (ctx.stateSchematic.get(CandleBlock.CANDLES) - 1) & 0b0011;//2bit 1~4 -> 0~3
+		return (ctx.stateSchematic.get(TurtleEggBlock.EGGS) - 1) & 0b0011;//2bit 1~4 -> 0~3
 	}
 	
 	@Override
 	public @Nullable BlockState earlycompat$fromProtocolValue(int extraProtocolValue, BlockState fromState, ItemPlacementContext context)
 	{
-		int maxCandles = (extraProtocolValue & 0b0011) + 1;
-		if(fromState.get(CandleBlock.CANDLES) > maxCandles)//获取一下当前自动生成的下一级
+		int maxEggs = (extraProtocolValue & 0b0011) + 1;
+		if(fromState.get(TurtleEggBlock.EGGS) > maxEggs)//获取一下当前自动生成的下一级
 		{
 			return null;
 		}

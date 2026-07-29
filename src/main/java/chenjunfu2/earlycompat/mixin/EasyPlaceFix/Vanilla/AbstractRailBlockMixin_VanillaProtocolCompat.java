@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(AbstractRailBlock.class)
-public class AbstractRailBlockMixin_VanillaProtocolCompat
+public abstract class AbstractRailBlockMixin_VanillaProtocolCompat
 {
 	@Inject
 	(

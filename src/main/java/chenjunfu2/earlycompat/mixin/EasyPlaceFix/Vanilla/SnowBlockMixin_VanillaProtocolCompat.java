@@ -3,25 +3,25 @@ package chenjunfu2.earlycompat.mixin.EasyPlaceFix.Vanilla;
 import chenjunfu2.earlycompat.util.BlockProtocolStateAdapter;
 import chenjunfu2.earlycompat.util.MultiStageBlockProtocolStateAdapter;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.CandleBlock;
+import net.minecraft.block.SnowBlock;
 import net.minecraft.item.ItemPlacementContext;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 
-@Mixin(CandleBlock.class)
-public abstract class CandleBlockMixin_VanillaProtocolCompat implements MultiStageBlockProtocolStateAdapter, BlockProtocolStateAdapter
+@Mixin(SnowBlock.class)
+public abstract class SnowBlockMixin_VanillaProtocolCompat implements MultiStageBlockProtocolStateAdapter, BlockProtocolStateAdapter
 {
 	@Override
 	public void earlycompat$setLoopCount(LoopContext ctx)
 	{
-		boolean isCandle = ctx.stateClient.isOf((CandleBlock)(Object)this);
-		int curCandles = isCandle ? ctx.stateClient.get(CandleBlock.CANDLES) : 0;
-		int targetCandles = ctx.stateSchematic.get(CandleBlock.CANDLES);
+		boolean isSnow = ctx.stateClient.isOf((SnowBlock)(Object)this);
+		int curLayers = isSnow ? ctx.stateClient.get(SnowBlock.LAYERS) : 0;
+		int targetLayers = ctx.stateSchematic.get(SnowBlock.LAYERS);
 		
-		if(targetCandles > curCandles)
+		if(targetLayers > curLayers)
 		{
-			ctx.loopCount = targetCandles - curCandles;
+			ctx.loopCount = targetLayers - curLayers;
 		}
 		else
 		{
@@ -32,14 +32,14 @@ public abstract class CandleBlockMixin_VanillaProtocolCompat implements MultiSta
 	@Override
 	public int earlycompat$toProtocolValueLoop(LoopContext ctx)
 	{
-		return (ctx.stateSchematic.get(CandleBlock.CANDLES) - 1) & 0b0011;//2bit 1~4 -> 0~3
+		return (ctx.stateSchematic.get(SnowBlock.LAYERS) - 1) & 0b0111;//3bit 1~8 -> 0~7
 	}
 	
 	@Override
 	public @Nullable BlockState earlycompat$fromProtocolValue(int extraProtocolValue, BlockState fromState, ItemPlacementContext context)
 	{
-		int maxCandles = (extraProtocolValue & 0b0011) + 1;
-		if(fromState.get(CandleBlock.CANDLES) > maxCandles)//获取一下当前自动生成的下一级
+		int maxLayers = (extraProtocolValue & 0b0111) + 1;
+		if(fromState.get(SnowBlock.LAYERS) > maxLayers)//获取一下当前自动生成的下一级
 		{
 			return null;
 		}
@@ -60,4 +60,7 @@ public abstract class CandleBlockMixin_VanillaProtocolCompat implements MultiSta
 	{
 		return ProtocolType.REPLACE;
 	}
+
+
+
 }

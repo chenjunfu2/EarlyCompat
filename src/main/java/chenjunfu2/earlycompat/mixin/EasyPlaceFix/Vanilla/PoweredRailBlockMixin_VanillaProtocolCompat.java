@@ -10,7 +10,7 @@ import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 
 @Mixin(PoweredRailBlock.class)//相当于同时修复activator_rail
-public class PoweredRailBlockMixin_VanillaProtocolCompat implements BlockProtocolStateAdapter
+public abstract class PoweredRailBlockMixin_VanillaProtocolCompat implements BlockProtocolStateAdapter
 {
 	@Override
 	public int earlycompat$toProtocolValue(int protocolValue, BlockState fromState)

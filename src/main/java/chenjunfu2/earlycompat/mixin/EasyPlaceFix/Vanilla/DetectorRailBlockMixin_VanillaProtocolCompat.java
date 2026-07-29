@@ -10,7 +10,7 @@ import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 
 @Mixin(DetectorRailBlock.class)
-public class DetectorRailBlockMixin_VanillaProtocolCompat implements BlockProtocolStateAdapter
+public abstract class DetectorRailBlockMixin_VanillaProtocolCompat implements BlockProtocolStateAdapter
 {
 	@Override
 	public int earlycompat$toProtocolValue(int protocolValue, BlockState fromState)

@@ -3,7 +3,6 @@ package chenjunfu2.earlycompat.mixin.EasyPlaceFix.Vanilla;
 import chenjunfu2.earlycompat.util.BlockProtocolStateAdapter;
 import chenjunfu2.earlycompat.util.MultiStageBlockProtocolStateAdapter;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.MultifaceGrowthBlock;
 import net.minecraft.block.VineBlock;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.state.property.BooleanProperty;

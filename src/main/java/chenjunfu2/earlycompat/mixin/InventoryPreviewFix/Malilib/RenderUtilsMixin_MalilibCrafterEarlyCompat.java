@@ -42,13 +42,12 @@ public abstract class RenderUtilsMixin_MalilibCrafterEarlyCompat
 			return original.call(items);
 		}
 		
-		NbtCompound nbt = stack.getNbt();
-		if (nbt == null || !nbt.contains("BlockEntityTag", NbtElement.COMPOUND_TYPE))
+		NbtCompound tagBlockEntity = stack.getSubNbt("BlockEntityTag");
+		if (tagBlockEntity == null)
 		{
 			return original.call(items);
 		}
-		
-		NbtCompound tagBlockEntity = nbt.getCompound("BlockEntityTag");
+
 		return new CrafterSimpleInventory(items, tagBlockEntity);
 	}
 	

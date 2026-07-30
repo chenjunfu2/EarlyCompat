@@ -56,6 +56,9 @@
     "PcaProtocolFix.Vanilla.JukeboxBlockEntityMixin_VanillaBugFix"
   ],
   "client": [
+    "EasyPlaceFix.Litematica.ConfigGuiTabMixin_LitematicaProtocolCompat",
+    "EasyPlaceFix.Litematica.GuiConfigsMixin_LitematicaProtocolCompat",
+    "EasyPlaceFix.Litematica.GuiRenderLayerMixin_LitematicaProtocolCompat",
     "EasyPlaceFix.Litematica.PlacementHandlerMixin_LitematicaProtocolCompat",
     "EasyPlaceFix.Litematica.WorldUtilsMixin_LitematicaProtocolCompat",
     "InventoryPreviewFix.Malilib.InventoryOverlayMixin_MalilibCrafterEarlyCompat",

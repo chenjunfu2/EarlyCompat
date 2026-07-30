@@ -16,7 +16,8 @@ public abstract class ConfigsMixin_LitematicaProtocolCompat
 	@Inject
 	(
 		method = "Lfi/dy/masa/litematica/config/Configs;loadFromFile()V",
-		at = @At(value = "TAIL")
+		at = @At(value = "TAIL"),
+		remap = false
 	)
 	private static void loadEarlyCompatConfigsFromFile(CallbackInfo ci)
 	{
@@ -26,7 +27,8 @@ public abstract class ConfigsMixin_LitematicaProtocolCompat
 	@Inject
 	(
 		method = "Lfi/dy/masa/litematica/config/Configs;saveToFile()V",
-		at = @At(value = "TAIL")
+		at = @At(value = "TAIL"),
+		remap = false
 	)
 	private static void saveEarlyCompatConfigsToFile(CallbackInfo ci)
 	{

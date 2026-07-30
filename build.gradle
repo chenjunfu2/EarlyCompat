@@ -18,14 +18,12 @@ repositories {
     }
 }
 
-//loom {
-//	mods {
-//		"earlycompat" {
-//			sourceSet sourceSets.main
-//		}
-//	}
-//
-//}
+loom {
+    mixin {
+        useLegacyMixinAp = true
+        defaultRefmapName = "earlycompat.refmap.json"
+    }
+}
 
 dependencies {
 	// To change the versions see the gradle.properties file

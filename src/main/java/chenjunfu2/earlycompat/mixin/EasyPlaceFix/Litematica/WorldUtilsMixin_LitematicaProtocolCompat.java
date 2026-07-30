@@ -240,7 +240,22 @@ public abstract class WorldUtilsMixin_LitematicaProtocolCompat
 		multiStageBlockProtocolStateAdapter.earlycompat$setLoopCount(ctx);
 		
 		//获取物品栏物品个数，选最少的进行循环
-		int stackCount = stack.getCount();
+		int stackCount = Integer.MAX_VALUE;
+		if(!mc.player.isCreative())//如果是创造，那么不限量
+		{
+			if(hand == Hand.MAIN_HAND)//否则查看手上物品
+			{
+				stackCount = mc.player.getMainHandStack().getCount();
+			}
+			else if(hand == Hand.OFF_HAND)
+			{
+				stackCount = mc.player.getOffHandStack().getCount();
+			}
+			else
+			{
+				stackCount = 0;
+			}
+		}
 		int loopCount = Math.min(stackCount, ctx.loopCount);
 		
 		//多次放置

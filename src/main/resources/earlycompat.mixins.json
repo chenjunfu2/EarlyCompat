@@ -57,6 +57,8 @@
   ],
   "client": [
     "EasyPlaceFix.Litematica.ConfigGuiTabMixin_LitematicaProtocolCompat",
+    "EasyPlaceFix.Litematica.ConfigsMixin_LitematicaProtocolCompat",
+    "EasyPlaceFix.Litematica.EarlyCompatConfigsMixin_LitematicaProtocolCompat",
     "EasyPlaceFix.Litematica.GuiConfigsMixin_LitematicaProtocolCompat",
     "EasyPlaceFix.Litematica.GuiRenderLayerMixin_LitematicaProtocolCompat",
     "EasyPlaceFix.Litematica.PlacementHandlerMixin_LitematicaProtocolCompat",

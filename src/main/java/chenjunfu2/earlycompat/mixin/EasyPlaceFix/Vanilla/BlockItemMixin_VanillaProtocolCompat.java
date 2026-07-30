@@ -21,6 +21,9 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static chenjunfu2.earlycompat.util.EasyPlaceExtraProtocolHelper.*;
 
 @Mixin(BlockItem.class)
@@ -64,10 +67,25 @@ public abstract class BlockItemMixin_VanillaProtocolCompat implements PlaceState
 	@Unique
 	private static boolean earlycompat$isEasyPlaceState = false;
 	
+	@Unique
+	private static long earlycompat$placeProperty = 0;
+	
 	@Override
 	public boolean earlycompat$isEasyPlaceState()
 	{
 		return earlycompat$isEasyPlaceState;
+	}
+	
+	@Override
+	public long earlycompat$placeProperty()
+	{
+		return earlycompat$placeProperty;
+	}
+	
+	@Override
+	public void earlycompat$placeProperty(long val)
+	{
+		earlycompat$placeProperty = val;
 	}
 
 	@Inject
@@ -91,6 +109,7 @@ public abstract class BlockItemMixin_VanillaProtocolCompat implements PlaceState
 	void clearPlaceState(ItemPlacementContext context, CallbackInfoReturnable<ActionResult> cir)
 	{
 		earlycompat$isEasyPlaceState = false;
+		earlycompat$placeProperty = 0;
 	}
 	
 }

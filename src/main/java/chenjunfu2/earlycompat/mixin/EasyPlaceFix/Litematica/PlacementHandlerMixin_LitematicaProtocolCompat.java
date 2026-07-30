@@ -14,6 +14,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import static chenjunfu2.earlycompat.config.LitematicaEarlyCompatConfigs.EASY_PLACE_V2_PROTOCOL_EXTRA;
 import static chenjunfu2.earlycompat.util.EasyPlaceExtraProtocolHelper.*;
 
 @Mixin(PlacementHandler.class)
@@ -33,7 +34,7 @@ public abstract class PlacementHandlerMixin_LitematicaProtocolCompat
 	)
 	private static void replaceExtraProtocol(BlockState state, PlacementHandler.UseContext context, CallbackInfoReturnable<BlockState> cir)
 	{
-		if(!EarlyCompatS2ClientHandler.isServerSupportsExtraProtocol())//当前服务器未开启扩展协议
+		if(!EarlyCompatS2ClientHandler.isServerSupportsExtraProtocol() || !EASY_PLACE_V2_PROTOCOL_EXTRA.getBooleanValue())//当前服务器未开启扩展协议或客户端没开启扩展协议
 		{
 			return;
 		}
@@ -81,7 +82,7 @@ public abstract class PlacementHandlerMixin_LitematicaProtocolCompat
 		int protocolValue
 	)
 	{
-		if(!EarlyCompatS2ClientHandler.isServerSupportsExtraProtocol())//未开启扩展协议
+		if(!EarlyCompatS2ClientHandler.isServerSupportsExtraProtocol() || !EASY_PLACE_V2_PROTOCOL_EXTRA.getBooleanValue())//未开启扩展协议
 		{
 			return protocolValue;
 		}
@@ -108,7 +109,7 @@ public abstract class PlacementHandlerMixin_LitematicaProtocolCompat
 		@Local(name = "context") PlacementHandler.UseContext context
 	)
 	{
-		if(!EarlyCompatS2ClientHandler.isServerSupportsExtraProtocol())//未开启扩展协议
+		if(!EarlyCompatS2ClientHandler.isServerSupportsExtraProtocol() || !EASY_PLACE_V2_PROTOCOL_EXTRA.getBooleanValue())//未开启扩展协议
 		{
 			return state;
 		}

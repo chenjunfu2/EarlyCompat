@@ -31,6 +31,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import static chenjunfu2.earlycompat.config.LitematicaEarlyCompatConfigs.EASY_PLACE_V2_PROTOCOL_EXTRA;
 import static chenjunfu2.earlycompat.util.EasyPlaceExtraProtocolHelper.*;
 
 @Mixin(WorldUtils.class)
@@ -45,7 +46,7 @@ public abstract class WorldUtilsMixin_LitematicaProtocolCompat
 	)
 	private static void replaceExtraProtocol(BlockPos pos, BlockState state, Vec3d hitVecIn, CallbackInfoReturnable<Vec3d> cir)
 	{
-		if(!EarlyCompatS2ClientHandler.isServerSupportsExtraProtocol())//未开启扩展协议
+		if(!EarlyCompatS2ClientHandler.isServerSupportsExtraProtocol() || !EASY_PLACE_V2_PROTOCOL_EXTRA.getBooleanValue())//未开启扩展协议
 		{
 			return;
 		}
@@ -129,7 +130,7 @@ public abstract class WorldUtilsMixin_LitematicaProtocolCompat
 	)
 	private static int addExtraProtocol(int protocolValue, @Local(name = "state") BlockState state)
 	{
-		if(!EarlyCompatS2ClientHandler.isServerSupportsExtraProtocol())//未开启扩展协议
+		if(!EarlyCompatS2ClientHandler.isServerSupportsExtraProtocol() || !EASY_PLACE_V2_PROTOCOL_EXTRA.getBooleanValue())//未开启扩展协议
 		{
 			return protocolValue;
 		}
@@ -157,7 +158,7 @@ public abstract class WorldUtilsMixin_LitematicaProtocolCompat
 	)
 	private static Vec3d replaceHitPos(Vec3d hitPos, @Local(name = "pos") BlockPos pos, @Local(name = "world") World world, @Local(name = "stateSchematic") BlockState stateSchematic)
 	{
-		if(!EarlyCompatS2ClientHandler.isServerSupportsExtraProtocol())//未开启扩展协议
+		if(!EarlyCompatS2ClientHandler.isServerSupportsExtraProtocol() || !EASY_PLACE_V2_PROTOCOL_EXTRA.getBooleanValue())//未开启扩展协议
 		{
 			return hitPos;//不变
 		}
@@ -213,7 +214,7 @@ public abstract class WorldUtilsMixin_LitematicaProtocolCompat
 		@Local(name = "side") Direction side
 	)
 	{
-		if(!EarlyCompatS2ClientHandler.isServerSupportsExtraProtocol())//未开启扩展协议
+		if(!EarlyCompatS2ClientHandler.isServerSupportsExtraProtocol() || !EASY_PLACE_V2_PROTOCOL_EXTRA.getBooleanValue())//未开启扩展协议
 		{
 			return;
 		}

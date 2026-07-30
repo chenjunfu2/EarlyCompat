@@ -40,7 +40,7 @@ public abstract class FlowerbedBlockMixin_VanillaProtocolCompat implements Multi
 		
 		int bits =
 			((facingOridinal & 0b0011) << 2) |//hi 2bit
-			((maxAmount & 0b0011));//lo 2bit
+			(maxAmount & 0b0011);//lo 2bit
 		
 		return bits;
 	}
@@ -48,8 +48,8 @@ public abstract class FlowerbedBlockMixin_VanillaProtocolCompat implements Multi
 	@Override
 	public @Nullable BlockState earlycompat$fromProtocolValue(int extraProtocolValue, BlockState fromState, ItemPlacementContext context)
 	{
-		int facingOridinal = ((extraProtocolValue & 0b1100) >> 2) + 2;
-		int maxAmount = (extraProtocolValue & 0b0011) + 1;
+		int facingOridinal = ((extraProtocolValue & 0b1100) >>> 2) + 2;// 0~3 -> 2~5
+		int maxAmount = (extraProtocolValue & 0b0011) + 1;// 0~3 -> 1~4
 		
 		World world = context.getWorld();
         BlockPos blockPos = context.getBlockPos();

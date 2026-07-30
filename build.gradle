@@ -18,14 +18,14 @@ repositories {
     }
 }
 
-loom {
-	mods {
-		"earlycompat" {
-			sourceSet sourceSets.main
-		}
-	}
-
-}
+//loom {
+//	mods {
+//		"earlycompat" {
+//			sourceSet sourceSets.main
+//		}
+//	}
+//
+//}
 
 dependencies {
 	// To change the versions see the gradle.properties file

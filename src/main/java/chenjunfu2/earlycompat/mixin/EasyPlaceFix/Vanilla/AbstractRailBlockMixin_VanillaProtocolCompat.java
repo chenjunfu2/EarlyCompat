@@ -33,6 +33,12 @@ public abstract class AbstractRailBlockMixin_VanillaProtocolCompat
 			return;//当前不是轻松放置，跳过
 		}
 		
+		//检测state
+		if(!blockItemPlaceStateAccessor.earlycompat$hasPlaceFlag(PlaceStateAccessor.easyPlaceRailBlockNoShapeUpdate))
+		{
+			return;//没有打开铁轨不更新，跳过
+		}
+		
 		//直接返回原始state，啥都不做，跳过更新
 		cir.setReturnValue(state);
 		cir.cancel();

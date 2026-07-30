@@ -35,11 +35,10 @@ public abstract class BlockItemMixin_VanillaProtocolCompat implements PlaceState
 		at = @At(value = "INVOKE", target = "Lnet/minecraft/item/BlockItem;postPlacement(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/world/World;Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/item/ItemStack;Lnet/minecraft/block/BlockState;)Z")
 	)
 	boolean replaceItemStack(BlockItem instance, BlockPos pos, World world, PlayerEntity player, ItemStack stack, BlockState state, Operation<Boolean> original,
-		@Local(name = "itemPlacementContext") ItemPlacementContext itemPlacementContext,
-		@Local(name = "blockState") BlockState blockState,
-		@Local(name = "playerEntity") PlayerEntity playerEntity)
+		@Local(ordinal = 1) ItemPlacementContext itemPlacementContext,
+		@Local(ordinal = 0) BlockState blockState)
 	{
-		if (!(playerEntity instanceof ServerPlayerEntity serverPlayerEntity) ||
+		if (!(player instanceof ServerPlayerEntity serverPlayerEntity) ||
 			!(EarlyCompatC2ServerHandler.isExtraProtocolPlayer(serverPlayerEntity)))//玩家没有扩展协议或不是服务端
 		{
 			return original.call(instance, pos, world, player,stack, state);//原封不动返回

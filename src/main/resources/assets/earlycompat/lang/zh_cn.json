@@ -1,0 +1,6 @@
+{
+  "config.name.easyplacev2protocolextra": "启用V2-Extra轻松放置协议",
+  "config.comment.easyplacev2protocolextra": "在支持V2-Extra轻松放置协议的服务器中，启用客户端V2-Extra轻松放置协议",
+  "config.name.easyplacerailblocknoshapeupdate": "轻松放置铁轨方块不进行形状更新",
+  "config.comment.easyplacerailblocknoshapeupdate": "在使用支持V2-Extra轻松放置协议的服务器中，放置铁轨方块不进行形状更新"
+}

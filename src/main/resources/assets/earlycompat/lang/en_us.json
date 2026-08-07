@@ -1,0 +1,6 @@
+{
+  "config.name.easyplacev2protocolextra": "Enable V2-Extra easy place protocol",
+  "config.comment.easyplacev2protocolextra": "Enable client-side V2-Extra easy place protocol on servers that support the V2-Extra easy place protocol",
+  "config.name.easyplacerailblocknoshapeupdate": "Do not update shape when placing rail blocks with easy place",
+  "config.comment.easyplacerailblocknoshapeupdate": "When using a server that supports the V2-Extra easy place protocol, do not update the shape when placing rail blocks"
+}

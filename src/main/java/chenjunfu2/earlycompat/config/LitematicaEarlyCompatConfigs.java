@@ -19,8 +19,8 @@ public class LitematicaEarlyCompatConfigs
 {
 	public static final String CONFIG_FILE_NAME = EarlyCompat.MOD_ID + ".json";
 	
-	public static final ConfigBoolean EASY_PLACE_V2_PROTOCOL_EXTRA = new ConfigBoolean("easyPlaceV2ProtocolExtra | 启用V2-Extra轻松放置协议", true, "在支持V2-Extra轻松放置协议的服务器中，启用客户端V2-Extra轻松放置协议");
-	public static final ConfigBoolean EASY_PLACE_RAIL_BLOCK_NO_SHAPE_UPDATE = new ConfigBoolean("easyPlaceRailBlockNoShapeUpdate | 轻松放置铁轨方块不进行形状更新", true, "在使用支持V2-Extra轻松放置协议的服务器中，放置铁轨方块不进行形状更新");
+	public static final ConfigBoolean EASY_PLACE_V2_PROTOCOL_EXTRA = new ConfigBoolean("easyPlaceV2ProtocolExtra", true, "easyPlaceV2ProtocolExtra_Comment");
+	public static final ConfigBoolean EASY_PLACE_RAIL_BLOCK_NO_SHAPE_UPDATE = new ConfigBoolean("easyPlaceRailBlockNoShapeUpdate", true, "easyPlaceRailBlockNoShapeUpdate_Comment");
 	
 	public static final ImmutableList<IConfigBase> OPTIONS = ImmutableList.of
 	(

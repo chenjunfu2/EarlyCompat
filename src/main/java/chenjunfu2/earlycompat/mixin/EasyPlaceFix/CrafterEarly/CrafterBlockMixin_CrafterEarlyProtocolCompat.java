@@ -1,5 +1,6 @@
 package chenjunfu2.earlycompat.mixin.EasyPlaceFix.CrafterEarly;
 
+import chenjunfu2.earlycompat.config.EarlyCompatConfigs;
 import chenjunfu2.earlycompat.util.BlockProtocolStateAdapter;
 import chenjunfu2.earlycompat.util.ItemStackProtocolDataAdapter;
 import net.chenjunfu2.block.CrafterBlock;
@@ -42,6 +43,11 @@ public abstract class CrafterBlockMixin_CrafterEarlyProtocolCompat implements Bl
 	@Override
 	public int earlycompat$toProtocolValueAddition(ItemStack fromStack)
 	{
+		if(!EarlyCompatConfigs.EASY_PLACE_CRAFTER_LOCK_SLOT())
+		{
+			return 0;//不要锁定格子
+		}
+		
 		NbtCompound tagBlockEntity = fromStack.getSubNbt("BlockEntityTag");
 		if(tagBlockEntity == null)
 		{

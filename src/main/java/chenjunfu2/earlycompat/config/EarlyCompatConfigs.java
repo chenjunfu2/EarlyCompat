@@ -6,4 +6,5 @@ public class EarlyCompatConfigs
 	{
 		return false;
 	}
+	public static boolean EASY_PLACE_CRAFTER_LOCK_SLOT() { return false; }
 }

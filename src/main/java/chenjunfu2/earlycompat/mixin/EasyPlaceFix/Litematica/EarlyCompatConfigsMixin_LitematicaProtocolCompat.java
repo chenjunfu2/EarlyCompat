@@ -16,4 +16,10 @@ public class EarlyCompatConfigsMixin_LitematicaProtocolCompat
 	{
 		return LitematicaEarlyCompatConfigs.EASY_PLACE_RAIL_BLOCK_NO_SHAPE_UPDATE.getBooleanValue();
 	}
+	
+	@Overwrite(remap = false)
+	public static boolean EASY_PLACE_CRAFTER_LOCK_SLOT()
+	{
+		return LitematicaEarlyCompatConfigs.EASY_PLACE_CRAFTER_LOCK_SLOT.getBooleanValue();
+	}
 }

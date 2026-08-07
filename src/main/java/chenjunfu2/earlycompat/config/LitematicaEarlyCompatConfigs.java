@@ -21,11 +21,13 @@ public class LitematicaEarlyCompatConfigs
 	
 	public static final ConfigBoolean EASY_PLACE_V2_PROTOCOL_EXTRA = new ConfigBoolean("easyPlaceV2ProtocolExtra", true, "easyPlaceV2ProtocolExtra_Comment");
 	public static final ConfigBoolean EASY_PLACE_RAIL_BLOCK_NO_SHAPE_UPDATE = new ConfigBoolean("easyPlaceRailBlockNoShapeUpdate", true, "easyPlaceRailBlockNoShapeUpdate_Comment");
+	public static final ConfigBoolean EASY_PLACE_CRAFTER_LOCK_SLOT = new ConfigBoolean("easyPlaceCrafterLockSlot", true, "easyPlaceCrafterLockSlot_Comment");
 	
 	public static final ImmutableList<IConfigBase> OPTIONS = ImmutableList.of
 	(
 		EASY_PLACE_V2_PROTOCOL_EXTRA,
-		EASY_PLACE_RAIL_BLOCK_NO_SHAPE_UPDATE
+		EASY_PLACE_RAIL_BLOCK_NO_SHAPE_UPDATE,
+		EASY_PLACE_CRAFTER_LOCK_SLOT
 	);
 	
 	public static void loadFromFile()
